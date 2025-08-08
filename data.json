@@ -1,0 +1,43 @@
+{
+  "updates": [
+    {
+      "title": "New Presidential Suite Open",
+      "description": "Our Gold Presidential Suite is now open for bookings — experience luxury like never before.",
+      "date": "August 5, 2025"
+    },
+    {
+      "title": "Wi-Fi Upgrade",
+      "description": "Enjoy faster and more reliable internet during your stay — perfect for work and entertainment.",
+      "date": "July 28, 2025"
+    }
+  ],
+  "news": [
+    {
+      "title": "Malungon Tourism Festival",
+      "description": "We are a proud sponsor of this year’s festival — stay tuned for exclusive guest benefits!",
+      "date": "July 15, 2025"
+    },
+    {
+      "title": "Staff Excellence Award",
+      "description": "Congratulations to our housekeeping team for winning the 2025 Hospitality Excellence Award.",
+      "date": "July 2, 2025"
+    }
+  ],
+  "events": [
+    "August 15, 2025: Romantic Dinner Night at the Rooftop Garden.",
+    "September 1-5, 2025: Rainy Season Room Discount — up to 30% off.",
+    "December 24, 2025: Christmas Eve Gala for all guests."
+  ],
+  "promos": [
+    {
+      "title": "Weekend Staycation Package",
+      "description": "Book a weekend stay and enjoy free breakfast for two plus late checkout.",
+      "date": "Valid until: September 30, 2025"
+    },
+    {
+      "title": "Anniversary Promo",
+      "description": "Celebrate with us and get 20% off for all suites during our anniversary month.",
+      "date": "Valid: October 2025"
+    }
+  ]
+}
