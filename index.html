@@ -1,352 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JHOM — Home</title>
-  <style>
-    /* Reset and base */
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      background: #f5f5f5; color: #333; min-height: 100vh;
-      display: flex; flex-direction: column;
-    }
-    a {
-      color: #007bff; text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Header */
-    
-
-    /* Footer */
-    footer.footer {
-      background: #007bff;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-      margin-top: auto;
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-    }
-
-    /* Container */
-    main.container {
-      max-width: 400px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 8px;
-      padding: 2rem 2rem 3rem;
-      box-shadow: 0 1px 8px rgb(0 0 0 / 0.1);
-    }
-
-    /* Hide sections initially except welcome */
-    .hidden {
-      display: none;
-    }
-
-    /* Welcome Screen */
-    #welcomeScreen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1rem;
-    }
-    #welcomeScreen img {
-      max-width: 150px;
-      border-radius: 8px;
-    }
-    #welcomeScreen h1 {
-      margin: 0;
-      font-weight: 700;
-      color: #007bff;
-    }
-    #welcomeScreen p {
-      font-size: 1rem;
-      line-height: 1.4;
-      color: #444;
-    }
-    label.checkbox-container {
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #555;
-    }
-    input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-    }
-    button#getStartedBtn {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button#getStartedBtn:disabled {
-      background: #99c1ff;
-      cursor: not-allowed;
-    }
-    button#getStartedBtn:hover:not(:disabled) {
-      background: #0056b3;
-    }
-
-    /* Form styles */
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    form label {
-      font-weight: 600;
-      color: #007bff;
-    }
-    form input[type="text"],
-    form input[type="email"],
-    form input[type="password"],
-    form input[type="file"] {
-      padding: 8px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      width: 100%;
-    }
-    form input[type="file"] {
-      padding: 3px 8px;
-    }
-    form button {
-      background: #007bff;
-      border: none;
-      color: white;
-      font-weight: 700;
-      padding: 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    form button:hover {
-      background: #0056b3;
-    }
-    .form-footer {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-    }
-    .form-footer button {
-      background: transparent;
-      color: #007bff;
-      font-weight: 600;
-      padding: 0;
-      border: none;
-      cursor: pointer;
-    }
-    .form-footer button:hover {
-      text-decoration: underline;
-      background: transparent;
-    }
-
-    /* Recaptcha placeholder styling */
-    .recaptcha-placeholder {
-      background: #eee;
-      border: 1px solid #ccc;
-      text-align: center;
-      padding: 12px 0;
-      color: #777;
-      border-radius: 6px;
-      user-select: none;
-    }
-
-    /* Main content - initially hidden */
-    #mainContent {
-      display: none;
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      flex-grow: 1;
-    }
-
-    /* Your original nav bar from your snippet */
-    nav#mainNav {
-      display: flex;
-      gap: 1rem;
-      font-weight: 600;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    nav#mainNav a {
-      color: #007bff;
-    }
-    nav#mainNav a:hover {
-      text-decoration: underline;
-    }
-
-    /* Cards styling */
-    section.card {
-      background: white;
-      border-radius: 8px;
-      padding: 1rem 1rem 1.5rem;
-      box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-      margin-bottom: 1.5rem;
-    }
-    section.card h2 {
-      margin-top: 0;
-      color: #007bff;
-    }
-    .kv {
-      min-height: 80px;
-      color: #555;
-      font-style: italic;
-    }
-  </style>
+  <title>JAYVEE HALL OF MANSION - Welcome</title>
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
-  <header class="header" role="banner" aria-label="Site header">
+
+<!-- HEADER -->
+<header class="header">
+  <a href="#" class="brand">
     <img src="logo.jpg" alt="JHOM Logo" />
     <h1>JAYVEE HALL OF MANSION</h1>
-  </header>
+  </a>
+  <nav class="nav">
+    <a href="#" class="active" id="nav-welcome">Welcome</a>
+    <a href="#" id="nav-login">Login</a>
+    <a href="#" id="nav-register">Register</a>
+  </nav>
+</header>
 
-  <main>
-    <main class="container" role="main">
-      <!-- Welcome Screen -->
-      <section id="welcomeScreen" aria-label="Welcome screen">
-        <img src="logo.jpg" alt="JHOM Logo" />
-        <h1>JAYVEE HALL OF MANSION</h1>
-        <p>
-          Welcome to Jayvee Hall of Mansion, your premier destination for exceptional experiences and unparalleled hospitality. Explore luxurious rooms, exciting events, and exclusive promos tailored just for you. We prioritize your comfort and satisfaction with every visit, ensuring you feel right at home. Join our community to stay updated and enjoy seamless access to all our offerings. We look forward to welcoming you warmly and providing an unforgettable stay!
-        </p>
-        <label class="checkbox-container" for="termsCheckbox">
-          <input type="checkbox" id="termsCheckbox" />
-          I agree to the <a href="#" target="_blank" rel="noopener">Terms and Conditions</a>.
-        </label>
-        <button id="getStartedBtn" disabled aria-disabled="true">GET STARTED</button>
-      </section>
+<!-- MAIN CONTAINER -->
+<main class="container">
 
-      <!-- Login Form -->
-      <section id="loginForm" class="hidden" aria-label="Login form">
-        <h2>Login</h2>
-        <form id="login" novalidate>
-          <label for="loginUsername">Username:</label>
-          <input type="text" id="loginUsername" name="username" required autocomplete="username" />
-          
-          <label for="loginPassword">Password:</label>
-          <input type="password" id="loginPassword" name="password" required autocomplete="current-password" />
-          
-          <button type="submit">Login</button>
-        </form>
-        <div class="form-footer">
-          <button id="forgotPasswordBtn" type="button">Forgot Password</button>
-          <button id="showRegisterBtn" type="button">Register</button>
-        </div>
-      </section>
+  <!-- WELCOME SCREEN -->
+  <section id="welcomeScreen" class="auth-wrapper">
+    <img src="logo.jpg" alt="Logo" class="logo-welcome" />
+    <h1>Welcome to JAYVEE HALL OF MANSION</h1>
+    <p>
+      Discover the finest place to relax, connect, and enjoy exclusive updates,
+      events, and promos. Join our community where comfort meets convenience.
+      Your perfect staycation starts here — experience unparalleled hospitality
+      with us.
+    </p>
+    <label class="checkbox-label">
+      <input type="checkbox" id="termsCheckbox" />
+      I agree to the <a href="#" target="_blank">Terms and Conditions</a>
+    </label>
+    <button id="btnGetStarted" disabled>Get Started</button>
+  </section>
 
-      <!-- Registration Form -->
-      <section id="registerForm" class="hidden" aria-label="Registration form">
-        <h2>Register</h2>
-        <form id="register" novalidate enctype="multipart/form-data">
-          <label for="uploadPhoto">Upload Photo: <span aria-hidden="true" style="color:red">*</span></label>
-          <input type="file" id="uploadPhoto" name="photo" accept="image/*" required />
-          
-          <label for="fullName">Fullname: <span aria-hidden="true" style="color:red">*</span></label>
-          <input type="text" id="fullName" name="fullname" required autocomplete="name" />
-          
-          <label for="email">Email: <span aria-hidden="true" style="color:red">*</span></label>
-          <input type="email" id="email" name="email" required autocomplete="email" />
-          
-          <label for="regPassword">Password: <span aria-hidden="true" style="color:red">*</span></label>
-          <input type="password" id="regPassword" name="password" required autocomplete="new-password" />
-          
-          <div class="recaptcha-placeholder" aria-label="Recaptcha verification">
-            [Recaptcha placeholder]
-          </div>
-          
-          <button type="submit">Create Account</button>
-        </form>
-        <div class="form-footer">
-          <button id="backToLoginBtn" type="button">Back</button>
-        </div>
-      </section>
-    </main>
-
-    <!-- Main content of the original index.html, hidden initially -->
-    <div id="mainContent" role="main" aria-label="Main homepage content">
-      <nav id="mainNav" aria-label="Primary navigation">
-        <a href="#">HOME</a>
-        <a href="#">ROOM</a>
-        <a href="#">CART</a>
-        <a href="#">MESSAGE</a>
-        <a href="#">NOTIFICATION</a>
-        <a href="#">ADMIN</a>
-        <button aria-label="Open menu">☰</button>
-      </nav>
-
-      <!-- MAIN SECTIONS -->
-      <section class="card">
-        <h2>Updates</h2>
-        <div id="updatesList" class="kv">Loading updates...</div>
-      </section>
-
-      <section class="card">
-        <h2>News</h2>
-        <div id="newsList" class="kv">Loading news...</div>
-      </section>
-
-      <section class="card">
-        <h2>Upcoming Events</h2>
-        <div id="eventsList" class="kv">Loading events...</div>
-      </section>
-
-      <section class="card">
-        <h2>Promos</h2>
-        <div id="promosList" class="kv">Loading promos...</div>
-      </section>
-
-      <section aria-label="Connect social media" style="margin-top: 1rem; font-size: 0.9rem;">
-        <strong>Connect</strong> &nbsp; ✕ &nbsp;
-        <a href="https://www.facebook.com/JaysGumcar" target="_blank" rel="noopener">🔵 Facebook</a> &nbsp; 
-        <a href="https://www.instagram.com/JaysGumcar" target="_blank" rel="noopener">📸 Instagram</a> &nbsp;
-        <a href="https://www.thread.com/JaysGumcar" target="_blank" rel="noopener">🧵 Thread</a> &nbsp;
-        ✉️ Email &nbsp;
-        <a href="https://www.telegram.com/JaysGumcar" target="_blank" rel="noopener">📨 Telegram</a> &nbsp;
-        ℹ️ About
-      </section>
-
-      <p style="margin-top: 1rem; font-size: 0.9rem; color: #555;">
-        Stay tuned for the latest updates and offers.
-      </p>
+  <!-- LOGIN FORM -->
+  <section id="loginForm" class="auth-wrapper hidden" aria-label="Login form">
+    <img src="logo.jpg" alt="Logo" class="logo-login" />
+    <h2>Login</h2>
+    <form id="formLogin" autocomplete="off">
+      <label for="loginUsername">Username:</label>
+      <input type="text" id="loginUsername" name="username" required autocomplete="username" />
+      
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" name="password" required autocomplete="current-password" />
+      
+      <button type="submit">Login</button>
+    </form>
+    <div class="form-footer">
+      <button id="forgotPasswordBtn" type="button">Forgot Password</button>
+      <button id="showRegisterBtn" type="button">Register</button>
     </div>
-  </main>
+  </section>
 
-  <footer class="footer" role="contentinfo">
-    © 2025 JHOM. All rights reserved.
-  </footer>
+  <!-- REGISTRATION FORM -->
+  <section id="registerForm" class="auth-wrapper hidden" aria-label="Registration form">
+    <img src="logo.jpg" alt="Logo" class="logo-login" />
+    <h2>Register</h2>
+    <form id="formRegister" autocomplete="off" enctype="multipart/form-data">
+      <label for="regPhoto">Upload Photo: (required)</label>
+      <input type="file" id="regPhoto" name="photo" accept="image/*" required />
+      
+      <label for="regFullname">Fullname: (required)</label>
+      <input type="text" id="regFullname" name="fullname" required />
+      
+      <label for="regEmail">Email: (required)</label>
+      <input type="email" id="regEmail" name="email" required />
+      
+      <label for="regPassword">Password: (required)</label>
+      <input type="password" id="regPassword" name="password" required />
+      
+      <!-- Simple recaptcha placeholder -->
+      <div class="recaptcha-placeholder">[Recaptcha Placeholder]</div>
+      
+      <button type="submit">Create Account</button>
+    </form>
+    <div class="form-footer">
+      <button id="backToLoginBtn" type="button">Back to Login</button>
+    </div>
+  </section>
 
-  <script>
-    // Elements
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const termsCheckbox = document.getElementById('termsCheckbox');
+</main>
 
-    const loginFormSection = document.getElementById('loginForm');
-    const registerFormSection = document.getElementById('registerForm');
-    const mainContent = document.getElementById('mainContent');
+<!-- FOOTER -->
+<footer class="footer">
+  &copy; 2025 JHOM — JAYVEE HALL OF MANSION. Stay tuned for the latest updates and offers.
+</footer>
 
-    const showRegisterBtn = document.getElementById('showRegisterBtn');
-    const backToLoginBtn = document.getElementById('backToLoginBtn');
+<script>
+  // DOM elements
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  const btnGetStarted = document.getElementById('btnGetStarted');
+  const termsCheckbox = document.getElementById('termsCheckbox');
+  
+  const navWelcome = document.getElementById('nav-welcome');
+  const navLogin = document.getElementById('nav-login');
+  const navRegister = document.getElementById('nav-register');
+  
+  const showRegisterBtn = document.getElementById('showRegisterBtn');
+  const backToLoginBtn = document.getElementById('backToLoginBtn');
+  const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+  
+  const formLogin = document.getElementById('formLogin');
+  const formRegister = document.getElementById('formRegister');
 
-    // Enable Get Started only if terms checked
-    termsCheckbox.addEventListener('change', () => {
-      getStartedBtn.disabled = !termsCheckbox.checked;
-      getStartedBtn.setAttribute('aria-disabled', !termsCheckbox.checked);
+  // Enable Get Started only if terms checked
+  termsCheckbox.addEventListener('change', () => {
+    btnGetStarted.disabled = !termsCheckbox.checked;
+  });
+
+  // Navigation helper
+  function showScreen(screen) {
+    // Hide all first
+    welcomeScreen.classList.add('hidden');
+    loginForm.classList.add('hidden');
+    registerForm.classList.add('hidden');
+    
+    // Reset nav active states
+    navWelcome.classList.remove('active');
+    navLogin.classList.remove('active');
+    navRegister.classList.remove('active');
+    
+    // Show selected screen and nav active
+    if(screen === 'welcome') {
+      welcomeScreen.classList.remove('hidden');
+      navWelcome.classList.add('active');
+    } else if(screen === 'login') {
+      loginForm.classList.remove('hidden');
+      navLogin.classList.add('active');
+    } else if(screen === 'register') {
+      registerForm.classList.remove('hidden');
+      navRegister.classList.add('active');
+    }
+  }
+
+  // Initial screen: welcome
+  showScreen('welcome');
+
+  // Button listeners
+  btnGetStarted.addEventListener('click', () => {
+    showScreen('login');
+  });
+
+  navWelcome.addEventListener('click', (e) => {
+    e.preventDefault();
+    showScreen('welcome');
+  });
+
+  navLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    showScreen('login');
+  });
+
+  navRegister.addEventListener('click', (e) => {
+    e.preventDefault();
+    showScreen('register');
+  });
+
+  showRegisterBtn.addEventListener('click', () => {
+    showScreen('register');
+  });
+
+  backToLoginBtn.addEventListener('click', () => {
+    showScreen('login');
+  });
+
+  forgotPasswordBtn.addEventListener('click', () => {
+    alert('Please contact admin to reset your password.');
+  });
+
+  // LOGIN FORM SUBMIT - example dummy validation
+  formLogin.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = formLogin.username.value.trim();
+    const password = formLogin.password.value.trim();
+
+    // Dummy check - in real use, validate via server or local storage
+    if (username === '' || password === '') {
+      alert('Please enter both username and password.');
+      return;
+    }
+    
+    // Here you would validate credentials
+    alert(`Welcome back, ${username}! Redirecting to home page...`);
+    window.location.href = 'home.html';  // Redirect to home
+  });
+
+  // REGISTRATION FORM SUBMIT - example dummy save and redirect
+  formRegister.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Basic client side validation already by required fields
+    alert('Account created successfully! Please login.');
+
+    // In real use, you'd save data and upload photo here
+
+    // Redirect to login
+    showScreen('login');
+  });
+</script>
+
+</body>
+</html>
