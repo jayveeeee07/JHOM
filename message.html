@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Messages — Jayvee Hall of Mansion</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+      <div class="nav">
+        <a href="home.html">HOME</a>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html">CART</a>
+        <a href="message.html" class="active">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Your Inbox List</h3>
+      <p class="small">Messages from staff about your bookings will appear here.</p>
+
+      <div id="inboxArea"></div>
+
+      <hr style="margin:16px 0">
+      <h4>Send Message to Staff</h4>
+      <form id="msgForm">
+        <div class="form-row">
+          <input class="input" id="mname" placeholder="Type your Name (required)" required>
+        </div>
+        <div class="form-row">
+          <input class="input" id="memail" placeholder="Type your Email (required)" required>
+        </div>
+        <div class="form-row">
+          <input class="input" id="mref" placeholder="Type Reported Reference Number (required)" required>
+        </div>
+        <div class="form-row">
+          <textarea id="mbody" class="input" placeholder="Type your Message"></textarea>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button type="submit" class="btn btn-primary">SEND</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">We reply as soon as possible. Keep your reference number handy for faster handling.</div>
+      <div class="kv">JHOM Messages</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+    function renderInbox(){
+      const area = document.getElementById('inboxArea');
+      const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
+      if(!msgs.length){ area.innerHTML = '<div class="kv">No messages yet.</div>'; return; }
+      area.innerHTML = msgs.reverse().map(m=>`
+        <div class="card" style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div><strong>${m.name}</strong> <div class="kv">${m.email} • ${m.date}</div></div>
+            <div class="badge">${m.ref}</div>
+          </div>
+          <div style="margin-top:8px">${m.body||'<em>No body</em>'}</div>
+          <div class="kv" style="margin-top:8px">From: Staff of JHOM's (this is where admin replies will appear)</div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('msgForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const name = document.getElementById('mname').value.trim();
+      const email = document.getElementById('memail').value.trim();
+      const body = document.getElementById('mbody').value.trim();
+      const ref = document.getElementById('mref').value.trim();
+      if(!name||!email||!ref){ alert('Please fill required fields'); return;}
+      const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
+      msgs.push({name,email,body,ref,date:new Date().toLocaleString()});
+      localStorage.setItem('messages', JSON.stringify(msgs));
+      alert('Message sent to staff.');
+      document.getElementById('msgForm').reset();
+      renderInbox();
+    });
+
+    renderInbox();
+  </script>
+</body>
+</html>
