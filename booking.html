@@ -102,6 +102,76 @@
     document.getElementById('closeMenu').addEventListener('click', () => {
       document.getElementById('sideMenu').classList.remove('open');
     });
+    // Load selected room details on page load
+const selectedRoom = JSON.parse(localStorage.getItem('selectedRoom') || '{}');
+if (selectedRoom.roomNumber) {
+  document.getElementById('roomNumber').textContent = selectedRoom.roomNumber;
+  document.getElementById('roomPrice').textContent = selectedRoom.price || '0.00';
+  if (selectedRoom.image) {
+    document.querySelector('#roomDetails img').src = selectedRoom.image;
+  }
+} else {
+  alert('No room selected! Redirecting to rooms page.');
+  window.location.href = 'room.html'; // or cart.html
+}
+
+// Generate ticket reference
+document.getElementById('generateRef').addEventListener('click', () => {
+  const ref = 'REF-' + Math.floor(Math.random() * 1000000000);
+  document.getElementById('ticketRef').value = ref;
+});
+
+// Review button shows booking summary
+document.getElementById('reviewBtn').addEventListener('click', () => {
+  const form = document.getElementById('bookingForm');
+  const fullName = form.fullName.value;
+  const checkIn = form.checkIn.value;
+  const paymentMethod = form.paymentMethod.value;
+  const roomNumber = document.getElementById('roomNumber').textContent;
+  const roomPrice = document.getElementById('roomPrice').textContent;
+
+  if (!fullName || !checkIn || !paymentMethod) {
+    alert('Please fill all required fields before reviewing.');
+    return;
+  }
+
+  alert(
+    `Review your booking:\n
+    Name: ${fullName}\n
+    Room Number: ${roomNumber}\n
+    Check-In Date: ${checkIn}\n
+    Payment Method: ${paymentMethod}\n
+    Price: ₱${roomPrice}`
+  );
+});
+
+// Confirm button saves booking and redirects to adminpanel.html
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const bookingData = {
+    fullName: form.fullName.value,
+    checkIn: form.checkIn.value,
+    paymentMethod: form.paymentMethod.value,
+    ticketRef: form.ticketRef.value,
+    roomNumber: document.getElementById('roomNumber').textContent,
+    roomPrice: document.getElementById('roomPrice').textContent,
+  };
+
+  let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+  bookings.push(bookingData);
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+
+  alert('Booking confirmed! Details saved for admin.');
+
+  window.location.href = 'adminpanel.html';
+});
+
+// Cancel button returns to previous page
+document.getElementById('cancelBtn').addEventListener('click', () => {
+  window.history.back();
+});
 
     // Simulated load of selected room from localStorage
     const selectedRoom = JSON.parse(localStorage.getItem('selectedRoom') || '{}');
