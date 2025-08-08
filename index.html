@@ -1,213 +1,503 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JAYVEE HALL OF MANSION - Welcome</title>
-  <link rel="stylesheet" href="index.css" />
+  <title>JHOM — Login / Register</title>
+  <style>
+    /* Reset & Box sizing */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main.container {
+      max-width: 420px;
+      margin: 2rem auto 4rem;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 14px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header.header, footer.footer {
+      background: #007bff;
+      color: white;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+
+    header.header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    header.header img {
+      height: 40px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
+    h1.page-title {
+      font-size: 1.5rem;
+    }
+
+    section {
+      display: none;
+      flex-direction: column;
+    }
+    section.active {
+      display: flex;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #007bff;
+      font-weight: 700;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 0.3rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline-offset: 2px;
+      outline-color: transparent;
+      transition: outline-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="file"]:focus {
+      outline-color: #007bff;
+      border-color: #007bff;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 0.6rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background: #0056b3;
+    }
+    button:disabled {
+      background: #aac4f7;
+      cursor: default;
+    }
+
+    .form-link {
+      margin-top: 0.2rem;
+      background: none;
+      border: none;
+      color: #007bff;
+      font-weight: 600;
+      text-align: left;
+      padding: 0;
+    }
+    .form-link:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .error-message {
+      color: #b00020;
+      font-size: 0.85rem;
+      font-style: italic;
+      min-height: 1.1em;
+    }
+
+    #welcomeSection {
+      text-align: center;
+      gap: 1rem;
+    }
+    #welcomeSection img {
+      max-width: 120px;
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+    #welcomeSection p {
+      font-size: 1rem;
+      line-height: 1.4;
+      max-height: 6rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+
+    .recaptcha-placeholder {
+      background: #e1e1e1;
+      height: 50px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.9rem;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
+
+    a.brand-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    a.brand-link img {
+      height: 40px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+  </style>
 </head>
 <body>
+  <header class="header" role="banner" aria-label="Site header">
+    <a href="#" class="brand-link" aria-label="JHOM Home">
+      <img src="logo.jpg" alt="JHOM Logo" />
+      JHOM — JAYVEE HALL OF MANSION
+    </a>
+  </header>
 
-<!-- HEADER -->
-<header class="header">
-  <a href="#" class="brand">
-    <img src="logo.jpg" alt="JHOM Logo" />
-    <h1>JAYVEE HALL OF MANSION</h1>
-  </a>
-  <nav class="nav">
-    <a href="#" class="active" id="nav-welcome">Welcome</a>
-    <a href="#" id="nav-login">Login</a>
-    <a href="#" id="nav-register">Register</a>
-  </nav>
-</header>
+  <main class="container" role="main">
+    <!-- Welcome Section -->
+    <section id="welcomeSection" aria-label="Welcome message" class="active">
+      <img src="logo.jpg" alt="JHOM Logo" />
+      <h1 class="page-title">Welcome to JAYVEE HALL OF MANSION</h1>
+      <p>
+        Experience the finest blend of comfort and luxury at JHOM. Our dedicated team ensures
+        every stay is memorable, offering exceptional service and facilities tailored to your needs.
+        Discover elegance, convenience, and tranquility all in one place.
+      </p>
+      <div class="checkbox-group">
+        <input type="checkbox" id="termsCheckbox" />
+        <label for="termsCheckbox">I agree to the terms and conditions</label>
+      </div>
+      <button id="getStartedBtn" disabled>Get Started</button>
+    </section>
 
-<!-- MAIN CONTAINER -->
-<main class="container">
+    <!-- Login Section -->
+    <section id="loginSection" aria-label="Login form" hidden>
+      <h2>Login</h2>
+      <form id="loginForm" novalidate>
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername" name="loginUsername" required autocomplete="username" />
+        
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" name="loginPassword" required autocomplete="current-password" />
+        
+        <div class="error-message" id="loginError" role="alert" aria-live="assertive"></div>
+        
+        <button type="submit">Login</button>
+      </form>
+      <button class="form-link" id="forgotPasswordBtn">Forgot Password?</button>
+      <button class="form-link" id="showRegisterBtn">Register</button>
+    </section>
 
-  <!-- WELCOME SCREEN -->
-  <section id="welcomeScreen" class="auth-wrapper">
-    <img src="logo.jpg" alt="Logo" class="logo-welcome" />
-    <h1>Welcome to JAYVEE HALL OF MANSION</h1>
-    <p>
-      Discover the finest place to relax, connect, and enjoy exclusive updates,
-      events, and promos. Join our community where comfort meets convenience.
-      Your perfect staycation starts here — experience unparalleled hospitality
-      with us.
-    </p>
-    <label class="checkbox-label">
-      <input type="checkbox" id="termsCheckbox" />
-      I agree to the <a href="#" target="_blank">Terms and Conditions</a>
-    </label>
-    <button id="btnGetStarted" disabled>Get Started</button>
-  </section>
+    <!-- Registration Section -->
+    <section id="registerSection" aria-label="Registration form" hidden>
+      <h2>Register</h2>
+      <form id="registerForm" novalidate>
+        <label for="registerPhoto">Upload Photo: <span aria-hidden="true" style="color:#b00020">*</span></label>
+        <input type="file" id="registerPhoto" name="registerPhoto" accept="image/*" required />
+        
+        <label for="registerFullname">Fullname: <span aria-hidden="true" style="color:#b00020">*</span></label>
+        <input type="text" id="registerFullname" name="registerFullname" required autocomplete="name" />
+        
+        <label for="registerEmail">Email: <span aria-hidden="true" style="color:#b00020">*</span></label>
+        <input type="email" id="registerEmail" name="registerEmail" required autocomplete="email" />
+        
+        <label for="registerPassword">Password: <span aria-hidden="true" style="color:#b00020">*</span></label>
+        <input type="password" id="registerPassword" name="registerPassword" required autocomplete="new-password" />
+        
+        <div class="recaptcha-placeholder" aria-label="ReCaptcha placeholder">
+          [Recaptcha Placeholder]
+        </div>
 
-  <!-- LOGIN FORM -->
-  <section id="loginForm" class="auth-wrapper hidden" aria-label="Login form">
-    <img src="logo.jpg" alt="Logo" class="logo-login" />
-    <h2>Login</h2>
-    <form id="formLogin" autocomplete="off">
-      <label for="loginUsername">Username:</label>
-      <input type="text" id="loginUsername" name="username" required autocomplete="username" />
-      
-      <label for="loginPassword">Password:</label>
-      <input type="password" id="loginPassword" name="password" required autocomplete="current-password" />
-      
-      <button type="submit">Login</button>
-    </form>
-    <div class="form-footer">
-      <button id="forgotPasswordBtn" type="button">Forgot Password</button>
-      <button id="showRegisterBtn" type="button">Register</button>
-    </div>
-  </section>
+        <div class="error-message" id="registerError" role="alert" aria-live="assertive"></div>
+        
+        <button type="submit">Create Account</button>
+      </form>
+      <button class="form-link" id="backToLoginFromRegisterBtn">Back to Login</button>
+    </section>
 
-  <!-- REGISTRATION FORM -->
-  <section id="registerForm" class="auth-wrapper hidden" aria-label="Registration form">
-    <img src="logo.jpg" alt="Logo" class="logo-login" />
-    <h2>Register</h2>
-    <form id="formRegister" autocomplete="off" enctype="multipart/form-data">
-      <label for="regPhoto">Upload Photo: (required)</label>
-      <input type="file" id="regPhoto" name="photo" accept="image/*" required />
-      
-      <label for="regFullname">Fullname: (required)</label>
-      <input type="text" id="regFullname" name="fullname" required />
-      
-      <label for="regEmail">Email: (required)</label>
-      <input type="email" id="regEmail" name="email" required />
-      
-      <label for="regPassword">Password: (required)</label>
-      <input type="password" id="regPassword" name="password" required />
-      
-      <!-- Simple recaptcha placeholder -->
-      <div class="recaptcha-placeholder">[Recaptcha Placeholder]</div>
-      
-      <button type="submit">Create Account</button>
-    </form>
-    <div class="form-footer">
-      <button id="backToLoginBtn" type="button">Back to Login</button>
-    </div>
-  </section>
+    <!-- Forgot Password Section -->
+    <section id="forgotPasswordSection" aria-label="Forgot password form" hidden>
+      <h2>Forgot Password</h2>
+      <form id="forgotPasswordForm" novalidate>
+        <label for="forgotEmail">Enter your registered Email:</label>
+        <input type="email" id="forgotEmail" name="forgotEmail" required autocomplete="email" />
+        <div class="error-message" id="forgotError" role="alert" aria-live="assertive"></div>
+        <div id="forgotResult" style="margin-top:10px; font-weight: bold;"></div>
+        <button type="submit">Retrieve Password</button>
+      </form>
+      <button class="form-link" id="forgotBackBtn">Back to Login</button>
+    </section>
+  </main>
 
-</main>
+  <footer class="footer" role="contentinfo" aria-label="Site footer">
+    © 2025 JHOM. All rights reserved.
+  </footer>
 
-<!-- FOOTER -->
-<footer class="footer">
-  &copy; 2025 JHOM — JAYVEE HALL OF MANSION. Stay tuned for the latest updates and offers.
-</footer>
+  <script>
+    // Elements
+    const welcomeSection = document.getElementById('welcomeSection');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const termsCheckbox = document.getElementById('termsCheckbox');
 
-<script>
-  // DOM elements
-  const welcomeScreen = document.getElementById('welcomeScreen');
-  const loginForm = document.getElementById('loginForm');
-  const registerForm = document.getElementById('registerForm');
-  const btnGetStarted = document.getElementById('btnGetStarted');
-  const termsCheckbox = document.getElementById('termsCheckbox');
-  
-  const navWelcome = document.getElementById('nav-welcome');
-  const navLogin = document.getElementById('nav-login');
-  const navRegister = document.getElementById('nav-register');
-  
-  const showRegisterBtn = document.getElementById('showRegisterBtn');
-  const backToLoginBtn = document.getElementById('backToLoginBtn');
-  const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-  
-  const formLogin = document.getElementById('formLogin');
-  const formRegister = document.getElementById('formRegister');
+    const loginSection = document.getElementById('loginSection');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
 
-  // Enable Get Started only if terms checked
-  termsCheckbox.addEventListener('change', () => {
-    btnGetStarted.disabled = !termsCheckbox.checked;
-  });
+    const registerSection = document.getElementById('registerSection');
+    const registerForm = document.getElementById('registerForm');
+    const registerError = document.getElementById('registerError');
+    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
 
-  // Navigation helper
-  function showScreen(screen) {
-    // Hide all first
-    welcomeScreen.classList.add('hidden');
-    loginForm.classList.add('hidden');
-    registerForm.classList.add('hidden');
-    
-    // Reset nav active states
-    navWelcome.classList.remove('active');
-    navLogin.classList.remove('active');
-    navRegister.classList.remove('active');
-    
-    // Show selected screen and nav active
-    if(screen === 'welcome') {
-      welcomeScreen.classList.remove('hidden');
-      navWelcome.classList.add('active');
-    } else if(screen === 'login') {
-      loginForm.classList.remove('hidden');
-      navLogin.classList.add('active');
-    } else if(screen === 'register') {
-      registerForm.classList.remove('hidden');
-      navRegister.classList.add('active');
+    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const forgotError = document.getElementById('forgotError');
+    const forgotResult = document.getElementById('forgotResult');
+    const forgotBackBtn = document.getElementById('forgotBackBtn');
+
+    // Enable Get Started only if checkbox checked
+    termsCheckbox.addEventListener('change', () => {
+      getStartedBtn.disabled = !termsCheckbox.checked;
+    });
+
+    // Show Login form on Get Started click
+    getStartedBtn.addEventListener('click', () => {
+      welcomeSection.classList.remove('active');
+      welcomeSection.hidden = true;
+      loginSection.hidden = false;
+      loginSection.classList.add('active');
+    });
+
+    // Show Register form
+    showRegisterBtn.addEventListener('click', () => {
+      loginSection.classList.remove('active');
+      loginSection.hidden = true;
+      registerSection.hidden = false;
+      registerSection.classList.add('active');
+      registerForm.reset();
+      registerError.textContent = '';
+    });
+
+    // Back to Login from Register
+    backToLoginFromRegisterBtn.addEventListener('click', () => {
+      registerSection.classList.remove('active');
+      registerSection.hidden = true;
+      loginSection.hidden = false;
+      loginSection.classList.add('active');
+      loginError.textContent = '';
+    });
+
+    // Show Forgot Password
+    forgotPasswordBtn.addEventListener('click', () => {
+      loginSection.classList.remove('active');
+      loginSection.hidden = true;
+      forgotPasswordSection.hidden = false;
+      forgotPasswordSection.classList.add('active');
+      forgotPasswordForm.reset();
+      forgotError.textContent = '';
+      forgotResult.textContent = '';
+    });
+
+    // Back to Login from Forgot Password
+    forgotBackBtn.addEventListener('click', () => {
+      forgotPasswordSection.classList.remove('active');
+      forgotPasswordSection.hidden = true;
+      loginSection.hidden = false;
+      loginSection.classList.add('active');
+      loginError.textContent = '';
+    });
+
+    // Helpers
+    function getUsers() {
+      return JSON.parse(localStorage.getItem('users') || '[]');
     }
-  }
-
-  // Initial screen: welcome
-  showScreen('welcome');
-
-  // Button listeners
-  btnGetStarted.addEventListener('click', () => {
-    showScreen('login');
-  });
-
-  navWelcome.addEventListener('click', (e) => {
-    e.preventDefault();
-    showScreen('welcome');
-  });
-
-  navLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    showScreen('login');
-  });
-
-  navRegister.addEventListener('click', (e) => {
-    e.preventDefault();
-    showScreen('register');
-  });
-
-  showRegisterBtn.addEventListener('click', () => {
-    showScreen('register');
-  });
-
-  backToLoginBtn.addEventListener('click', () => {
-    showScreen('login');
-  });
-
-  forgotPasswordBtn.addEventListener('click', () => {
-    alert('Please contact admin to reset your password.');
-  });
-
-  // LOGIN FORM SUBMIT - example dummy validation
-  formLogin.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const username = formLogin.username.value.trim();
-    const password = formLogin.password.value.trim();
-
-    // Dummy check - in real use, validate via server or local storage
-    if (username === '' || password === '') {
-      alert('Please enter both username and password.');
-      return;
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
     }
-    
-    // Here you would validate credentials
-    alert(`Welcome back, ${username}! Redirecting to home page...`);
-    window.location.href = 'home.html';  // Redirect to home
-  });
+    function validateEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
 
-  // REGISTRATION FORM SUBMIT - example dummy save and redirect
-  formRegister.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // Login form submit
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginError.textContent = '';
+      const username = loginForm.loginUsername.value.trim();
+      const password = loginForm.loginPassword.value;
 
-    // Basic client side validation already by required fields
-    alert('Account created successfully! Please login.');
+      if (!username || !password) {
+        loginError.textContent = 'Please enter both username and password.';
+        return;
+      }
 
-    // In real use, you'd save data and upload photo here
+      const users = getUsers();
+      const user = users.find(u => u.fullname.toLowerCase() === username.toLowerCase() || u.email.toLowerCase() === username.toLowerCase());
+      if (!user) {
+        loginError.textContent = 'User not found. Please register first.';
+        return;
+      }
+      if (user.password !== password) {
+        loginError.textContent = 'Incorrect password.';
+        return;
+      }
 
-    // Redirect to login
-    showScreen('login');
-  });
-</script>
+      // Save current logged user info (optional)
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
 
+      // Redirect to home page
+      window.location.href = 'index.html';
+    });
+
+    // Register form submit
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      registerError.textContent = '';
+
+      // Validate photo file
+      const photoInput = registerForm.registerPhoto;
+      if (!photoInput.files.length) {
+        registerError.textContent = 'Please upload a photo.';
+        return;
+      }
+      const photoFile = photoInput.files[0];
+      if (!photoFile.type.startsWith('image/')) {
+        registerError.textContent = 'Uploaded file must be an image.';
+        return;
+      }
+
+      // Validate fullname
+      const fullname = registerForm.registerFullname.value.trim();
+      if (!fullname) {
+        registerError.textContent = 'Please enter your fullname.';
+        return;
+      }
+
+      // Validate email
+      const email = registerForm.registerEmail.value.trim().toLowerCase();
+      if (!validateEmail(email)) {
+        registerError.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      // Validate password (min 6 chars)
+      const password = registerForm.registerPassword.value;
+      if (password.length < 6) {
+        registerError.textContent = 'Password must be at least 6 characters.';
+        return;
+      }
+
+      // TODO: ReCaptcha placeholder (assumed always valid here)
+
+      // Check if email already registered
+      const users = getUsers();
+      if (users.some(u => u.email === email)) {
+        registerError.textContent = 'An account with this email already exists.';
+        return;
+      }
+
+      // Read photo as base64
+      const reader = new FileReader();
+      reader.onload = function () {
+        const photoDataUrl = reader.result;
+
+        // Save user
+        users.push({
+          photo: photoDataUrl,
+          fullname,
+          email,
+          password
+        });
+        saveUsers(users);
+
+        alert('Account created successfully! You may now login.');
+
+        // Reset form and switch to login
+        registerForm.reset();
+        registerSection.classList.remove('active');
+        registerSection.hidden = true;
+        loginSection.hidden = false;
+        loginSection.classList.add('active');
+      };
+      reader.readAsDataURL(photoFile);
+    });
+
+    // Forgot Password form submit
+    forgotPasswordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      forgotError.textContent = '';
+      forgotResult.textContent = '';
+
+      const email = forgotPasswordForm.forgotEmail.value.trim().toLowerCase();
+
+      if (!validateEmail(email)) {
+        forgotError.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      const users = getUsers();
+      const user = users.find(u => u.email === email);
+
+      if (!user) {
+        forgotError.textContent = 'No account found with this email.';
+        return;
+      }
+
+      // For demo purposes, just reveal the password (in real life you would send an email)
+      forgotResult.textContent = `Your password is: "${user.password}"`;
+
+      forgotPasswordForm.reset();
+    });
+  </script>
 </body>
 </html>
