@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Panel — JHOM</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+      <div class="nav">
+        <a href="home.html">HOME</a>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html">CART</a>
+        <a href="message.html">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html" class="active">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Administrator Login</h3>
+      <form id="loginForm" style="max-width:420px">
+        <div class="form-row"><input class="input" id="username" placeholder="Username" required></div>
+        <div class="form-row"><input class="input" id="password" placeholder="Password" type="password" required></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-primary" type="submit">Login</button></div>
+      </form>
+    </section>
+
+    <div id="adminArea" style="display:none; margin-top:16px">
+      <section class="card">
+        <h3>Administrator Dashboard</h3>
+        <p class="small">Manage users, bookings and messages.</p>
+
+        <div class="admin-grid">
+          <div>
+            <h4>Registered Users</h4>
+            <table class="table" id="usersTable"><thead><tr><th>Photo</th><th>Name</th><th>Email</th><th>Contact</th><th>Status</th></tr></thead><tbody></tbody></table>
+          </div>
+
+          <div>
+            <h4>Bookings</h4>
+            <table class="table" id="bookingsTable"><thead><tr><th>Image</th><th>Name</th><th>Check-in</th><th>Price</th><th>Proof</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4>Messages</h4>
+          <div id="adminMsgs"></div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">Admin actions update notifications and messages for users automatically.</div>
+      <div class="kv">JHOM Admin</div>
+    </div>
+  </footer>
+
+  <script>
+    // login
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', e=>{
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if(user==='JHOM' && pass==='ADMIN'){
+        document.getElementById('adminArea').style.display='block';
+        loginForm.style.display='none';
+        loadAdminData();
+      } else alert('Invalid credentials');
+    });
+
+    function loadAdminData(){
+      // users (simple placeholder)
+      const users = JSON.parse(localStorage.getItem('users')||'[]');
+      const uT = document.querySelector('#usersTable tbody');
+      uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
+
+      // bookings
+      const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
+      const bT = document.querySelector('#bookingsTable tbody');
+      bT.innerHTML = (bookings.length? bookings.map((b,idx)=>`
+        <tr>
+          <td><img src="${b.room.img}" style="width:80px;height:44px;object-fit:cover"></td>
+          <td>${b.name}</td>
+          <td>${b.date}</td>
+          <td>₱ ${Number(b.room.price).toLocaleString()}</td>
+          <td>${b.proof ? `<a href="${b.proof}" target="_blank">View</a>` : '—'}</td>
+          <td>${b.status}</td>
+          <td>
+            <button class="btn btn-outline" data-i="${idx}" data-act="approve">Approve</button>
+            <button class="btn btn-outline" data-i="${idx}" data-act="reject">Reject</button>
+            <button class="btn btn-primary" data-i="${idx}" data-act="view">View</button>
+          </td>
+        </tr>
+      `).join('') : '<tr><td colspan="7">No bookings yet.</td></tr>');
+      attachBookingActions();
+
+      // messages
+      const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
+      const adminMsgs = document.getElementById('adminMsgs');
+      adminMsgs.innerHTML = (msgs.length? msgs.map((m,idx)=>`
+        <div class="card" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between"><div><strong>${m.name}</strong><div class="kv">${m.email} • ${m.date}</div></div><div class="badge">${m.ref}</div></div>
+          <div style="margin-top:8px">${m.body||'<em>No body</em>'}</div>
+          <div style="margin-top:8px">
+            <textarea class="input" id="reply-${idx}" placeholder="Reply to user"></textarea>
+            <div style="margin-top:8px"><button class="btn btn-primary" data-i="${idx}" data-act="reply">SEND</button></div>
+          </div>
+        </div>
+      `).join('') : '<div class="kv">No messages</div>');
+      // attach reply handlers
+      document.querySelectorAll('button[data-act="reply"]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const idx = +b.dataset.i;
+          const val = document.getElementById(`reply-${idx}`).value.trim();
+          if(!val){ alert('Type a reply'); return;}
+          // store reply into messages as admin reply (for simplicity, append to messages)
+          const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
+          msgs[idx].adminReply = val;
+          localStorage.setItem('messages', JSON.stringify(msgs));
+          alert('Reply sent to user inbox');
+          loadAdminData();
+        });
+      });
+    }
+
+    function attachBookingActions(){
+      document.querySelectorAll('button[data-act]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const idx = +b.dataset.i;
+          const act = b.dataset.act;
+          const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
+          if(!bookings[idx]) return;
+          if(act==='approve'){
+            bookings[idx].status = 'Approved';
+            bookings[idx].pin = Math.random().toString(36).slice(2,10).toUpperCase();
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+            alert('Booking approved and notification sent.');
+          } else if(act==='reject'){
+            bookings[idx].status = 'Rejected';
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+            alert('Booking rejected.');
+          } else if(act==='view'){
+            alert(JSON.stringify(bookings[idx],null,2));
+          }
+          loadAdminData();
+        });
+      });
+    }
+  </script>
+</body>
+</html>
