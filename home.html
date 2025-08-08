@@ -1,1 +1,305 @@
-.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JHOM — Home</title>
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    /* Basic styling for the dynamic content */
+    section.content-section {
+      margin: 20px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f5f5f5;
+    }
+    section.content-section h2 {
+      margin-bottom: 12px;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 6px;
+      font-weight: 600;
+    }
+    .content-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    .content-item:hover {
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+    }
+    .content-item img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .content-details {
+      flex-grow: 1;
+    }
+    .content-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #007bff;
+    }
+    .content-date {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .content-desc {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    .no-content {
+      font-style: italic;
+      color: #777;
+      padding: 12px 0;
+      text-align: center;
+    }
+
+    /* Override styles for home.html */
+    section.content-section {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: #f5f5f5;
+    }
+
+    /* Header improvements */
+    header.header {
+      background: #007bff;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+    a.brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      gap: 10px;
+    }
+    a.brand img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    a.brand h1 {
+      font-size: 1.3rem;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    nav.nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    nav.nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    nav.nav a.active,
+    nav.nav a:hover {
+      background: rgba(255 255 255 / 0.25);
+    }
+    button.icon-btn {
+      font-size: 1.5rem;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: none; /* show on smaller screens later if needed */
+    }
+
+    /* Container */
+    main.container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Side menu */
+    aside.side-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: #f5f5f5;
+      box-shadow: -2px 0 6px rgb(0 0 0 / 0.1);
+      padding: 1rem;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      z-index: 1100;
+    }
+    aside.side-menu.open {
+      right: 0;
+    }
+    aside .icon-btn {
+      font-size: 1.3rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .socials {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .socials a {
+      text-decoration: none;
+      font-size: 1rem;
+      color: #007bff;
+      transition: color 0.3s ease;
+    }
+    .socials a:hover {
+      color: #0056b3;
+    }
+
+    /* Footer */
+    footer.footer {
+      background: #007bff;
+      color: white;
+      padding: 1rem 0;
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      button.icon-btn {
+        display: block;
+      }
+      nav.nav a {
+        display: none;
+      }
+      nav.nav a.active {
+        display: inline-block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" role="banner">
+    <a class="brand" href="home.html" aria-label="Go to Home">
+      <img src="logo.jpg" alt="JHOM Logo" />
+      <h1>JAYVEE HALL OF MANSION</h1>
+    </a>
+    <nav class="nav" role="navigation" aria-label="Primary navigation">
+      <a href="home.html" class="active" aria-current="page">HOME</a>
+      <a href="room.html">ROOM</a>
+      <a href="cart.html">CART</a>
+      <a href="message.html">MESSAGE</a>
+      <a href="notification.html">NOTIFICATION</a>
+      <a href="adminpanel.html">ADMIN</a>
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <section aria-labelledby="welcome-heading">
+      <h2 id="welcome-heading">Welcome to JHOM</h2>
+      <p>Experience comfort and luxury at JHOM.</p>
+    </section>
+
+    <div id="dynamicContent" aria-live="polite"></div>
+  </main>
+
+  <aside class="side-menu" id="sideMenu" aria-label="Side menu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu" aria-label="Close menu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank" rel="noopener noreferrer">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank" rel="noopener noreferrer">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank" rel="noopener noreferrer">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank" rel="noopener noreferrer">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="small-muted">© 2025 JHOM. All rights reserved.</div>
+      <div class="kv">JHOM</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const closeMenuBtn = document.getElementById('closeMenu');
+    const sideMenu = document.getElementById('sideMenu');
+
+    menuBtn.addEventListener('click', () => sideMenu.classList.add('open'));
+    closeMenuBtn.addEventListener('click', () => sideMenu.classList.remove('open'));
+
+    const contentTypes = ['Updates', 'News', 'Events', 'Promos'];
+
+    function loadDynamicContent() {
+      const container = document.getElementById('dynamicContent');
+      container.innerHTML = '';
+
+      contentTypes.forEach(type => {
+        const items = JSON.parse(localStorage.getItem(`content_${type}`) || '[]');
+
+        if (items.length === 0) {
+          container.insertAdjacentHTML('beforeend', `
+            <section class="content-section" aria-label="${type}">
+              <h2>${type}</h2>
+              <div class="no-content">No ${type.toLowerCase()} available at the moment.</div>
+            </section>
+          `);
+        } else {
+          const sectionHTML = items.map(item => `
+            <article class="content-item">
+              ${item.img ? `<img src="${item.img}" alt="${item.title}"/>` : ''}
+              <div class="content-details">
+                <h3 class="content-title">${item.title}</h3>
+                <time class="content-date" datetime="${new Date(item.date).toISOString()}">${new Date(item.date).toLocaleDateString()}</time>
+                <p class="content-desc">${item.desc}</p>
+              </div>
+            </article>
+          `).join('');
+
+          container.insertAdjacentHTML('beforeend', `
+            <section class="content-section" aria-label="${type}">
+              <h2>${type}</h2>
+              ${sectionHTML}
+            </section>
+          `);
+        }
+      });
+    }
+
+    loadDynamicContent();
+  </script>
+</body>
+</html>
