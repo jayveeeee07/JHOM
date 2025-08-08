@@ -1,122 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Jayvee Hall of Mansion</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home — Jayvee Hall of Mansion</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Minimal additional styles for homepage cards */
+    .section-card{ background:var(--card); padding:14px; border-radius:12px; box-shadow:var(--shadow); margin-bottom:12px; }
+    .section-row{ display:flex; gap:12px; flex-direction:column; }
+    .item { padding:10px 8px; border-bottom:1px solid #f2f4f7; }
+    .item:last-child{ border-bottom:none; }
+    .meta{ color:var(--muted); font-size:13px; }
+    .view-more{ margin-top:8px; background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; }
+  </style>
 </head>
 <body>
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+    <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+    <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+    <a href="mailto:jayveecaringal07@gmail.com">✉️ Email</a>
+    <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+    <a href="about.html">ℹ️ About</a>
+  </div>
 
-    <!-- Side Menu -->
-    <div id="sideMenu" class="side-menu">
-        <span class="close-btn" onclick="closeMenu()">&times;</span>
-        <a href="https://www.facebook.com/JaysGumcar" target="_blank">📘 Facebook</a>
-        <a href="https://www.instagram.com/JaysGumcar" target="_blank">📷 Instagram</a>
-        <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
-        <a href="mailto:jayveecaringal07@gmail.com">📧 Email</a>
-        <a href="https://www.telegram.com/JaysGumcar" target="_blank">💬 Telegram</a>
-        <a href="about.html">ℹ️ About</a>
-    </div>
-
-    <!-- Navigation -->
-    <nav>
-        <div style="display:flex; align-items:center;">
-            <span class="menu-icon" onclick="openMenu()">☰</span>
-            <img src="logo.jpg" alt="Logo">
-        </div>
+  <!-- Navigation -->
+  <nav>
+    <div style="display:flex; align-items:center;">
+      <span class="menu-icon" onclick="openMenu()">☰</span>
+      <a class="brand" href="home.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <img src="logo.jpg" alt="logo" style="width:44px;height:44px;border-radius:10px;object-fit:cover">
         <div>
-            <a href="home.html" class="active">HOME</a>
-            <a href="room.html">ROOM</a>
-            <a href="cart.html">CART</a>
-            <a href="message.html">MESSAGE</a>
-            <a href="notification.html">NOTIFICATION</a>
-            <a href="adminpanel.html">ADMIN</a>
+          <h1 style="margin:0;font-size:16px">JAYVEE HALL OF MANSION</h1>
         </div>
-    </nav>
+      </a>
+    </div>
+    <div>
+      <a href="home.html" class="active">HOME</a>
+      <a href="room.html">ROOM</a>
+      <a href="cart.html">CART</a>
+      <a href="message.html">MESSAGE</a>
+      <a href="notification.html">NOTIFICATION</a>
+      <a href="adminpanel.html">ADMIN</a>
+    </div>
+  </nav>
 
-    <!-- Header -->
-    <header>
-        Latest Updates, News & Promotions
+  <main class="container" style="padding-top:16px;">
+    <header class="header card">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <div>
+          <h2 style="margin:0">Latest Updates, News & Promotions</h2>
+          <div class="kv">Stay informed — recent announcements and exclusive promos for guests.</div>
+        </div>
+        <div style="width:100px">
+          <img src="logo.jpg" alt="logo" style="width:100%;border-radius:12px;object-fit:cover">
+        </div>
+      </div>
     </header>
 
-    <!-- Welcome Message -->
-    <section style="padding:20px; text-align:center;">
-        <h2>WELCOME (Guest), TO JAYVEE HALL OF MANSION</h2>
-        <p>
-            Stay informed and never miss out! Here, you’ll find the latest news, special promos, and upcoming events happening at Jayvee Hall of Mansion. Whether it’s a luxurious room discount, a seasonal event, or a limited-time package, we make sure our guests always have the inside scoop.
-        </p>
+    <section style="margin-top:18px">
+      <!-- Updates -->
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">🏨 Updates</h3>
+          <button id="updatesViewMore" class="view-more" onclick="toggleMore('updates')">View More</button>
+        </div>
+        <div id="updatesList" class="section-row"></div>
+      </div>
+
+      <!-- News -->
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">📰 News</h3>
+          <button id="newsViewMore" class="view-more" onclick="toggleMore('news')">View More</button>
+        </div>
+        <div id="newsList" class="section-row"></div>
+      </div>
+
+      <!-- Events -->
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">📅 Upcoming Events</h3>
+          <button id="eventsViewMore" class="view-more" onclick="toggleMore('events')">View More</button>
+        </div>
+        <div id="eventsList" class="section-row"></div>
+      </div>
+
+      <!-- Promos -->
+      <div class="section-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">💎 Special Promos</h3>
+          <button id="promosViewMore" class="view-more" onclick="toggleMore('promos')">View More</button>
+        </div>
+        <div id="promosList" class="section-row"></div>
+      </div>
     </section>
 
-    <!-- Updates Section -->
-    <section class="update-section">
-        <h2>🏨 Hotel Updates</h2>
-        <div class="update-card">
-            <h3>New Presidential Suite Open</h3>
-            <p>Our Gold Presidential Suite is now open for bookings — experience luxury like never before.</p>
-            <span class="date">Posted: August 5, 2025</span>
-        </div>
-        <div class="update-card">
-            <h3>Wi-Fi Upgrade</h3>
-            <p>Enjoy faster and more reliable internet during your stay — perfect for work and entertainment.</p>
-            <span class="date">Posted: July 28, 2025</span>
-        </div>
-    </section>
+    <div style="height:18px"></div>
+  </main>
 
-    <!-- News Section -->
-    <section class="news-section">
-        <h2>📰 News</h2>
-        <div class="update-card">
-            <h3>Malungon Tourism Festival</h3>
-            <p>We are a proud sponsor of this year’s festival — stay tuned for exclusive guest benefits!</p>
-            <span class="date">Posted: July 15, 2025</span>
-        </div>
-        <div class="update-card">
-            <h3>Staff Excellence Award</h3>
-            <p>Congratulations to our housekeeping team for winning the 2025 Hospitality Excellence Award.</p>
-            <span class="date">Posted: July 2, 2025</span>
-        </div>
-    </section>
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">Check updates regularly — best rates and friendly staff await.</div>
+      <div class="kv">© Jayvee Hall of Mansion</div>
+    </div>
+  </footer>
 
-    <!-- Upcoming Events -->
-    <section class="events-section">
-        <h2>📅 Upcoming Events</h2>
-        <ul>
-            <li><strong>August 15, 2025:</strong> Romantic Dinner Night at the Rooftop Garden.</li>
-            <li><strong>September 1-5, 2025:</strong> Rainy Season Room Discount — up to 30% off.</li>
-            <li><strong>December 24, 2025:</strong> Christmas Eve Gala for all guests.</li>
-        </ul>
-    </section>
+  <script>
+    function openMenu(){ document.getElementById('sideMenu').style.width='250px' }
+    function closeMenu(){ document.getElementById('sideMenu').style.width='0' }
 
-    <!-- Promos -->
-    <section class="promos-section">
-        <h2>💎 Special Promos</h2>
-        <div class="update-card">
-            <h3>Weekend Staycation Package</h3>
-            <p>Book a weekend stay and enjoy free breakfast for two plus late checkout.</p>
-            <span class="date">Valid until: September 30, 2025</span>
-        </div>
-        <div class="update-card">
-            <h3>Anniversary Promo</h3>
-            <p>Celebrate with us and get 20% off for all suites during our anniversary month.</p>
-            <span class="date">Valid: October 2025</span>
-        </div>
-    </section>
+    // store fetched data
+    let siteData = null;
+    const visibleLimit = 3;
+    const expanded = { updates:false, news:false, events:false, promos:false };
 
-    <!-- Footer -->
-    <footer>
-        © 2025 Jayvee Hall of Mansion — Luxury Beyond Expectation
-    </footer>
+    // fetch data from server.php (which returns data.json)
+    function fetchData(){
+      fetch('server.php')
+        .then(r => r.json())
+        .then(data => {
+          siteData = data;
+          renderSection('updates');
+          renderSection('news');
+          renderSection('events');
+          renderSection('promos');
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('updatesList').innerHTML = '<div class="kv">Unable to load updates.</div>';
+        });
+    }
 
-    <!-- Menu Script -->
-    <script>
-        function openMenu() {
-            document.getElementById("sideMenu").style.width = "250px";
-        }
-        function closeMenu() {
-            document.getElementById("sideMenu").style.width = "0";
-        }
-    </script>
+    function renderSection(section){
+      const container = document.getElementById(section + 'List');
+      container.innerHTML = '';
+      if(!siteData || !siteData[section] || !siteData[section].length){
+        container.innerHTML = '<div class="kv">No entries yet.</div>';
+        return;
+      }
 
+      const items = siteData[section];
+      const showAll = expanded[section];
+      const list = showAll ? items : items.slice(-visibleLimit).reverse(); // show latest items
+      // if showAll we show all in reverse chronological order (last entries last added)
+      const displayList = showAll ? items.slice().reverse() : list;
+
+      displayList.forEach(it=>{
+        const el = document.createElement('div');
+        el.className = 'item';
+        el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:flex-start">
+                          <div>
+                            <div style="font-weight:800">${escapeHtml(it.title)}</div>
+                            <div class="meta">${escapeHtml(it.description)}</div>
+                          </div>
+                          <div class="meta">${escapeHtml(it.date||'')}</div>
+                        </div>`;
+        container.appendChild(el);
+      });
+
+      // update button text
+      const btn = document.getElementById(section + 'ViewMore');
+      if(expanded[section]){
+        btn.textContent = 'Show Less';
+      } else {
+        btn.textContent = 'View More';
+      }
+    }
+
+    function toggleMore(section){
+      expanded[section] = !expanded[section];
+      renderSection(section);
+    }
+
+    // very small escape helper
+    function escapeHtml(text){
+      if(!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // initial load
+    fetchData();
+    // reload periodically (optional)
+    setInterval(fetchData, 120000); // refresh every 2 minutes
+  </script>
 </body>
 </html>
