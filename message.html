@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Messages — Jayvee Hall of Mansion</title>
-  <link rel="stylesheet" href="index.css">
+  <title>Messages — JHOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
+    <!-- Header -->
     <header class="header">
-      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+      <a class="brand" href="index.html">
+        <img src="logo.jpg" alt="logo">
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
+      </a>
       <div class="nav">
         <a href="home.html">HOME</a>
         <a href="room.html">ROOM</a>
@@ -21,34 +25,37 @@
       </div>
     </header>
 
+    <!-- Page Title -->
     <section class="card">
-      <h3>Your Inbox List</h3>
-      <p class="small">Messages from staff about your bookings will appear here.</p>
+      <h2>Your Inbox</h2>
+      <p class="small-muted">Messages from staff or admin will appear here.</p>
+    </section>
 
-      <div id="inboxArea"></div>
+    <!-- Inbox List -->
+    <section id="inboxList" class="grid"></section>
 
-      <hr style="margin:16px 0">
-      <h4>Send Message to Staff</h4>
-      <form id="msgForm">
-        <div class="form-row">
-          <input class="input" id="mname" placeholder="Type your Name (required)" required>
-        </div>
-        <div class="form-row">
-          <input class="input" id="memail" placeholder="Type your Email (required)" required>
-        </div>
-        <div class="form-row">
-          <input class="input" id="mref" placeholder="Type Reported Reference Number (required)" required>
-        </div>
-        <div class="form-row">
-          <textarea id="mbody" class="input" placeholder="Type your Message"></textarea>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button type="submit" class="btn btn-primary">SEND</button>
-        </div>
+    <!-- Send Message Form -->
+    <section class="card">
+      <h3>Send a Message to Staff/Admin</h3>
+      <form id="messageForm">
+        <label>Name <span class="required">*</span></label>
+        <input type="text" id="name" required>
+
+        <label>Email <span class="required">*</span></label>
+        <input type="email" id="email" required>
+
+        <label>Message</label>
+        <textarea id="message"></textarea>
+
+        <label>Reported Reference Number <span class="required">*</span></label>
+        <input type="text" id="refNumber" required>
+
+        <button type="submit" class="btn">Send</button>
       </form>
     </section>
   </main>
 
+  <!-- Side Menu -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -64,10 +71,11 @@
     </div>
   </aside>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">We reply as soon as possible. Keep your reference number handy for faster handling.</div>
-      <div class="kv">JHOM Messages</div>
+      <div class="small-muted">© 2025 JHOM. All rights reserved.</div>
+      <div class="kv">Stay connected with us</div>
     </div>
   </footer>
 
@@ -75,38 +83,46 @@
     document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
     document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
 
-    function renderInbox(){
-      const area = document.getElementById('inboxArea');
-      const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
-      if(!msgs.length){ area.innerHTML = '<div class="kv">No messages yet.</div>'; return; }
-      area.innerHTML = msgs.reverse().map(m=>`
-        <div class="card" style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div><strong>${m.name}</strong> <div class="kv">${m.email} • ${m.date}</div></div>
-            <div class="badge">${m.ref}</div>
-          </div>
-          <div style="margin-top:8px">${m.body||'<em>No body</em>'}</div>
-          <div class="kv" style="margin-top:8px">From: Staff of JHOM's (this is where admin replies will appear)</div>
+    const inboxContainer = document.getElementById('inboxList');
+    const messages = JSON.parse(localStorage.getItem('inbox') || '[]');
+
+    if(messages.length === 0){
+      inboxContainer.innerHTML = `<div class="card"><p>No messages yet.</p></div>`;
+    } else {
+      inboxContainer.innerHTML = messages.map(msg=>`
+        <div class="card">
+          <p class="small-muted">${msg.date}</p>
+          <p><strong>From:</strong> Staff of JHOM's</p>
+          <p>${msg.text}</p>
         </div>
       `).join('');
     }
 
-    document.getElementById('msgForm').addEventListener('submit', e=>{
+    document.getElementById('messageForm').addEventListener('submit', function(e){
       e.preventDefault();
-      const name = document.getElementById('mname').value.trim();
-      const email = document.getElementById('memail').value.trim();
-      const body = document.getElementById('mbody').value.trim();
-      const ref = document.getElementById('mref').value.trim();
-      if(!name||!email||!ref){ alert('Please fill required fields'); return;}
-      const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
-      msgs.push({name,email,body,ref,date:new Date().toLocaleString()});
-      localStorage.setItem('messages', JSON.stringify(msgs));
-      alert('Message sent to staff.');
-      document.getElementById('msgForm').reset();
-      renderInbox();
-    });
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const refNumber = document.getElementById('refNumber').value.trim();
 
-    renderInbox();
+      if(!name || !email || !refNumber){
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      const newMsg = {
+        name, email, text: message || "(No message)", refNumber,
+        date: new Date().toLocaleString()
+      };
+
+      // Save to admin's pending messages
+      let adminMsgs = JSON.parse(localStorage.getItem('adminMessages') || '[]');
+      adminMsgs.push(newMsg);
+      localStorage.setItem('adminMessages', JSON.stringify(adminMsgs));
+
+      alert("Your message has been sent to the admin/staff.");
+      this.reset();
+    });
   </script>
 </body>
 </html>
