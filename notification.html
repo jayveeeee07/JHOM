@@ -3,15 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Notifications — Jayvee Hall of Mansion</title>
-  <link rel="stylesheet" href="index.css">
+  <title>Notifications — JHOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
+    <!-- HEADER -->
     <header class="header">
-      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+      <a class="brand" href="index.html">
+        <img src="logo.jpg" alt="logo">
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
+      </a>
       <div class="nav">
-        <a href="home.html">HOME</a>
+        <a href="index.html">HOME</a>
         <a href="room.html">ROOM</a>
         <a href="cart.html">CART</a>
         <a href="message.html">MESSAGE</a>
@@ -21,13 +25,14 @@
       </div>
     </header>
 
+    <!-- NOTIFICATIONS SECTION -->
     <section class="card">
-      <h3>Your Notification List</h3>
-      <p class="small">This is where booking notifications and statuses appear.</p>
-      <div id="notifArea"></div>
+      <h3>Notifications</h3>
+      <div id="notificationsList" class="notif-list"></div>
     </section>
   </main>
 
+  <!-- SIDE MENU -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -43,40 +48,53 @@
     </div>
   </aside>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">Notifications include booking approvals, rejections, and generated access codes.</div>
-      <div class="kv">JHOM Notifications</div>
+      <div class="small-muted">Notifications update automatically after admin actions.</div>
+      <div class="kv">JHOM © 2025</div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
-    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+    // Menu toggle
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.add('open');
+    });
+    document.getElementById('closeMenu').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.remove('open');
+    });
 
-    function renderNotifs(){
-      const area = document.getElementById('notifArea');
-      const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
-      if(!bookings.length){ area.innerHTML='<div class="kv">No notifications yet.</div>'; return;}
-      area.innerHTML = bookings.slice().reverse().map(b=>`
-        <div class="card" style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
+    // Load Notifications
+    function loadNotifications() {
+      const notifications = document.getElementById('notificationsList');
+      const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+
+      if (!bookings.length) {
+        notifications.innerHTML = '<div class="kv">No notifications yet.</div>';
+        return;
+      }
+
+      notifications.innerHTML = bookings.map(b => {
+        let statusClass = '';
+        if (b.status === 'Approved') statusClass = 'badge-success';
+        else if (b.status === 'Rejected') statusClass = 'badge-danger';
+        else statusClass = 'badge-warning';
+
+        return `
+          <div class="notif-item card" style="margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
               <strong>${b.name}</strong>
-              <div class="kv">${b.room.name} • Room #${b.room.id}</div>
+              <span class="badge ${statusClass}">${b.status}</span>
             </div>
-            <div class="kv">${b.date}</div>
+            <div class="kv">${b.room.name} • Check-in: ${b.date}</div>
+            ${b.status === 'Approved' ? `<div class="kv">Access Pin: <strong>${b.pin || '—'}</strong></div>` : ''}
           </div>
-          <div style="margin-top:8px">
-            <div class="kv">Price: ₱ ${Number(b.room.price).toLocaleString()}</div>
-            <div class="kv">Status: <strong>${b.status}</strong></div>
-            ${b.status==='Approved' ? `<div class="kv">Access Pin Code: <strong>${b.pin||'—'}</strong></div>` : ''}
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    renderNotifs();
+    loadNotifications();
   </script>
 </body>
 </html>
