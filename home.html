@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home — Jayvee Hall of Mansion</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <img src="logo.jpg" alt="logo">
+        <div>
+          <h1>JAYVEE HALL OF MANSION</h1>
+          <div class="kv">Warm stays in Sarangani — Book now</div>
+        </div>
+      </a>
+      <div class="nav">
+        <a href="home.html" class="active">HOME</a>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html">CART</a>
+        <a href="message.html">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
+      </div>
+    </header>
+
+    <section class="hero card">
+      <div class="info">
+        <h2>WELCOME, TO JAYVEE HALL OF MANSION</h2>
+        <p>We aim to inspire your travels with clean comfort, friendly staff, and affordable luxury. Browse rooms and book directly — simple, secure, and personal service awaits.</p>
+      </div>
+      <div style="width:120px">
+        <img src="logo.jpg" alt="logo" style="width:100%;border-radius:10px;object-fit:cover">
+      </div>
+    </section>
+
+    <section style="margin-top:16px">
+      <h3>Rooms</h3>
+      <div class="grid" id="roomsGrid"></div>
+    </section>
+  </main>
+
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">Check-in fast, stay comfortable — friendly staff help at every step.</div>
+      <div class="kv">Contact: +63 946 476 6208</div>
+    </div>
+  </footer>
+
+  <script>
+    // sample room data
+    const rooms = [
+      {id:1210,name:'Standard A',price:1999,desc:'Cozy standard room with essential comforts and neat furnishing.',img:'image1.jpg'},
+      {id:1211,name:'Standard B',price:2199,desc:'Bright room with window view and complimentary wifi.',img:'image2.jpg'},
+      {id:1212,name:'Standard C',price:2299,desc:'Comfortable bed and clean bathroom for short stays.',img:'image3.jpg'},
+      {id:1213,name:'Deluxe',price:5693,desc:'Spacious deluxe room with queen bed and mini-fridge.',img:'image4.jpg'},
+      {id:1214,name:'Family Room',price:6999,desc:'Large family room with multiple beds and sitting area.',img:'image5.jpg'},
+      {id:1215,name:'Superior',price:7999,desc:'Superior room with premium amenities and great view.',img:'image6.jpg'},
+      {id:1216,name:'Economy',price:1299,desc:'Affordable room for budget-conscious guests.',img:'image7.jpg'},
+      {id:1217,name:'Twin',price:3499,desc:'Twin beds - perfect for friends or colleagues traveling together.',img:'image8.jpg'},
+      {id:1218,name:'Gold Presidential Suite',price:999639976967123,desc:'Extravagant suite with premium services and private lounge.',img:'image9.jpg'}
+    ];
+
+    const grid = document.getElementById('roomsGrid');
+
+    function renderRooms(){
+      grid.innerHTML = rooms.map(r => `
+        <div class="card room fade-in">
+          <div class="img"><img src="${r.img}" alt="${r.name}"></div>
+          <div>
+            <div class="meta">
+              <h4>${r.name}</h4>
+              <div class="badge">₱ ${Number(r.price).toLocaleString()}</div>
+            </div>
+            <div class="desc">Room #: ${r.id} — ${r.desc}</div>
+            <div class="actions">
+              <button class="btn btn-outline" data-id="${r.id}" data-action="save">Interested</button>
+              <button class="btn btn-primary" data-id="${r.id}" data-action="book">Book Now</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      attachRoomButtons();
+    }
+
+    function attachRoomButtons(){
+      document.querySelectorAll('button[data-action="save"]').forEach(b=>{
+        b.addEventListener('click', e=>{
+          const id = +b.dataset.id;
+          const room = rooms.find(r=>r.id===id);
+          if(!room) return;
+          // save to cart (localStorage)
+          const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+          cart.push(room);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          alert('Saved to Cart!');
+        });
+      });
+      document.querySelectorAll('button[data-action="book"]').forEach(b=>{
+        b.addEventListener('click', e=>{
+          const id = +b.dataset.id;
+          localStorage.setItem('selectedRoom', JSON.stringify(rooms.find(r=>r.id===id)));
+          window.location.href='booking.html';
+        });
+      });
+    }
+
+    // menu toggle
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+    renderRooms();
+  </script>
+</body>
+</html>
