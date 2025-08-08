@@ -116,7 +116,30 @@
     window.location.href = 'booking.html';
   });
 });
-    }
+        }
+      <!-- Example room card -->
+<div class="room-card">
+  <img src="deluxe.jpg" alt="Deluxe Room" style="width:200px;">
+  <h3>Room 101</h3>
+  <p>Price: ₱2500.00</p>
+  <button class="bookNowBtn" 
+          data-room-number="101" 
+          data-price="2500.00" 
+          data-image="deluxe.jpg">Book Now</button>
+</div>
+
+<script>
+  document.querySelectorAll('.bookNowBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const room = {
+        roomNumber: btn.dataset.roomNumber,
+        price: btn.dataset.price,
+        image: btn.dataset.image
+      };
+      localStorage.setItem('selectedRoom', JSON.stringify(room));
+      window.location.href = 'booking.html';
+    });
+  });
   </script>
 </body>
 </html>
