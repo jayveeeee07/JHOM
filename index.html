@@ -364,17 +364,18 @@
 
     // Form validation (basic example) and submission handlers
     // Login form
-    const loginForm = document.getElementById('loginForm');
-    const loginError = document.getElementById('loginError');
     loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      loginError.textContent = '';
-      const username = loginForm.loginUsername.value.trim();
-      const password = loginForm.loginPassword.value.trim();
-      if (!username || !password) {
-        loginError.textContent = 'Please enter both username and password.';
-        return;
-      }
+  e.preventDefault();
+  loginError.textContent = '';
+  const username = loginForm.loginUsername.value.trim();
+  const password = loginForm.loginPassword.value.trim();
+  if (!username || !password) {
+    loginError.textContent = 'Please enter both username and password.';
+    return;
+  }
+  // If login is successful, redirect to home.html
+  window.location.href = 'home.html';
+});
       // Here you can add actual login logic
       alert(`Logging in as ${username}`);
       loginForm.reset();
