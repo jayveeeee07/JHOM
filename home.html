@@ -2,56 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Home — JHOM</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JHOM — Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Basic styling for the dynamic content */
+    section.content-section {
+      margin: 20px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f5f5f5;
+    }
+    section.content-section h2 {
+      margin-bottom: 12px;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 6px;
+      font-weight: 600;
+    }
+    .content-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+      background: white;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+    }
+    .content-item img {
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .content-details {
+      flex-grow: 1;
+    }
+    .content-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #007bff;
+    }
+    .content-date {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .content-desc {
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .no-content {
+      font-style: italic;
+      color: #777;
+      padding: 12px 0;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <header class="header">
+    <a class="brand" href="home.html"><img src="logo.jpg" alt="logo" /><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+    <nav class="nav">
+      <a href="home.html" class="active">HOME</a>
+      <a href="room.html">ROOM</a>
+      <a href="cart.html">CART</a>
+      <a href="message.html">MESSAGE</a>
+      <a href="notification.html">NOTIFICATION</a>
+      <a href="adminpanel.html">ADMIN</a>
+      <button class="icon-btn" id="menuBtn">☰</button>
+    </nav>
+  </header>
+
   <main class="container">
-    <!-- Header -->
-    <header class="header">
-      <a class="brand" href="index.html">
-        <img src="logo.jpg" alt="logo">
-        <div><h1>JAYVEE HALL OF MANSION</h1></div>
-      </a>
-      <div class="nav">
-        <a href="index.html" class="active">HOME</a>
-        <a href="room.html">ROOM</a>
-        <a href="cart.html">CART</a>
-        <a href="message.html">MESSAGE</a>
-        <a href="notification.html">NOTIFICATION</a>
-        <a href="adminpanel.html">ADMIN</a>
-        <button class="icon-btn" id="menuBtn">☰</button>
-      </div>
-    </header>
-
-    <!-- Sections -->
-    <section class="card">
-      <h2>Updates</h2>
-      <div class="grid" id="updatesList"></div>
-      <button class="btn btn-outline" id="updatesMore">View More</button>
+    <!-- Your existing home page content here -->
+    <section>
+      <h2>Welcome to JHOM</h2>
+      <p>Experience comfort and luxury at JHOM.</p>
     </section>
 
-    <section class="card">
-      <h2>News</h2>
-      <div class="grid" id="newsList"></div>
-      <button class="btn btn-outline" id="newsMore">View More</button>
-    </section>
-
-    <section class="card">
-      <h2>List of Upcoming Events</h2>
-      <div class="grid" id="eventsList"></div>
-      <button class="btn btn-outline" id="eventsMore">View More</button>
-    </section>
-
-    <section class="card">
-      <h2>Promos</h2>
-      <div class="grid" id="promosList"></div>
-      <button class="btn btn-outline" id="promosMore">View More</button>
-    </section>
+    <!-- Dynamic content sections -->
+    <div id="dynamicContent"></div>
   </main>
 
-  <!-- Side Menu -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -67,56 +103,63 @@
     </div>
   </aside>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="small-muted">© 2025 JHOM. All rights reserved.</div>
-      <div class="kv">Built for mobile and desktop</div>
+      <div class="kv">JHOM</div>
     </div>
   </footer>
 
   <script>
-    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
-    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.add('open');
+    });
+    document.getElementById('closeMenu').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.remove('open');
+    });
 
-    // Fetch data from backend
-    fetch('server.php?action=getHomeData')
-      .then(res=>res.json())
-      .then(data=>{
-        renderSection('updatesList', data.updates, 3, 'updatesMore');
-        renderSection('newsList', data.news, 3, 'newsMore');
-        renderSection('eventsList', data.events, 3, 'eventsMore');
-        renderSection('promosList', data.promos, 3, 'promosMore');
-      })
-      .catch(err=>{
-        console.error(err);
-        // fallback sample data
-        const sample = [{title:'Sample Item', desc:'Description here', img:'logo.jpg', date:'2025-08-08'}];
-        ['updatesList','newsList','eventsList','promosList'].forEach(id=> renderSection(id, sample, 1));
+    // Load admin content sections from localStorage
+    const contentTypes = ['Updates', 'News', 'Events', 'Promos'];
+
+    function loadDynamicContent() {
+      const container = document.getElementById('dynamicContent');
+      container.innerHTML = '';
+
+      contentTypes.forEach(type => {
+        const items = JSON.parse(localStorage.getItem(`content_${type}`) || '[]');
+
+        if (items.length === 0) {
+          // Show section with "No content" message
+          container.insertAdjacentHTML('beforeend', `
+            <section class="content-section">
+              <h2>${type}</h2>
+              <div class="no-content">No ${type.toLowerCase()} available at the moment.</div>
+            </section>
+          `);
+        } else {
+          // Show content items
+          const sectionHTML = items.map(item => `
+            <div class="content-item">
+              ${item.img ? `<img src="${item.img}" alt="${item.title}"/>` : ''}
+              <div class="content-details">
+                <div class="content-title">${item.title}</div>
+                <div class="content-date">${new Date(item.date).toLocaleDateString()}</div>
+                <div class="content-desc">${item.desc}</div>
+              </div>
+            </div>
+          `).join('');
+
+          container.insertAdjacentHTML('beforeend', `
+            <section class="content-section">
+              <h2>${type}</h2>
+              ${sectionHTML}
+            </section>
+          `);
+        }
       });
-
-    function renderSection(containerId, items, limit, moreBtnId){
-      const container = document.getElementById(containerId);
-      let showing = items.slice(0, limit);
-      container.innerHTML = showing.map(cardHTML).join('');
-      if(moreBtnId){
-        document.getElementById(moreBtnId).addEventListener('click', ()=>{
-          showing = showing.length === limit ? items : items.slice(0, limit);
-          container.innerHTML = showing.map(cardHTML).join('');
-        });
-      }
     }
 
-    function cardHTML(item){
-      return `
-        <div class="card small">
-          <img src="${item.img}" alt="${item.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px">
-          <h4>${item.title}</h4>
-          <p class="small">${item.desc}</p>
-          <div class="kv">${item.date}</div>
-        </div>
-      `;
-    }
+    loadDynamicContent();
   </script>
 </body>
 </html>
