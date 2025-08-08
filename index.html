@@ -36,203 +36,213 @@ section.content-section {
   flex-shrink: 0;
 }
 
-    header.header, footer.footer {
-      background: #007bff;
-      color: white;
-      padding: 1rem 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      user-select: none;
-    }
-    header.header {
-      background: linear-gradient(90deg, #004080, #cc0000);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 16px;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-    header.header a.brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: white;
-    }
-    header.header a.brand img {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-    header.header a.brand h1 {
-      font-size: 1.4rem;
-      margin: 0;
-      white-space: nowrap;
-    }
-    .nav {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .nav a {
-      color: white;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-    }
-    .nav a:hover, .nav a.active {
-      background: #cc0000;
-    }
+/* Header and Footer */
+header.header, footer.footer {
+  background: #007bff;
+  color: white;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+header.header {
+  background: linear-gradient(90deg, #004080, #cc0000);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+header.header a.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+header.header a.brand img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+header.header a.brand h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  white-space: nowrap;
+}
+.nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.nav a {
+  color: white;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+.nav a:hover, .nav a.active {
+  background: #cc0000;
+}
 
-    h1.page-title {
-      font-size: 1.5rem;
-    }
+h1.page-title {
+  font-size: 1.5rem;
+}
 
-    section {
-      display: none;
-      flex-direction: column;
-    }
-    section.active {
-      display: flex;
-    }
+section {
+  display: none;
+  flex-direction: column;
+}
 
-    h2 {
-      margin-bottom: 1rem;
-      color: #007bff;
-      font-weight: 700;
-      font-size: 1.3rem;
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 0.3rem;
-    }
+/* *** HERE: Override to make all sections borderless and background transparent *** */
+section {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    label {
-      font-weight: 600;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="file"] {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      outline-offset: 2px;
-      outline-color: transparent;
-      transition: outline-color 0.3s ease;
-    }
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    input[type="password"]:focus,
-    input[type="file"]:focus {
-      outline-color: #007bff;
-      border-color: #007bff;
-    }
+section.active {
+  display: flex;
+}
 
-    button {
-      cursor: pointer;
-      padding: 0.6rem 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-    }
-    button:hover:not(:disabled) {
-      background: #0056b3;
-    }
-    button:disabled {
-      background: #aac4f7;
-      cursor: default;
-    }
+h2 {
+  margin-bottom: 1rem;
+  color: #007bff;
+  font-weight: 700;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.3rem;
+}
 
-    .form-link {
-      margin-top: 0.2rem;
-      background: none;
-      border: none;
-      color: #007bff;
-      font-weight: 600;
-      text-align: left;
-      padding: 0;
-    }
-    .form-link:hover {
-      text-decoration: underline;
-      cursor: pointer;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+label {
+  font-weight: 600;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline-offset: 2px;
+  outline-color: transparent;
+  transition: outline-color 0.3s ease;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="file"]:focus {
+  outline-color: #007bff;
+  border-color: #007bff;
+}
 
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-    }
+button {
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+button:hover:not(:disabled) {
+  background: #0056b3;
+}
+button:disabled {
+  background: #aac4f7;
+  cursor: default;
+}
 
-    .error-message {
-      color: #b00020;
-      font-size: 0.85rem;
-      font-style: italic;
-      min-height: 1.1em;
-    }
+.form-link {
+  margin-top: 0.2rem;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: 600;
+  text-align: left;
+  padding: 0;
+}
+.form-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-    #welcomeSection {
-      text-align: center;
-      gap: 1rem;
-    }
-    #welcomeSection img {
-      max-width: 120px;
-      border-radius: 8px;
-      margin: 0 auto;
-    }
-    #welcomeSection p {
-      font-size: 1rem;
-      line-height: 1.4;
-      max-height: 6rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 1rem;
-      color: #444;
-    }
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
 
-    .recaptcha-placeholder {
-      background: #e1e1e1;
-      height: 50px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      font-size: 0.9rem;
-      user-select: none;
-      margin-bottom: 1rem;
-    }
+.error-message {
+  color: #b00020;
+  font-size: 0.85rem;
+  font-style: italic;
+  min-height: 1.1em;
+}
 
-    a.brand-link {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.25rem;
-    }
-    a.brand-link img {
-      height: 40px;
-      border-radius: 6px;
-      object-fit: contain;
-    }
+#welcomeSection {
+  text-align: center;
+  gap: 1rem;
+}
+#welcomeSection img {
+  max-width: 120px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+#welcomeSection p {
+  font-size: 1rem;
+  line-height: 1.4;
+  max-height: 6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.recaptcha-placeholder {
+  background: #e1e1e1;
+  height: 50px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 0.9rem;
+  user-select: none;
+  margin-bottom: 1rem;
+}
+
+a.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+a.brand-link img {
+  height: 40px;
+  border-radius: 6px;
+  object-fit: contain;
+}
   </style>
 </head>
 <body>
@@ -353,191 +363,4 @@ section.content-section {
 
     // Show Login form on Get Started click
     getStartedBtn.addEventListener('click', () => {
-      welcomeSection.classList.remove('active');
-      welcomeSection.hidden = true;
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-    });
-
-    // Show Register form
-    showRegisterBtn.addEventListener('click', () => {
-      loginSection.classList.remove('active');
-      loginSection.hidden = true;
-      registerSection.hidden = false;
-      registerSection.classList.add('active');
-      registerForm.reset();
-      registerError.textContent = '';
-    });
-
-    // Back to Login from Register
-    backToLoginFromRegisterBtn.addEventListener('click', () => {
-      registerSection.classList.remove('active');
-      registerSection.hidden = true;
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-      loginError.textContent = '';
-    });
-
-    // Show Forgot Password
-    forgotPasswordBtn.addEventListener('click', () => {
-      loginSection.classList.remove('active');
-      loginSection.hidden = true;
-      forgotPasswordSection.hidden = false;
-      forgotPasswordSection.classList.add('active');
-      forgotPasswordForm.reset();
-      forgotError.textContent = '';
-      forgotResult.textContent = '';
-    });
-
-    // Back to Login from Forgot Password
-    forgotBackBtn.addEventListener('click', () => {
-      forgotPasswordSection.classList.remove('active');
-      forgotPasswordSection.hidden = true;
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-      loginError.textContent = '';
-    });
-
-    // Helpers
-    function getUsers() {
-      return JSON.parse(localStorage.getItem('users') || '[]');
-    }
-    function saveUsers(users) {
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-    function validateEmail(email) {
-      return /\S+@\S+\.\S+/.test(email);
-    }
-
-    // Login form submit
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      loginError.textContent = '';
-      const username = loginForm.loginUsername.value.trim();
-      const password = loginForm.loginPassword.value;
-
-      if (!username || !password) {
-        loginError.textContent = 'Please enter both username and password.';
-        return;
-      }
-
-      const users = getUsers();
-      const user = users.find(u => u.fullname.toLowerCase() === username.toLowerCase() || u.email.toLowerCase() === username.toLowerCase());
-      if (!user) {
-        loginError.textContent = 'User not found. Please register first.';
-        return;
-      }
-      if (user.password !== password) {
-        loginError.textContent = 'Incorrect password.';
-        return;
-      }
-
-      // Save current logged user info (optional)
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-      // Redirect to home page
-      window.location.href = 'index.html';
-    });
-
-    // Register form submit
-    registerForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      registerError.textContent = '';
-
-      // Validate photo file
-      const photoInput = registerForm.registerPhoto;
-      if (!photoInput.files.length) {
-        registerError.textContent = 'Please upload a photo.';
-        return;
-      }
-      const photoFile = photoInput.files[0];
-      if (!photoFile.type.startsWith('image/')) {
-        registerError.textContent = 'Uploaded file must be an image.';
-        return;
-      }
-
-      // Validate fullname
-      const fullname = registerForm.registerFullname.value.trim();
-      if (!fullname) {
-        registerError.textContent = 'Please enter your fullname.';
-        return;
-      }
-
-      // Validate email
-      const email = registerForm.registerEmail.value.trim().toLowerCase();
-      if (!validateEmail(email)) {
-        registerError.textContent = 'Please enter a valid email address.';
-        return;
-      }
-
-      // Validate password (min 6 chars)
-      const password = registerForm.registerPassword.value;
-      if (password.length < 6) {
-        registerError.textContent = 'Password must be at least 6 characters.';
-        return;
-      }
-
-      // TODO: ReCaptcha placeholder (assumed always valid here)
-
-      // Check if email already registered
-      const users = getUsers();
-      if (users.some(u => u.email === email)) {
-        registerError.textContent = 'An account with this email already exists.';
-        return;
-      }
-
-      // Read photo as base64
-      const reader = new FileReader();
-      reader.onload = function () {
-        const photoDataUrl = reader.result;
-
-        // Save user
-        users.push({
-          photo: photoDataUrl,
-          fullname,
-          email,
-          password
-        });
-        saveUsers(users);
-
-        alert('Account created successfully! You may now login.');
-
-        // Reset form and switch to login
-        registerForm.reset();
-        registerSection.classList.remove('active');
-        registerSection.hidden = true;
-        loginSection.hidden = false;
-        loginSection.classList.add('active');
-      };
-      reader.readAsDataURL(photoFile);
-    });
-
-    // Forgot Password form submit
-    forgotPasswordForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      forgotError.textContent = '';
-      forgotResult.textContent = '';
-
-      const email = forgotPasswordForm.forgotEmail.value.trim().toLowerCase();
-
-      if (!validateEmail(email)) {
-        forgotError.textContent = 'Please enter a valid email address.';
-        return;
-      }
-
-      const users = getUsers();
-      const user = users.find(u => u.email === email);
-
-      if (!user) {
-        forgotError.textContent = 'No account found with this email.';
-        return;
-      }
-
-      // For demo purposes, just reveal the password (in real life you would send an email)
-      forgotResult.textContent = `Your password is: "${user.password}"`;
-
-      forgotPasswordForm.reset();
-    });
-  </script>
-</body>
-</html>
+      welcomeSection
