@@ -1,10 +1,323 @@
+Got it! Here’s the complete adminpanel.html with the full HTML (untouched content you gave) plus embedded CSS for styling and responsiveness, including sticky footer. This time, the whole file, from start to end:
+
+
+---
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Panel — JHOM</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
+
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+      background: #e6f0ff;
+      color: #003366;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Container */
+    main.container {
+      flex: 1;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 16px 80px; /* padding bottom for footer */
+    }
+
+    /* Header */
+    header.header {
+      background: linear-gradient(90deg, #004080, #cc0000);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    header.header a.brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+    header.header a.brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    header.header a.brand h1 {
+      font-size: 1.4rem;
+      margin: 0;
+      white-space: nowrap;
+    }
+    .nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav a {
+      color: white;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    .nav a:hover, .nav a.active {
+      background: #cc0000;
+    }
+    .icon-btn {
+      font-size: 1.4rem;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    /* Card Section */
+    section.card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    }
+    section.card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: #004080;
+    }
+    section.card p.small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* Form */
+    form#loginForm {
+      max-width: 420px;
+    }
+    .form-row {
+      margin-bottom: 16px;
+    }
+    input.input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input.input:focus {
+      outline: none;
+      border-color: #004080;
+    }
+
+    /* Buttons */
+    .btn {
+      cursor: pointer;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary {
+      background-color: #004080;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #003060;
+    }
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid #004080;
+      color: #004080;
+    }
+    .btn-outline:hover {
+      background-color: #004080;
+      color: white;
+    }
+
+    /* Admin grid */
+    .admin-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .admin-grid > div {
+      flex: 1 1 45%;
+      min-width: 300px;
+      background: #f2f7ff;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: inset 0 0 10px #d0dff7;
+    }
+
+    /* Tables */
+    table.table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      color: #003366;
+    }
+    table.table thead tr {
+      background: #004080;
+      color: white;
+    }
+    table.table th, table.table td {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+      vertical-align: middle;
+    }
+    table.table tbody tr:hover {
+      background-color: #e6f0ff;
+    }
+    table.table img {
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    /* Messages */
+    #adminMsgs > .card {
+      background: white;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
+    }
+    #adminMsgs strong {
+      font-size: 1.1rem;
+    }
+    .kv {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .badge {
+      background: #cc0000;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    textarea.input {
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+      margin-top: 8px;
+      padding: 8px 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    /* Side menu */
+    aside.side-menu {
+      position: fixed;
+      top: 0; right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: #004080;
+      color: white;
+      padding: 16px;
+      box-shadow: -3px 0 6px rgba(0,0,0,0.2);
+      transition: right 0.3s ease;
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    aside.side-menu.open {
+      right: 0;
+    }
+    aside.side-menu strong {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    aside.side-menu .socials a {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #0066cc;
+      transition: background-color 0.3s ease;
+    }
+    aside.side-menu .socials a:hover {
+      background: #003366;
+    }
+    #closeMenu {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      color: white;
+      cursor: pointer;
+      align-self: flex-end;
+      margin-top: -12px;
+      margin-bottom: 12px;
+    }
+
+    /* Footer */
+    footer.footer {
+      background: #004080;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    footer.footer .kv {
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .admin-grid {
+        flex-direction: column;
+      }
+      .nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .icon-btn {
+        display: inline-block;
+      }
+    }
+  </style>
 </head>
 <body>
 <main class="container">
