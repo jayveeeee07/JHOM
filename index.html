@@ -6,31 +6,37 @@
   <title>JHOM — Login / Register</title>
   <link rel="stylesheet" href="index.css" />
   <style>
-    /* ... (Same styles as before; omitted here for brevity) ... */
     * {
       box-sizing: border-box;
     }
+
+    /* Container to center content and limit width */
     main.container {
       max-width: 900px;
       margin: 0 auto;
       padding: 0 16px;
       width: 100%;
     }
+
+    /* Content sections: no border, background light, full width */
     section.content-section {
       width: 100%;
       margin: 20px 0;
       padding: 16px;
-      border: none;
+      border: none; /* NO border */
       border-radius: 8px;
       background: #f5f5f5;
-      box-shadow: none;
+      box-shadow: none; /* remove shadow if any */
     }
+
+    /* Responsive images */
     .content-item img {
       max-width: 100%;
       height: auto;
       border-radius: 6px;
       flex-shrink: 0;
     }
+
     header.header,
     footer.footer {
       background: #007bff;
@@ -53,20 +59,22 @@
       top: 0;
       z-index: 999;
     }
-    header.header a.brand-link {
+    header.header a.brand {
       display: flex;
       align-items: center;
       gap: 12px;
       color: white;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.25rem;
     }
-    header.header a.brand-link img {
+    header.header a.brand img {
       width: 48px;
       height: 48px;
       border-radius: 8px;
       object-fit: contain;
+    }
+    header.header a.brand h1 {
+      font-size: 1.4rem;
+      margin: 0;
+      white-space: nowrap;
     }
     .nav {
       display: flex;
@@ -85,9 +93,11 @@
     .nav a.active {
       background: #cc0000;
     }
+
     h1.page-title {
       font-size: 1.5rem;
     }
+
     section {
       display: none;
       flex-direction: column;
@@ -95,6 +105,7 @@
     section.active {
       display: flex;
     }
+
     h2 {
       margin-bottom: 1rem;
       color: #007bff;
@@ -103,6 +114,7 @@
       border-bottom: 2px solid #007bff;
       padding-bottom: 0.3rem;
     }
+
     form {
       display: flex;
       flex-direction: column;
@@ -130,6 +142,7 @@
       outline-color: #007bff;
       border-color: #007bff;
     }
+
     button {
       cursor: pointer;
       padding: 0.6rem 1rem;
@@ -148,6 +161,7 @@
       background: #aac4f7;
       cursor: default;
     }
+
     .form-link {
       margin-top: 0.2rem;
       background: none;
@@ -161,18 +175,21 @@
       text-decoration: underline;
       cursor: pointer;
     }
+
     .checkbox-group {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.9rem;
     }
+
     .error-message {
       color: #b00020;
       font-size: 0.85rem;
       font-style: italic;
       min-height: 1.1em;
     }
+
     #welcomeSection {
       text-align: center;
       gap: 1rem;
@@ -191,6 +208,7 @@
       margin-bottom: 1rem;
       color: #444;
     }
+
     .recaptcha-placeholder {
       background: #e1e1e1;
       height: 50px;
@@ -202,6 +220,21 @@
       font-size: 0.9rem;
       user-select: none;
       margin-bottom: 1rem;
+    }
+
+    a.brand-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    a.brand-link img {
+      height: 40px;
+      border-radius: 6px;
+      object-fit: contain;
     }
   </style>
 </head>
@@ -234,7 +267,7 @@
     <section id="loginSection" aria-label="Login form" hidden>
       <h2>Login</h2>
       <form id="loginForm" novalidate>
-        <label for="loginUsername">Username:</label>
+        <label for="loginUsername">Username or Email:</label>
         <input type="text" id="loginUsername" name="loginUsername" required autocomplete="username" />
         
         <label for="loginPassword">Password:</label>
@@ -244,7 +277,6 @@
         
         <button type="submit">Login</button>
       </form>
-      <button class="form-link" id="home.html">Login</button>
       <button class="form-link" id="forgotPasswordBtn">Forgot Password?</button>
       <button class="form-link" id="showRegisterBtn">Register</button>
     </section>
@@ -275,166 +307,157 @@
       </form>
       <button class="form-link" id="backToLoginFromRegisterBtn">Back to Login</button>
     </section>
-
-    <!-- Forgot Password Section -->
-    <section id="forgotPasswordSection" aria-label="Forgot password form" hidden>
-      <h2>Forgot Password</h2>
-      <form id="forgotPasswordForm" novalidate>
-        <label for="forgotEmail">Enter your email address:</label>
-        <input type="email" id="forgotEmail" name="forgotEmail" required autocomplete="email" />
-        <div class="error-message" id="forgotError" role="alert" aria-live="assertive"></div>
-        <button type="submit">Reset Password</button>
-      </form>
-      <button class="form-link" id="backToLoginFromForgotBtn">Back to Login</button>
-    </section>
   </main>
 
-  <footer class="footer" role="contentinfo" aria-label="Site footer">
-    &copy; 2025 JHOM — Jayvee Hall of Mansion
-  </footer>
-
   <script>
-    // DOM elements
-    const termsCheckbox = document.getElementById('termsCheckbox');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-
+    // Elements
     const welcomeSection = document.getElementById('welcomeSection');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const termsCheckbox = document.getElementById('termsCheckbox');
+
     const loginSection = document.getElementById('loginSection');
-    const registerSection = document.getElementById('registerSection');
-    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
-
-    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
     const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
-    const backToLoginFromForgotBtn = document.getElementById('backToLoginFromForgotBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
 
-    // Enable Get Started button when checkbox is checked
+    const registerSection = document.getElementById('registerSection');
+    const registerForm = document.getElementById('registerForm');
+    const registerError = document.getElementById('registerError');
+    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
+
+    // Utility functions for showing/hiding sections
+    function showSection(section) {
+      [welcomeSection, loginSection, registerSection].forEach(sec => {
+        if (sec === section) {
+          sec.removeAttribute('hidden');
+          sec.classList.add('active');
+        } else {
+          sec.setAttribute('hidden', true);
+          sec.classList.remove('active');
+        }
+      });
+    }
+
+    // Enable Get Started button only when terms checked
     termsCheckbox.addEventListener('change', () => {
       getStartedBtn.disabled = !termsCheckbox.checked;
     });
 
-    // On Get Started button click: hide welcome, show login
+    // On clicking Get Started: go to login section
     getStartedBtn.addEventListener('click', () => {
-      welcomeSection.classList.remove('active');
-      welcomeSection.hidden = true;
-
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-
-      // Reset checkbox and disable button
-      termsCheckbox.checked = false;
-      getStartedBtn.disabled = true;
+      showSection(loginSection);
     });
 
-    // Show registration form
+    // Show Register form when clicked
     showRegisterBtn.addEventListener('click', () => {
-      loginSection.classList.remove('active');
-      loginSection.hidden = true;
-
-      registerSection.hidden = false;
-      registerSection.classList.add('active');
+      showSection(registerSection);
+      registerForm.reset();
+      registerError.textContent = '';
     });
 
-    // Show forgot password form
-    forgotPasswordBtn.addEventListener('click', () => {
-      loginSection.classList.remove('active');
-      loginSection.hidden = true;
-
-      forgotPasswordSection.hidden = false;
-      forgotPasswordSection.classList.add('active');
-    });
-
-    // Back to login from registration
+    // Back to Login from Register form
     backToLoginFromRegisterBtn.addEventListener('click', () => {
-      registerSection.classList.remove('active');
-      registerSection.hidden = true;
-
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
+      showSection(loginSection);
+      loginError.textContent = '';
     });
 
-    // Back to login from forgot password
-    backToLoginFromForgotBtn.addEventListener('click', () => {
-      forgotPasswordSection.classList.remove('active');
-      forgotPasswordSection.hidden = true;
+    // LocalStorage user handling
+    function getUsers() {
+      return JSON.parse(localStorage.getItem('users') || '[]');
+    }
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    function validateEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
 
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-    });
-
-    // Form validation (basic example) and submission handlers
-    // Login form
+    // Login form submit
     loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  loginError.textContent = '';
-  const username = loginForm.loginUsername.value.trim();
-  const password = loginForm.loginPassword.value.trim();
-  if (!username || !password) {
-    loginError.textContent = 'Please enter both username and password.';
-    return;
-  }
-  // If login is successful, redirect to home.html
-  window.location.href = 'home.html';
-});
-      // Here you can add actual login logic
-      alert(`Logging in as ${username}`);
-      loginForm.reset();
+      e.preventDefault();
+      loginError.textContent = '';
+
+      const usernameInput = loginForm.loginUsername.value.trim().toLowerCase();
+      const passwordInput = loginForm.loginPassword.value;
+
+      if (!usernameInput || !passwordInput) {
+        loginError.textContent = 'Please enter both username/email and password.';
+        return;
+      }
+
+      const users = getUsers();
+      // Check by fullname or email (case insensitive)
+      const user = users.find(u =>
+        u.fullname.toLowerCase() === usernameInput ||
+        u.email.toLowerCase() === usernameInput
+      );
+
+      if (!user) {
+        loginError.textContent = 'User not found. Please register first.';
+        return;
+      }
+
+      if (user.password !== passwordInput) {
+        loginError.textContent = 'Incorrect password.';
+        return;
+      }
+
+      // Save logged in user to localStorage (optional)
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+      // Redirect to home.html
+      window.location.href = 'home.html';
     });
 
-    // Register form
-    const registerForm = document.getElementById('registerForm');
-    const registerError = document.getElementById('registerError');
+    // Register form submit
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       registerError.textContent = '';
 
-      if (!registerForm.registerPhoto.files.length) {
+      // Photo file name (simplified, real app needs file upload handling)
+      const photoInput = registerForm.registerPhoto.files[0];
+      if (!photoInput) {
         registerError.textContent = 'Please upload a photo.';
         return;
       }
-      if (!registerForm.registerFullname.value.trim()) {
+      const photoName = photoInput.name;
+
+      const fullname = registerForm.registerFullname.value.trim();
+      const email = registerForm.registerEmail.value.trim().toLowerCase();
+      const password = registerForm.registerPassword.value;
+
+      if (!fullname) {
         registerError.textContent = 'Please enter your fullname.';
         return;
       }
-      if (!registerForm.registerEmail.value.trim()) {
-        registerError.textContent = 'Please enter your email.';
-        return;
-      }
-      if (!registerForm.registerPassword.value.trim()) {
-        registerError.textContent = 'Please enter a password.';
+
+      if (!validateEmail(email)) {
+        registerError.textContent = 'Please enter a valid email.';
         return;
       }
 
-      // Add any additional validation here
+      if (password.length < 6) {
+        registerError.textContent = 'Password must be at least 6 characters.';
+        return;
+      }
 
-      alert(`Account created for ${registerForm.registerFullname.value}`);
+      const users = getUsers();
+
+      if (users.some(u => u.email === email)) {
+        registerError.textContent = 'Email is already registered.';
+        return;
+      }
+
+      users.push({ fullname, email, password, photo: photoName });
+      saveUsers(users);
+
+      alert('Account created successfully! Please login.');
+
       registerForm.reset();
 
-      // Return to login after successful registration
-      registerSection.classList.remove('active');
-      registerSection.hidden = true;
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
-    });
-
-    // Forgot password form
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-    const forgotError = document.getElementById('forgotError');
-    forgotPasswordForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      forgotError.textContent = '';
-      const email = forgotPasswordForm.forgotEmail.value.trim();
-      if (!email) {
-        forgotError.textContent = 'Please enter your email address.';
-        return;
-      }
-      alert(`Password reset link sent to ${email}`);
-      forgotPasswordForm.reset();
-
-      forgotPasswordSection.classList.remove('active');
-      forgotPasswordSection.hidden = true;
-      loginSection.hidden = false;
-      loginSection.classList.add('active');
+      showSection(loginSection);
+      loginError.textContent = '';
     });
   </script>
 </body>
