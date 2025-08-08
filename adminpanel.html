@@ -438,6 +438,38 @@ function loadAdminData(){
   `).join('') : '<tr><td colspan="7">No bookings yet.</td></tr>');
   attachBookingActions();
 
+  
+<h2>Bookings</h2>
+<div id="bookingList"></div>
+
+<script>
+  const bookingList = document.getElementById('bookingList');
+  const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+
+
+  if (bookings.length === 0) {
+    bookingList.textContent = 'No bookings yet.';
+  } else {
+    bookings.forEach((b, i) => {
+      const div = document.createElement('div');
+      div.className = 'booking-item';
+      div.style.border = '1px solid #ddd';
+      div.style.padding = '1rem';
+      div.style.marginBottom = '1rem';
+      div.innerHTML = `
+        <h3>Booking ${i + 1}</h3>
+        <p><strong>Name:</strong> ${b.fullName}</p>
+        <p><strong>Room Number:</strong> ${b.roomNumber}</p>
+        <p><strong>Check-In:</strong> ${b.checkIn}</p>
+        <p><strong>Payment Method:</strong> ${b.paymentMethod}</p>
+        <p><strong>Ticket Ref:</strong> ${b.ticketRef}</p>
+        <p><strong>Price:</strong> ₱${b.roomPrice}</p>
+      `;
+      bookingList.appendChild(div);
+    });
+  }
+  
+
   // messages
   const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
   const adminMsgs = document.getElementById('adminMsgs');
@@ -561,34 +593,6 @@ function deleteContent(type, idx){
   localStorage.setItem(key, JSON.stringify(list));
   loadContentSections();
 }
-<h2>Bookings</h2>
-<div id="bookingList"></div>
-
-<script>
-  const bookingList = document.getElementById('bookingList');
-  const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-
-  if (bookings.length === 0) {
-    bookingList.textContent = 'No bookings yet.';
-  } else {
-    bookings.forEach((b, i) => {
-      const div = document.createElement('div');
-      div.className = 'booking-item';
-      div.style.border = '1px solid #ddd';
-      div.style.padding = '1rem';
-      div.style.marginBottom = '1rem';
-      div.innerHTML = `
-        <h3>Booking ${i + 1}</h3>
-        <p><strong>Name:</strong> ${b.fullName}</p>
-        <p><strong>Room Number:</strong> ${b.roomNumber}</p>
-        <p><strong>Check-In:</strong> ${b.checkIn}</p>
-        <p><strong>Payment Method:</strong> ${b.paymentMethod}</p>
-        <p><strong>Ticket Ref:</strong> ${b.ticketRef}</p>
-        <p><strong>Price:</strong> ₱${b.roomPrice}</p>
-      `;
-      bookingList.appendChild(div);
-    });
-  }
 </script>
 </body>
 </html>
