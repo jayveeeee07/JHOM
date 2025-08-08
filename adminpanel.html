@@ -33,7 +33,7 @@
     <div id="adminArea" style="display:none; margin-top:16px">
       <section class="card">
         <h3>Administrator Dashboard</h3>
-        <p class="small">Manage users, bookings and messages.</p>
+        <p class="small">Manage users, bookings, messages, and website content.</p>
 
         <div class="admin-grid">
           <div>
@@ -52,29 +52,14 @@
           <div id="adminMsgs"></div>
         </div>
 
-        <!-- Content Management Section -->
-        <div style="margin-top:16px">
-          <h4>Manage Updates, News, Events & Promos</h4>
-          <div id="contentTables"></div>
+        <hr style="margin:20px 0">
 
-          <h5 style="margin-top:12px">Add / Edit Item</h5>
-          <form id="contentForm">
-            <select name="section" required>
-              <option value="">Select Section</option>
-              <option value="updates">Updates</option>
-              <option value="news">News</option>
-              <option value="events">Events</option>
-              <option value="promos">Promos</option>
-            </select>
-            <input type="text" name="title" placeholder="Title" required>
-            <textarea name="description" placeholder="Description" required></textarea>
-            <input type="text" name="date" placeholder="Date (e.g. August 8, 2025)">
-            <input type="hidden" name="index">
-            <input type="hidden" name="action" value="add">
-            <button class="btn btn-primary" type="submit">Save</button>
-          </form>
+        <div>
+          <h4>Website Content Management</h4>
+          <p class="small">Manage homepage sections: Updates, News, Events, and Promos.</p>
+
+          <div id="contentSections"></div>
         </div>
-
       </section>
     </div>
 
@@ -103,7 +88,8 @@
   </footer>
 
   <script>
-    // login
+    const sections = ["updates","news","events","promos"];
+
     document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
     document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
 
@@ -116,17 +102,16 @@
         document.getElementById('adminArea').style.display='block';
         loginForm.style.display='none';
         loadAdminData();
-        loadContent();
       } else alert('Invalid credentials');
     });
 
     function loadAdminData(){
-      // users
+      // load users
       const users = JSON.parse(localStorage.getItem('users')||'[]');
       const uT = document.querySelector('#usersTable tbody');
       uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
 
-      // bookings
+      // load bookings
       const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
       const bT = document.querySelector('#bookingsTable tbody');
       bT.innerHTML = (bookings.length? bookings.map((b,idx)=>`
@@ -146,7 +131,7 @@
       `).join('') : '<tr><td colspan="7">No bookings yet.</td></tr>');
       attachBookingActions();
 
-      // messages
+      // load messages
       const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
       const adminMsgs = document.getElementById('adminMsgs');
       adminMsgs.innerHTML = (msgs.length? msgs.map((m,idx)=>`
@@ -171,6 +156,36 @@
           loadAdminData();
         });
       });
+
+      // load website content
+      fetch('server.php')
+        .then(res=>res.json())
+        .then(data=>{
+          const container = document.getElementById('contentSections');
+          container.innerHTML = sections.map(sec=>{
+            const items = data[sec] || [];
+            return `
+              <div style="margin-top:20px">
+                <h4 style="text-transform:capitalize">${sec}</h4>
+                <button class="btn btn-primary" onclick="addItem('${sec}')">Add Item</button>
+                <table class="table"><thead><tr><th>Title</th><th>Description</th><th>Date</th><th>Action</th></tr></thead>
+                <tbody>
+                  ${items.length ? items.map((it,i)=>`
+                    <tr>
+                      <td>${it.title}</td>
+                      <td>${it.desc}</td>
+                      <td>${it.date}</td>
+                      <td>
+                        <button class="btn btn-outline" onclick="editItem('${sec}',${i})">Edit</button>
+                        <button class="btn btn-outline" onclick="deleteItem('${sec}',${i})">Delete</button>
+                      </td>
+                    </tr>`).join('') : `<tr><td colspan="4">No ${sec} yet.</td></tr>`}
+                </tbody>
+                </table>
+              </div>
+            `;
+          }).join('');
+        });
     }
 
     function attachBookingActions(){
@@ -197,66 +212,45 @@
       });
     }
 
-    // Content Management JS
-    function loadContent(){
-      fetch('data.json').then(r=>r.json()).then(data=>{
-        let html = '';
-        for(let section in data){
-          html += `<h5>${section.toUpperCase()}</h5><table class="table"><thead><tr><th>Title</th><th>Description</th><th>Date</th><th>Action</th></tr></thead><tbody>`;
-          if(data[section].length){
-            data[section].forEach((item,i)=>{
-              html += `<tr>
-                <td>${item.title}</td>
-                <td>${item.description}</td>
-                <td>${item.date||''}</td>
-                <td>
-                  <button type="button" onclick="editItem('${section}',${i})">Edit</button>
-                  <button type="button" onclick="deleteItem('${section}',${i})">Delete</button>
-                </td>
-              </tr>`;
-            });
-          } else {
-            html += `<tr><td colspan="4">No items</td></tr>`;
-          }
-          html += `</tbody></table>`;
-        }
-        document.getElementById('contentTables').innerHTML = html;
-      });
+    function addItem(sec){
+      const title = prompt(`Enter ${sec} title:`);
+      if(!title) return;
+      const desc = prompt(`Enter ${sec} description:`) || '';
+      const date = new Date().toISOString().split('T')[0];
+      fetch('server.php')
+        .then(res=>res.json())
+        .then(data=>{
+          data[sec] = data[sec] || [];
+          data[sec].push({title, desc, date});
+          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
+        })
+        .then(()=>{alert(`${sec} added.`); loadAdminData();});
     }
 
-    function editItem(section,index){
-      fetch('data.json').then(r=>r.json()).then(data=>{
-        let item = data[section][index];
-        const form = document.getElementById('contentForm');
-        form.section.value = section;
-        form.title.value = item.title;
-        form.description.value = item.description;
-        form.date.value = item.date;
-        form.index.value = index;
-        form.action.value = 'edit';
-      });
+    function editItem(sec,i){
+      fetch('server.php')
+        .then(res=>res.json())
+        .then(data=>{
+          const item = data[sec][i];
+          const title = prompt(`Edit ${sec} title:`, item.title);
+          if(!title) return;
+          const desc = prompt(`Edit ${sec} description:`, item.desc) || '';
+          data[sec][i] = {title, desc, date: item.date};
+          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
+        })
+        .then(()=>{alert(`${sec} updated.`); loadAdminData();});
     }
 
-    function deleteItem(section,index){
-      if(!confirm('Delete this item?')) return;
-      const formData = new FormData();
-      formData.append('section', section);
-      formData.append('index', index);
-      formData.append('action', 'delete');
-      fetch('server.php', {method:'POST', body:formData}).then(r=>r.text()).then(res=>{
-        loadContent();
-      });
+    function deleteItem(sec,i){
+      if(!confirm(`Delete this ${sec} item?`)) return;
+      fetch('server.php')
+        .then(res=>res.json())
+        .then(data=>{
+          data[sec].splice(i,1);
+          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
+        })
+        .then(()=>{alert(`${sec} deleted.`); loadAdminData();});
     }
-
-    document.getElementById('contentForm').addEventListener('submit', e=>{
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      fetch('server.php', {method:'POST', body:formData}).then(r=>r.text()).then(res=>{
-        e.target.reset();
-        e.target.action.value = 'add';
-        loadContent();
-      });
-    });
   </script>
 </body>
 </html>
