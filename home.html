@@ -7,15 +7,38 @@
   <link rel="stylesheet" href="index.css" />
   <style>
     /* Basic styling for the dynamic content */
-    section.content-section {
+    /* Box sizing to prevent overflow */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Container to center content and limit width */
+main.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+}
+
+/* Content sections: no border, background light, full width */
+section.content-section {
+  width: 100%;
   margin: 20px 0;
-  padding: 16px;        /* increase padding for nicer spacing */
+  padding: 16px;
+  border: none; /* NO border */
   border-radius: 8px;
-  background: #fff;     /* white background for better contrast */
-  border: 2px solid #007bff;  /* add a solid blue border */
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1); /* subtle shadow */
-      
-    }
+  background: #f5f5f5;
+  box-shadow: none; /* remove shadow if any */
+}
+
+/* Responsive images */
+.content-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+    
     section.content-section h2 {
       margin-bottom: 12px;
       color: #333;
