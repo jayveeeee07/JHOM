@@ -2,134 +2,336 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JHOM — Home</title>
-  <link rel="stylesheet" href="index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JHOM — Welcome / Login / Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+    .container {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      width: 360px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: #007bff;
+      text-align: center;
+    }
+    p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-top: 16px;
+      margin-bottom: 24px;
+      text-align: justify;
+      color: #444;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background: #0056b3;
+    }
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+    .link-button {
+      background: none;
+      border: none;
+      color: #007bff;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 8px;
+      text-decoration: underline;
+      font-size: 0.9rem;
+      width: auto;
+    }
+    .error {
+      color: red;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .captcha {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      user-select: none;
+      padding: 8px;
+      background: #eee;
+      border-radius: 4px;
+    }
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    .checkbox-container input {
+      margin-right: 8px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <main class="container">
-    <!-- HEADER -->
-    <header class="header">
-      <a class="brand" href="home.html">
-        <img src="logo.jpg" alt="logo">
-        <div><h1>JAYVEE HALL OF MANSION</h1></div>
-      </a>
-      <div class="nav">
-        <a href="home.html" class="active">HOME</a>
-        <a href="room.html">ROOM</a>
-        <a href="cart.html">CART</a>
-        <a href="message.html">MESSAGE</a>
-        <a href="notification.html">NOTIFICATION</a>
-        <a href="adminpanel.html">ADMIN</a>
-        <button class="icon-btn" id="menuBtn">☰</button>
-      </div>
-    </header>
 
-    <!-- MAIN SECTIONS -->
-    <section class="card">
-      <h2>Updates</h2>
-      <div id="updatesList" class="kv">Loading updates...</div>
-    </section>
+<!-- Welcome Screen -->
+<div class="container" id="welcomeScreen">
+  <h1>JAYVEE HALL OF MANSION</h1>
+  <p>
+    Welcome to Jayvee Hall of Mansion, your premier destination for exquisite living and luxurious comfort. We take pride in offering a community designed for those who appreciate elegance, convenience, and exceptional service. Explore our beautiful rooms, exciting events, and exclusive promos tailored just for you. Join us today and experience a lifestyle beyond ordinary. Please read and accept our terms and conditions to proceed. Your privacy and satisfaction are our highest priorities.
+  </p>
+  <div class="checkbox-container">
+    <input type="checkbox" id="acceptTerms" />
+    <label for="acceptTerms">I agree to the terms and conditions</label>
+  </div>
+  <button id="getStartedBtn" disabled>GET STARTED</button>
+</div>
 
-    <section class="card">
-      <h2>News</h2>
-      <div id="newsList" class="kv">Loading news...</div>
-    </section>
+<!-- Login Form -->
+<div class="container" id="loginForm" style="display:none;">
+  <h2>Login to JHOM</h2>
+  <form id="login" novalidate>
+    <label for="loginUsername">Username:</label>
+    <input type="text" id="loginUsername" autocomplete="username" required />
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" autocomplete="current-password" required />
+    <button type="submit">Login</button>
+  </form>
+  <button class="link-button" id="forgotPasswordBtn">Forgot Password?</button>
+  <button class="link-button" id="showRegisterBtn">Register</button>
+  <div class="error" id="loginError"></div>
+</div>
 
-    <section class="card">
-      <h2>Upcoming Events</h2>
-      <div id="eventsList" class="kv">Loading events...</div>
-    </section>
+<!-- Registration Form -->
+<div class="container" id="registerForm" style="display:none;">
+  <h2>Create Account</h2>
+  <form id="register" novalidate enctype="multipart/form-data">
+    <label for="photoUpload">Upload Photo: <span style="color:red">*</span></label>
+    <input type="file" id="photoUpload" accept="image/*" required />
+    
+    <label for="fullname">Fullname: <span style="color:red">*</span></label>
+    <input type="text" id="fullname" required />
+    
+    <label for="email">Email: <span style="color:red">*</span></label>
+    <input type="email" id="email" required />
+    
+    <label for="registerPassword">Password: <span style="color:red">*</span></label>
+    <input type="password" id="registerPassword" required minlength="6" />
+    
+    <div class="captcha" id="captchaText"></div>
+    <label for="captchaInput">Enter CAPTCHA:</label>
+    <input type="text" id="captchaInput" required />
+    
+    <button type="submit">Create Account</button>
+  </form>
+  <button class="link-button" id="backToLoginBtn">Back to Login</button>
+  <div class="error" id="registerError"></div>
+</div>
 
-    <section class="card">
-      <h2>Promos</h2>
-      <div id="promosList" class="kv">Loading promos...</div>
-    </section>
-  </main>
+<script>
+  // Simple captcha generation
+  function generateCaptcha() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let captcha = '';
+    for(let i=0; i<5; i++) {
+      captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return captcha;
+  }
 
-  <!-- SIDE MENU -->
-  <aside class="side-menu" id="sideMenu">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <strong>Connect</strong>
-      <button class="icon-btn" id="closeMenu">✕</button>
-    </div>
-    <div class="socials">
-      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
-      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
-      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
-      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
-      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
-      <a href="About.html">ℹ️ About</a>
-    </div>
-  </aside>
+  let currentCaptcha = generateCaptcha();
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="small-muted">Stay tuned for the latest updates and offers.</div>
-      <div class="kv">© 2025 JHOM</div>
-    </div>
-  </footer>
+  // DOM references
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  const getStartedBtn = document.getElementById('getStartedBtn');
+  const acceptTermsCheckbox = document.getElementById('acceptTerms');
+  const captchaText = document.getElementById('captchaText');
+  captchaText.textContent = 'CAPTCHA: ' + currentCaptcha;
 
-  <!-- SCRIPT -->
-  <script>
-    document.getElementById('menuBtn').addEventListener('click', () => {
-      document.getElementById('sideMenu').classList.add('open');
-    });
-    document.getElementById('closeMenu').addEventListener('click', () => {
-      document.getElementById('sideMenu').classList.remove('open');
-    });
+  // Enable GET STARTED button only if terms accepted
+  acceptTermsCheckbox.addEventListener('change', () => {
+    getStartedBtn.disabled = !acceptTermsCheckbox.checked;
+  });
 
-    // Dynamic data (placeholder simulation)
-    const updates = [
-      { title: "Website Launch", body: "We are now live with new booking features." },
-      { title: "New Room Added", body: "Presidential Suite now available." }
-    ];
-    const news = [
-      { title: "Awarded Best Event Hall 2025", body: "JHOM wins local recognition." }
-    ];
-    const events = [
-      { date: "Aug 15, 2025", title: "Wedding Expo", body: "Showcasing our facilities." },
-      { date: "Sep 05, 2025", title: "Corporate Night", body: "Special rates for companies." }
-    ];
-    const promos = [
-      { title: "50% Off Weekdays", body: "Valid until end of August." }
-    ];
+  // Get Started Button Click - Show login form
+  getStartedBtn.addEventListener('click', () => {
+    welcomeScreen.style.display = 'none';
+    loginForm.style.display = 'block';
+  });
 
-    function renderList(id, list, formatter) {
-      const el = document.getElementById(id);
-      el.innerHTML = list.length
-        ? list.map(formatter).join("")
-        : `<div class="kv">No items yet.</div>`;
+  // Show Register form from login
+  document.getElementById('showRegisterBtn').addEventListener('click', () => {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+    clearErrors();
+    currentCaptcha = generateCaptcha();
+    captchaText.textContent = 'CAPTCHA: ' + currentCaptcha;
+  });
+
+  // Back to Login from Register form
+  document.getElementById('backToLoginBtn').addEventListener('click', () => {
+    registerForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    clearErrors();
+  });
+
+  // Forgot password alert
+  document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+    alert('Please contact admin to reset your password.');
+  });
+
+  // Clear errors
+  function clearErrors() {
+    document.getElementById('loginError').textContent = '';
+    document.getElementById('registerError').textContent = '';
+  }
+
+  // Save user data (simulate saving to localStorage)
+  function saveUser(user) {
+    let users = JSON.parse(localStorage.getItem('JHOM_users') || '[]');
+    users.push(user);
+    localStorage.setItem('JHOM_users', JSON.stringify(users));
+  }
+
+  // Check if username exists
+  function userExists(username) {
+    let users = JSON.parse(localStorage.getItem('JHOM_users') || '[]');
+    return users.some(u => u.username === username);
+  }
+
+  // Get user by username
+  function getUser(username) {
+    let users = JSON.parse(localStorage.getItem('JHOM_users') || '[]');
+    return users.find(u => u.username === username);
+  }
+
+  // Handle registration submit
+  document.getElementById('register').addEventListener('submit', e => {
+    e.preventDefault();
+    clearErrors();
+
+    const photoInput = document.getElementById('photoUpload');
+    const fullname = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const captchaInput = document.getElementById('captchaInput').value.trim().toUpperCase();
+
+    if (!photoInput.files.length) {
+      document.getElementById('registerError').textContent = 'Please upload a photo.';
+      return;
+    }
+    if (!fullname || !email || !password) {
+      document.getElementById('registerError').textContent = 'Please fill in all required fields.';
+      return;
+    }
+    if (captchaInput !== currentCaptcha) {
+      document.getElementById('registerError').textContent = 'CAPTCHA is incorrect.';
+      currentCaptcha = generateCaptcha();
+      captchaText.textContent = 'CAPTCHA: ' + currentCaptcha;
+      return;
     }
 
-    renderList("updatesList", updates, u => `
-      <div class="card" style="margin-bottom:8px">
-        <strong>${u.title}</strong>
-        <div class="small-muted">${u.body}</div>
-      </div>
-    `);
+    // Convert photo to base64 to store in localStorage (simulate)
+    const file = photoInput.files[0];
+    const reader = new FileReader();
 
-    renderList("newsList", news, n => `
-      <div class="card" style="margin-bottom:8px">
-        <strong>${n.title}</strong>
-        <div class="small-muted">${n.body}</div>
-      </div>
-    `);
+    reader.onload = function(event) {
+      const photoData = event.target.result;
 
-    renderList("eventsList", events, e => `
-      <div class="card" style="margin-bottom:8px">
-        <strong>${e.date} — ${e.title}</strong>
-        <div class="small-muted">${e.body}</div>
-      </div>
-    `);
+      // Use email as username (or you can add a separate username field)
+      const username = email.toLowerCase();
 
-    renderList("promosList", promos, p => `
-      <div class="card" style="margin-bottom:8px">
-        <strong>${p.title}</strong>
-        <div class="small-muted">${p.body}</div>
-      </div>
-    `);
-  </script>
+      if (userExists(username)) {
+        document.getElementById('registerError').textContent = 'Account with this email already exists.';
+        return;
+      }
+
+      // Save user object
+      saveUser({
+        username,
+        fullname,
+        email,
+        password,
+        photo: photoData
+      });
+
+      alert('Account created! Please login.');
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  // Handle login submit
+  document.getElementById('login').addEventListener('submit', e => {
+    e.preventDefault();
+    clearErrors();
+
+    const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!username || !password) {
+      document.getElementById('loginError').textContent = 'Please enter username and password.';
+      return;
+    }
+
+    const user = getUser(username);
+    if (!user) {
+      document.getElementById('loginError').textContent = 'User not found.';
+      return;
+    }
+    if (user.password !== password) {
+      document.getElementById('loginError').textContent = 'Incorrect password.';
+      return;
+    }
+
+    // Save login state (simulate session)
+    localStorage.setItem('JHOM_loggedInUser', JSON.stringify(user));
+
+    // Redirect to main home page (replace with your home page path)
+    window.location.href = 'index.html';
+  });
+</script>
 </body>
 </html>
