@@ -7,250 +7,251 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <main class="container">
-    <header class="header">
-      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
-      <div class="nav">
-        <a href="home.html">HOME</a>
-        <a href="room.html">ROOM</a>
-        <a href="cart.html">CART</a>
-        <a href="message.html">MESSAGE</a>
-        <a href="notification.html">NOTIFICATION</a>
-        <a href="adminpanel.html" class="active">ADMIN</a>
-        <button class="icon-btn" id="menuBtn">☰</button>
-      </div>
-    </header>
+<main class="container">
+  <header class="header">
+    <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+    <div class="nav">
+      <a href="home.html">HOME</a>
+      <a href="room.html">ROOM</a>
+      <a href="cart.html">CART</a>
+      <a href="message.html">MESSAGE</a>
+      <a href="notification.html">NOTIFICATION</a>
+      <a href="adminpanel.html" class="active">ADMIN</a>
+      <button class="icon-btn" id="menuBtn">☰</button>
+    </div>
+  </header>
 
+  <section class="card">
+    <h3>Administrator Login</h3>
+    <form id="loginForm" style="max-width:420px">
+      <div class="form-row"><input class="input" id="username" placeholder="Username" required></div>
+      <div class="form-row"><input class="input" id="password" placeholder="Password" type="password" required></div>
+      <div style="display:flex;gap:8px"><button class="btn btn-primary" type="submit">Login</button></div>
+    </form>
+  </section>
+
+  <div id="adminArea" style="display:none; margin-top:16px">
     <section class="card">
-      <h3>Administrator Login</h3>
-      <form id="loginForm" style="max-width:420px">
-        <div class="form-row"><input class="input" id="username" placeholder="Username" required></div>
-        <div class="form-row"><input class="input" id="password" placeholder="Password" type="password" required></div>
-        <div style="display:flex;gap:8px"><button class="btn btn-primary" type="submit">Login</button></div>
-      </form>
-    </section>
+      <h3>Administrator Dashboard</h3>
+      <p class="small">Manage users, bookings and messages.</p>
 
-    <div id="adminArea" style="display:none; margin-top:16px">
-      <section class="card">
-        <h3>Administrator Dashboard</h3>
-        <p class="small">Manage users, bookings, messages, and website content.</p>
-
-        <div class="admin-grid">
-          <div>
-            <h4>Registered Users</h4>
-            <table class="table" id="usersTable"><thead><tr><th>Photo</th><th>Name</th><th>Email</th><th>Contact</th><th>Status</th></tr></thead><tbody></tbody></table>
-          </div>
-
-          <div>
-            <h4>Bookings</h4>
-            <table class="table" id="bookingsTable"><thead><tr><th>Image</th><th>Name</th><th>Check-in</th><th>Price</th><th>Proof</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>
-          </div>
+      <div class="admin-grid">
+        <div>
+          <h4>Registered Users</h4>
+          <table class="table" id="usersTable"><thead><tr><th>Photo</th><th>Name</th><th>Email</th><th>Contact</th><th>Status</th></tr></thead><tbody></tbody></table>
         </div>
-
-        <div style="margin-top:12px">
-          <h4>Messages</h4>
-          <div id="adminMsgs"></div>
-        </div>
-
-        <hr style="margin:20px 0">
 
         <div>
-          <h4>Website Content Management</h4>
-          <p class="small">Manage homepage sections: Updates, News, Events, and Promos.</p>
-
-          <div id="contentSections"></div>
+          <h4>Bookings</h4>
+          <table class="table" id="bookingsTable"><thead><tr><th>Image</th><th>Name</th><th>Check-in</th><th>Price</th><th>Proof</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>
         </div>
-      </section>
+      </div>
+
+      <div style="margin-top:12px">
+        <h4>Messages</h4>
+        <div id="adminMsgs"></div>
+      </div>
+    </section>
+
+    <!-- NEW: Content Management Sections -->
+    <section class="card">
+      <h3>Manage Updates, News, Events & Promos</h3>
+      <p class="small">Add, edit or remove public posts for the home page.</p>
+
+      <div id="contentSections"></div>
+    </section>
+  </div>
+</main>
+
+<aside class="side-menu" id="sideMenu">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <strong>Connect</strong>
+    <button class="icon-btn" id="closeMenu">✕</button>
+  </div>
+  <div class="socials">
+    <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+    <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+    <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+    <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+    <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+    <a href="About.html">ℹ️ About</a>
+  </div>
+</aside>
+
+<footer class="footer">
+  <div class="container">
+    <div class="small-muted">Admin actions update notifications and messages for users automatically.</div>
+    <div class="kv">JHOM Admin</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+// login
+const loginForm = document.getElementById('loginForm');
+loginForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const user = document.getElementById('username').value.trim();
+  const pass = document.getElementById('password').value.trim();
+  if(user==='JHOM' && pass==='ADMIN'){
+    document.getElementById('adminArea').style.display='block';
+    loginForm.style.display='none';
+    loadAdminData();
+    loadContentSections();
+  } else alert('Invalid credentials');
+});
+
+function loadAdminData(){
+  // users
+  const users = JSON.parse(localStorage.getItem('users')||'[]');
+  const uT = document.querySelector('#usersTable tbody');
+  uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
+
+  // bookings
+  const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
+  const bT = document.querySelector('#bookingsTable tbody');
+  bT.innerHTML = (bookings.length? bookings.map((b,idx)=>`
+    <tr>
+      <td><img src="${b.room.img}" style="width:80px;height:44px;object-fit:cover"></td>
+      <td>${b.name}</td>
+      <td>${b.date}</td>
+      <td>₱ ${Number(b.room.price).toLocaleString()}</td>
+      <td>${b.proof ? `<a href="${b.proof}" target="_blank">View</a>` : '—'}</td>
+      <td>${b.status}</td>
+      <td>
+        <button class="btn btn-outline" data-i="${idx}" data-act="approve">Approve</button>
+        <button class="btn btn-outline" data-i="${idx}" data-act="reject">Reject</button>
+        <button class="btn btn-primary" data-i="${idx}" data-act="view">View</button>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="7">No bookings yet.</td></tr>');
+  attachBookingActions();
+
+  // messages
+  const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
+  const adminMsgs = document.getElementById('adminMsgs');
+  adminMsgs.innerHTML = (msgs.length? msgs.map((m,idx)=>`
+    <div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between"><div><strong>${m.name}</strong><div class="kv">${m.email} • ${m.date}</div></div><div class="badge">${m.ref}</div></div>
+      <div style="margin-top:8px">${m.body||'<em>No body</em>'}</div>
+      <div style="margin-top:8px">
+        <textarea class="input" id="reply-${idx}" placeholder="Reply to user"></textarea>
+        <div style="margin-top:8px"><button class="btn btn-primary" data-i="${idx}" data-act="reply">SEND</button></div>
+      </div>
     </div>
+  `).join('') : '<div class="kv">No messages</div>');
 
-  </main>
-
-  <aside class="side-menu" id="sideMenu">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <strong>Connect</strong>
-      <button class="icon-btn" id="closeMenu">✕</button>
-    </div>
-    <div class="socials">
-      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
-      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
-      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
-      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
-      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
-      <a href="About.html">ℹ️ About</a>
-    </div>
-  </aside>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="small-muted">Admin actions update notifications and messages for users automatically.</div>
-      <div class="kv">JHOM Admin</div>
-    </div>
-  </footer>
-
-  <script>
-    const sections = ["updates","news","events","promos"];
-
-    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
-    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
-
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', e=>{
-      e.preventDefault();
-      const user = document.getElementById('username').value.trim();
-      const pass = document.getElementById('password').value.trim();
-      if(user==='JHOM' && pass==='ADMIN'){
-        document.getElementById('adminArea').style.display='block';
-        loginForm.style.display='none';
-        loadAdminData();
-      } else alert('Invalid credentials');
-    });
-
-    function loadAdminData(){
-      // load users
-      const users = JSON.parse(localStorage.getItem('users')||'[]');
-      const uT = document.querySelector('#usersTable tbody');
-      uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
-
-      // load bookings
-      const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
-      const bT = document.querySelector('#bookingsTable tbody');
-      bT.innerHTML = (bookings.length? bookings.map((b,idx)=>`
-        <tr>
-          <td><img src="${b.room.img}" style="width:80px;height:44px;object-fit:cover"></td>
-          <td>${b.name}</td>
-          <td>${b.date}</td>
-          <td>₱ ${Number(b.room.price).toLocaleString()}</td>
-          <td>${b.proof ? `<a href="${b.proof}" target="_blank">View</a>` : '—'}</td>
-          <td>${b.status}</td>
-          <td>
-            <button class="btn btn-outline" data-i="${idx}" data-act="approve">Approve</button>
-            <button class="btn btn-outline" data-i="${idx}" data-act="reject">Reject</button>
-            <button class="btn btn-primary" data-i="${idx}" data-act="view">View</button>
-          </td>
-        </tr>
-      `).join('') : '<tr><td colspan="7">No bookings yet.</td></tr>');
-      attachBookingActions();
-
-      // load messages
+  document.querySelectorAll('button[data-act="reply"]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const idx = +b.dataset.i;
+      const val = document.getElementById(`reply-${idx}`).value.trim();
+      if(!val){ alert('Type a reply'); return;}
       const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
-      const adminMsgs = document.getElementById('adminMsgs');
-      adminMsgs.innerHTML = (msgs.length? msgs.map((m,idx)=>`
-        <div class="card" style="margin-bottom:8px">
-          <div style="display:flex;justify-content:space-between"><div><strong>${m.name}</strong><div class="kv">${m.email} • ${m.date}</div></div><div class="badge">${m.ref}</div></div>
-          <div style="margin-top:8px">${m.body||'<em>No body</em>'}</div>
-          <div style="margin-top:8px">
-            <textarea class="input" id="reply-${idx}" placeholder="Reply to user"></textarea>
-            <div style="margin-top:8px"><button class="btn btn-primary" data-i="${idx}" data-act="reply">SEND</button></div>
-          </div>
-        </div>
-      `).join('') : '<div class="kv">No messages</div>');
-      document.querySelectorAll('button[data-act="reply"]').forEach(b=>{
-        b.addEventListener('click', ()=>{
-          const idx = +b.dataset.i;
-          const val = document.getElementById(`reply-${idx}`).value.trim();
-          if(!val){ alert('Type a reply'); return;}
-          const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
-          msgs[idx].adminReply = val;
-          localStorage.setItem('messages', JSON.stringify(msgs));
-          alert('Reply sent to user inbox');
-          loadAdminData();
-        });
-      });
+      msgs[idx].adminReply = val;
+      localStorage.setItem('messages', JSON.stringify(msgs));
+      alert('Reply sent to user inbox');
+      loadAdminData();
+    });
+  });
+}
 
-      // load website content
-      fetch('server.php')
-        .then(res=>res.json())
-        .then(data=>{
-          const container = document.getElementById('contentSections');
-          container.innerHTML = sections.map(sec=>{
-            const items = data[sec] || [];
-            return `
-              <div style="margin-top:20px">
-                <h4 style="text-transform:capitalize">${sec}</h4>
-                <button class="btn btn-primary" onclick="addItem('${sec}')">Add Item</button>
-                <table class="table"><thead><tr><th>Title</th><th>Description</th><th>Date</th><th>Action</th></tr></thead>
-                <tbody>
-                  ${items.length ? items.map((it,i)=>`
-                    <tr>
-                      <td>${it.title}</td>
-                      <td>${it.desc}</td>
-                      <td>${it.date}</td>
-                      <td>
-                        <button class="btn btn-outline" onclick="editItem('${sec}',${i})">Edit</button>
-                        <button class="btn btn-outline" onclick="deleteItem('${sec}',${i})">Delete</button>
-                      </td>
-                    </tr>`).join('') : `<tr><td colspan="4">No ${sec} yet.</td></tr>`}
-                </tbody>
-                </table>
-              </div>
-            `;
-          }).join('');
-        });
-    }
+function attachBookingActions(){
+  document.querySelectorAll('button[data-act]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const idx = +b.dataset.i;
+      const act = b.dataset.act;
+      const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
+      if(!bookings[idx]) return;
+      if(act==='approve'){
+        bookings[idx].status = 'Approved';
+        bookings[idx].pin = Math.random().toString(36).slice(2,10).toUpperCase();
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        alert('Booking approved and notification sent.');
+      } else if(act==='reject'){
+        bookings[idx].status = 'Rejected';
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        alert('Booking rejected.');
+      } else if(act==='view'){
+        alert(JSON.stringify(bookings[idx],null,2));
+      }
+      loadAdminData();
+    });
+  });
+}
 
-    function attachBookingActions(){
-      document.querySelectorAll('button[data-act]').forEach(b=>{
-        b.addEventListener('click', ()=>{
-          const idx = +b.dataset.i;
-          const act = b.dataset.act;
-          const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
-          if(!bookings[idx]) return;
-          if(act==='approve'){
-            bookings[idx].status = 'Approved';
-            bookings[idx].pin = Math.random().toString(36).slice(2,10).toUpperCase();
-            localStorage.setItem('bookings', JSON.stringify(bookings));
-            alert('Booking approved and notification sent.');
-          } else if(act==='reject'){
-            bookings[idx].status = 'Rejected';
-            localStorage.setItem('bookings', JSON.stringify(bookings));
-            alert('Booking rejected.');
-          } else if(act==='view'){
-            alert(JSON.stringify(bookings[idx],null,2));
-          }
-          loadAdminData();
-        });
-      });
-    }
+// ========================
+// NEW CONTENT MANAGEMENT
+// ========================
+function loadContentSections(){
+  const types = ['Updates','News','Events','Promos'];
+  const container = document.getElementById('contentSections');
+  container.innerHTML = types.map(type=>`
+    <div class="card" style="margin-top:12px">
+      <h4>${type}</h4>
+      <form data-type="${type}" class="contentForm" style="margin-bottom:8px">
+        <input class="input" name="title" placeholder="Title" required>
+        <textarea class="input" name="desc" placeholder="Description" required></textarea>
+        <input class="input" name="date" type="date" required>
+        <input class="input" name="image" type="file" accept="image/*">
+        <button class="btn btn-primary" type="submit">Add ${type}</button>
+      </form>
+      <div id="${type}List" class="kv small"></div>
+    </div>
+  `).join('');
 
-    function addItem(sec){
-      const title = prompt(`Enter ${sec} title:`);
-      if(!title) return;
-      const desc = prompt(`Enter ${sec} description:`) || '';
-      const date = new Date().toISOString().split('T')[0];
-      fetch('server.php')
-        .then(res=>res.json())
-        .then(data=>{
-          data[sec] = data[sec] || [];
-          data[sec].push({title, desc, date});
-          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
-        })
-        .then(()=>{alert(`${sec} added.`); loadAdminData();});
-    }
+  document.querySelectorAll('.contentForm').forEach(form=>{
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const type = form.dataset.type;
+      const storeKey = `content_${type}`;
+      const existing = JSON.parse(localStorage.getItem(storeKey)||'[]');
 
-    function editItem(sec,i){
-      fetch('server.php')
-        .then(res=>res.json())
-        .then(data=>{
-          const item = data[sec][i];
-          const title = prompt(`Edit ${sec} title:`, item.title);
-          if(!title) return;
-          const desc = prompt(`Edit ${sec} description:`, item.desc) || '';
-          data[sec][i] = {title, desc, date: item.date};
-          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
-        })
-        .then(()=>{alert(`${sec} updated.`); loadAdminData();});
-    }
+      const title = form.title.value.trim();
+      const desc = form.desc.value.trim();
+      const date = form.date.value;
+      const file = form.image.files[0];
 
-    function deleteItem(sec,i){
-      if(!confirm(`Delete this ${sec} item?`)) return;
-      fetch('server.php')
-        .then(res=>res.json())
-        .then(data=>{
-          data[sec].splice(i,1);
-          return fetch('server.php', {method:'POST', body: JSON.stringify(data)});
-        })
-        .then(()=>{alert(`${sec} deleted.`); loadAdminData();});
-    }
-  </script>
+      if(file){
+        const reader = new FileReader();
+        reader.onload = ev=>{
+          existing.push({title,desc,date,img:ev.target.result});
+          localStorage.setItem(storeKey, JSON.stringify(existing));
+          form.reset();
+          loadContentSections();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        existing.push({title,desc,date,img:''});
+        localStorage.setItem(storeKey, JSON.stringify(existing));
+        form.reset();
+        loadContentSections();
+      }
+    });
+  });
+
+  types.forEach(type=>{
+    const list = JSON.parse(localStorage.getItem(`content_${type}`)||'[]');
+    const target = document.getElementById(`${type}List`);
+    target.innerHTML = list.length ? list.map((item,i)=>`
+      <div style="margin-bottom:6px">
+        ${item.img? `<img src="${item.img}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;margin-right:6px">` : ''}
+        <strong>${item.title}</strong> (${item.date})
+        <div class="small">${item.desc}</div>
+        <button class="btn btn-outline" onclick="deleteContent('${type}',${i})">Delete</button>
+      </div>
+    `).join('') : `<em>No ${type} yet.</em>`;
+  });
+}
+
+function deleteContent(type, idx){
+  const key = `content_${type}`;
+  const list = JSON.parse(localStorage.getItem(key)||'[]');
+  list.splice(idx,1);
+  localStorage.setItem(key, JSON.stringify(list));
+  loadContentSections();
+}
+</script>
 </body>
 </html>
