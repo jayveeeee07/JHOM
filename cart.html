@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cart — Jayvee Hall of Mansion</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <img src="logo.jpg" alt="logo">
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
+      </a>
+      <div class="nav">
+        <a href="home.html">HOME</a>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html" class="active">CART</a>
+        <a href="message.html">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Your Cart List</h3>
+      <div id="cartArea"></div>
+    </section>
+  </main>
+
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">Review your selections carefully. Proceed to booking to confirm reservations and payments.</div>
+      <div class="kv">JHOM Cart</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+    function renderCart(){
+      const cartArea = document.getElementById('cartArea');
+      const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+      if(!cart.length){ cartArea.innerHTML = '<div class="kv">Your cart is empty.</div>'; return;}
+      cartArea.innerHTML = cart.map((r,i)=>`
+        <div class="card" style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
+          <div style="width:88px;height:66px;overflow:hidden;border-radius:8px"><img src="${r.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <strong>${r.name}</strong>
+                <div class="kv">Room #${r.id}</div>
+              </div>
+              <div class="badge">₱ ${Number(r.price).toLocaleString()}</div>
+            </div>
+            <div class="small" style="margin-top:6px">${r.desc}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-outline" data-index="${i}" data-action="remove">Not Interested</button>
+            <button class="btn btn-primary" data-index="${i}" data-action="book">Book Now</button>
+          </div>
+        </div>
+      `).join('');
+      attachCartButtons();
+    }
+
+    function attachCartButtons(){
+      document.querySelectorAll('button[data-action="remove"]').forEach(b=>{
+        b.addEventListener('click',()=>{
+          const idx = +b.dataset.index;
+          const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+          cart.splice(idx,1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          renderCart();
+        });
+      });
+      document.querySelectorAll('button[data-action="book"]').forEach(b=>{
+        b.addEventListener('click',()=>{
+          const idx = +b.dataset.index;
+          const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+          const room = cart[idx];
+          localStorage.setItem('selectedRoom', JSON.stringify(room));
+          window.location.href='booking.html';
+        });
+      });
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
