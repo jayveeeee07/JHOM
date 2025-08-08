@@ -267,7 +267,7 @@
     <section id="loginSection" aria-label="Login form" hidden>
       <h2>Login</h2>
       <form id="loginForm" novalidate>
-        <label for="loginUsername">Username or Email:</label>
+        <label for="loginUsername">Username:</label>
         <input type="text" id="loginUsername" name="loginUsername" required autocomplete="username" />
         
         <label for="loginPassword">Password:</label>
@@ -307,70 +307,105 @@
       </form>
       <button class="form-link" id="backToLoginFromRegisterBtn">Back to Login</button>
     </section>
+
+    <!-- Forgot Password Section -->
+    <section id="forgotPasswordSection" aria-label="Forgot Password form" hidden>
+      <h2>Forgot Password</h2>
+      <form id="forgotPasswordForm" novalidate>
+        <label for="forgotEmail">Enter your email address:</label>
+        <input type="email" id="forgotEmail" name="forgotEmail" required autocomplete="email" />
+        
+        <div class="error-message" id="forgotPasswordError" role="alert" aria-live="assertive"></div>
+        <div class="success-message" id="forgotPasswordSuccess" style="color:green; font-size:0.9rem; min-height:1.1em;" role="alert" aria-live="polite"></div>
+        
+        <button type="submit">Send Reset Link</button>
+      </form>
+      <button class="form-link" id="backToLoginFromForgotBtn">Back to Login</button>
+    </section>
   </main>
 
-  <script>
-    // Elements
-    const welcomeSection = document.getElementById('welcomeSection');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const termsCheckbox = document.getElementById('termsCheckbox');
+  <footer class="footer" role="contentinfo" aria-label="Site footer">
+    <p>© 2025 JHOM — Jayvee Hall of Mansion. All rights reserved.</p>
+  </footer>
 
+  <script>
+    // Sections
+    const welcomeSection = document.getElementById('welcomeSection');
     const loginSection = document.getElementById('loginSection');
+    const registerSection = document.getElementById('registerSection');
+    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
+
+    // Buttons & Forms
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
+    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+    const backToLoginFromForgotBtn = document.getElementById('backToLoginFromForgotBtn');
+
     const loginForm = document.getElementById('loginForm');
     const loginError = document.getElementById('loginError');
-    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-    const showRegisterBtn = document.getElementById('showRegisterBtn');
 
-    const registerSection = document.getElementById('registerSection');
     const registerForm = document.getElementById('registerForm');
     const registerError = document.getElementById('registerError');
-    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
 
-    // Utility functions for showing/hiding sections
-    function showSection(section) {
-      [welcomeSection, loginSection, registerSection].forEach(sec => {
-        if (sec === section) {
-          sec.removeAttribute('hidden');
-          sec.classList.add('active');
-        } else {
-          sec.setAttribute('hidden', true);
-          sec.classList.remove('active');
-        }
-      });
-    }
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    const forgotPasswordError = document.getElementById('forgotPasswordError');
+    const forgotPasswordSuccess = document.getElementById('forgotPasswordSuccess');
 
-    // Enable Get Started button only when terms checked
+    // Enable Get Started only if terms checked
     termsCheckbox.addEventListener('change', () => {
       getStartedBtn.disabled = !termsCheckbox.checked;
     });
 
-    // On clicking Get Started: go to login section
+    // Show login from welcome
     getStartedBtn.addEventListener('click', () => {
       showSection(loginSection);
     });
 
-    // Show Register form when clicked
+    // Show register from login
     showRegisterBtn.addEventListener('click', () => {
       showSection(registerSection);
-      registerForm.reset();
-      registerError.textContent = '';
     });
 
-    // Back to Login from Register form
+    // Back to login from register
     backToLoginFromRegisterBtn.addEventListener('click', () => {
+      showSection(loginSection);
+      registerError.textContent = '';
+      registerForm.reset();
+    });
+
+    // Show Forgot Password from Login
+    forgotPasswordBtn.addEventListener('click', () => {
+      showSection(forgotPasswordSection);
+      forgotPasswordForm.reset();
+      forgotPasswordError.textContent = '';
+      forgotPasswordSuccess.textContent = '';
+    });
+
+    // Back to Login from Forgot Password
+    backToLoginFromForgotBtn.addEventListener('click', () => {
       showSection(loginSection);
       loginError.textContent = '';
     });
 
-    // LocalStorage user handling
+    // Helper to show only one section at a time
+    function showSection(section) {
+      [welcomeSection, loginSection, registerSection, forgotPasswordSection].forEach(sec => {
+        sec.hidden = true;
+        sec.classList.remove('active');
+      });
+      section.hidden = false;
+      section.classList.add('active');
+    }
+
+    // Simple localStorage user store for demo
     function getUsers() {
-      return JSON.parse(localStorage.getItem('users') || '[]');
+      const users = localStorage.getItem('users');
+      return users ? JSON.parse(users) : [];
     }
     function saveUsers(users) {
       localStorage.setItem('users', JSON.stringify(users));
-    }
-    function validateEmail(email) {
-      return /\S+@\S+\.\S+/.test(email);
     }
 
     // Login form submit
@@ -378,35 +413,23 @@
       e.preventDefault();
       loginError.textContent = '';
 
-      const usernameInput = loginForm.loginUsername.value.trim().toLowerCase();
-      const passwordInput = loginForm.loginPassword.value;
+      const username = loginForm.loginUsername.value.trim();
+      const password = loginForm.loginPassword.value;
 
-      if (!usernameInput || !passwordInput) {
-        loginError.textContent = 'Please enter both username/email and password.';
+      if (!username || !password) {
+        loginError.textContent = 'Please fill in both username and password.';
         return;
       }
 
       const users = getUsers();
-      // Check by fullname or email (case insensitive)
-      const user = users.find(u =>
-        u.fullname.toLowerCase() === usernameInput ||
-        u.email.toLowerCase() === usernameInput
-      );
+      const user = users.find(u => u.username === username && u.password === password);
 
       if (!user) {
-        loginError.textContent = 'User not found. Please register first.';
+        loginError.textContent = 'Invalid username or password.';
         return;
       }
 
-      if (user.password !== passwordInput) {
-        loginError.textContent = 'Incorrect password.';
-        return;
-      }
-
-      // Save logged in user to localStorage (optional)
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-      // Redirect to home.html
+      // Successful login: redirect to home.html
       window.location.href = 'home.html';
     });
 
@@ -415,50 +438,70 @@
       e.preventDefault();
       registerError.textContent = '';
 
-      // Photo file name (simplified, real app needs file upload handling)
-      const photoInput = registerForm.registerPhoto.files[0];
-      if (!photoInput) {
-        registerError.textContent = 'Please upload a photo.';
-        return;
-      }
-      const photoName = photoInput.name;
-
+      const photo = registerForm.registerPhoto.files[0];
       const fullname = registerForm.registerFullname.value.trim();
       const email = registerForm.registerEmail.value.trim().toLowerCase();
       const password = registerForm.registerPassword.value;
 
-      if (!fullname) {
-        registerError.textContent = 'Please enter your fullname.';
+      if (!photo) {
+        registerError.textContent = 'Please upload a photo.';
         return;
       }
-
-      if (!validateEmail(email)) {
-        registerError.textContent = 'Please enter a valid email.';
-        return;
-      }
-
-      if (password.length < 6) {
-        registerError.textContent = 'Password must be at least 6 characters.';
+      if (!fullname || !email || !password) {
+        registerError.textContent = 'Please fill in all required fields.';
         return;
       }
 
       const users = getUsers();
-
       if (users.some(u => u.email === email)) {
-        registerError.textContent = 'Email is already registered.';
+        registerError.textContent = 'An account with this email already exists.';
         return;
       }
 
-      users.push({ fullname, email, password, photo: photoName });
+      // Save new user (username set as email for simplicity)
+      users.push({
+        username: email,
+        email,
+        fullname,
+        password,
+        photo: URL.createObjectURL(photo) // just for demo, not saved persistently
+      });
       saveUsers(users);
 
-      alert('Account created successfully! Please login.');
-
+      alert('Account created successfully! You can now login.');
       registerForm.reset();
-
       showSection(loginSection);
-      loginError.textContent = '';
     });
+
+    // Forgot Password form submit
+    forgotPasswordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      forgotPasswordError.textContent = '';
+      forgotPasswordSuccess.textContent = '';
+
+      const emailInput = forgotPasswordForm.forgotEmail.value.trim().toLowerCase();
+
+      if (!emailInput) {
+        forgotPasswordError.textContent = 'Please enter your email.';
+        return;
+      }
+
+      const users = getUsers();
+      const user = users.find(u => u.email === emailInput);
+
+      if (!user) {
+        forgotPasswordError.textContent = 'Email not found. Please check and try again.';
+        return;
+      }
+
+      // For demo: just show success message (no actual email sending)
+      forgotPasswordSuccess.textContent = 'If this email is registered, a reset link has been sent.';
+      forgotPasswordForm.reset();
+    });
+
+    // Initialize page: show welcome
+    showSection(welcomeSection);
+    getStartedBtn.disabled = true;
   </script>
 </body>
 </html>
