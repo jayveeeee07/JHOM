@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JAYVEE HALL OF MANSION — Welcome</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <img src="logo.jpg" alt="logo">
+        <div>
+          <h1>JAYVEE HALL OF MANSION</h1>
+          <div class="kv">Brgy Poblacion, Malungon, Sarangani, Philippines 9503</div>
+        </div>
+      </a>
+      <div class="nav">
+        <a href="home.html" class="active">HOME</a>
+        <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
+      </div>
+    </header>
+
+    <section class="hero card">
+      <div class="info">
+        <h2>Welcome to Jayvee Hall of Mansion</h2>
+        <p>Welcome — we invite you to experience comfort and warm hospitality in our family-run rooms designed for both leisure and business travelers. Enjoy clean, well-appointed rooms, friendly staff, and easy access to local attractions and services. We look forward to making your stay memorable.</p>
+      </div>
+      <div style="width:160px; text-align:center">
+        <img src="logo.jpg" alt="logo" style="width:120px;height:120px;border-radius:12px;object-fit:cover;">
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px;">
+      <h3 style="margin:0 0 8px 0">Get Started</h3>
+      <form id="startForm">
+        <div class="form-row">
+          <label class="small">Please accept terms and conditions</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="terms" required>
+            <label for="terms" class="small">I agree to the Terms and Conditions</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button type="submit" class="btn btn-primary">GET STARTED</button>
+          <a class="btn btn-outline" href="home.html">Skip</a>
+        </div>
+      </form>
+    </section>
+
+    <div style="height:30px"></div>
+  </main>
+
+  <!-- Side menu (shared across pages) -->
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <!-- sticky footer (20 words) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="small-muted">JHOM — Comfort, Care, and Charm. Book with ease — best rates guaranteed and friendly staff awaits you.</div>
+      <div class="kv">© Jayvee Hall of Mansion</div>
+    </div>
+  </footer>
+
+  <script>
+    // menu toggle
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+
+    // form submit validation
+    document.getElementById('startForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const terms = document.getElementById('terms').checked;
+      if(!terms){ alert('Please accept terms and conditions'); return;}
+      // go to home
+      window.location.href='home.html';
+    });
+  </script>
+</body>
+</html>
