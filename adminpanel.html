@@ -52,6 +52,37 @@
           <div id="adminMsgs"></div>
         </div>
       </section>
+
+      <!-- NEW: Dynamic Content Management -->
+      <section class="card" style="margin-top:20px">
+        <h3>Manage Updates, News, Events & Promos</h3>
+        <form id="contentForm" action="server.php" method="POST" style="max-width:500px">
+          <div class="form-row">
+            <label>Section:</label>
+            <select name="section" class="input">
+              <option value="updates">Updates</option>
+              <option value="news">News</option>
+              <option value="events">Events</option>
+              <option value="promos">Promos</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input class="input" name="title" placeholder="Title" required>
+          </div>
+          <div class="form-row">
+            <textarea class="input" name="description" placeholder="Description" required></textarea>
+          </div>
+          <div class="form-row">
+            <input class="input" name="date" placeholder="Date (e.g. August 8, 2025)">
+          </div>
+          <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+
+        <div id="contentList" style="margin-top:20px">
+          <h4>Existing Entries</h4>
+          <div id="dynamicEntries">Loading...</div>
+        </div>
+      </section>
     </div>
 
   </main>
@@ -79,10 +110,11 @@
   </footer>
 
   <script>
-    // login
+    // Menu
     document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
     document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
 
+    // Login
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', e=>{
       e.preventDefault();
@@ -92,11 +124,12 @@
         document.getElementById('adminArea').style.display='block';
         loginForm.style.display='none';
         loadAdminData();
+        loadDynamicContent();
       } else alert('Invalid credentials');
     });
 
     function loadAdminData(){
-      // users (simple placeholder)
+      // users
       const users = JSON.parse(localStorage.getItem('users')||'[]');
       const uT = document.querySelector('#usersTable tbody');
       uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
@@ -134,13 +167,11 @@
           </div>
         </div>
       `).join('') : '<div class="kv">No messages</div>');
-      // attach reply handlers
       document.querySelectorAll('button[data-act="reply"]').forEach(b=>{
         b.addEventListener('click', ()=>{
           const idx = +b.dataset.i;
           const val = document.getElementById(`reply-${idx}`).value.trim();
           if(!val){ alert('Type a reply'); return;}
-          // store reply into messages as admin reply (for simplicity, append to messages)
           const msgs = JSON.parse(localStorage.getItem('messages')||'[]');
           msgs[idx].adminReply = val;
           localStorage.setItem('messages', JSON.stringify(msgs));
@@ -172,6 +203,32 @@
           loadAdminData();
         });
       });
+    }
+
+    // Load dynamic content from data.json
+    function loadDynamicContent(){
+      fetch('data.json')
+        .then(res => res.json())
+        .then(data => {
+          let html = '';
+          Object.keys(data).forEach(section => {
+            html += `<h5 style="margin-top:10px;text-transform:capitalize">${section}</h5>`;
+            if(data[section].length){
+              html += '<ul>';
+              data[section].forEach((item, idx) => {
+                if(typeof item === 'string'){
+                  html += `<li>${item} <a href="delete.php?section=${section}&idx=${idx}">[Delete]</a></li>`;
+                } else {
+                  html += `<li><strong>${item.title}</strong> - ${item.description} (${item.date}) <a href="delete.php?section=${section}&idx=${idx}">[Delete]</a></li>`;
+                }
+              });
+              html += '</ul>';
+            } else {
+              html += '<div class="kv">No entries</div>';
+            }
+          });
+          document.getElementById('dynamicEntries').innerHTML = html;
+        });
     }
   </script>
 </body>
