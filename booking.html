@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Booking — Jayvee Hall of Mansion</title>
-  <link rel="stylesheet" href="index.css">
+  <title>Reservation Form — JHOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
+    <!-- HEADER -->
     <header class="header">
-      <a class="brand" href="home.html"><img src="logo.jpg" alt="logo"><div><h1>JAYVEE HALL OF MANSION</h1></div></a>
+      <a class="brand" href="home.html">
+        <img src="logo.jpg" alt="logo">
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
+      </a>
       <div class="nav">
         <a href="home.html">HOME</a>
         <a href="room.html">ROOM</a>
@@ -21,63 +25,52 @@
       </div>
     </header>
 
+    <!-- BOOKING SECTION -->
     <section class="card">
-      <h3>RESERVATION FORM</h3>
-      <p class="small">Complete the form to reserve your selected room. Check-in within 12–24 hours only.</p>
+      <h2>Reservation Form</h2>
+      <p class="small-muted">Secure your stay by completing the form below. Please ensure all required fields are filled in before confirming your booking.</p>
 
-      <div style="display:flex;gap:16px;flex-direction:column;">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div style="width:120px;height:80px;overflow:hidden;border-radius:8px"><img id="roomImg" src="image1.jpg" style="width:100%;height:100%;object-fit:cover"></div>
-          <div style="flex:1">
-            <div id="roomName" style="font-weight:800">Room Name</div>
-            <div class="kv" id="roomNumber">Room #</div>
-            <div class="kv" id="roomPrice">Price</div>
-          </div>
-        </div>
-
-        <form id="bookingForm">
-          <div class="form-row">
-            <label class="kv">Full Name (required)</label>
-            <input class="input" id="fullname" required>
-          </div>
-
-          <div class="form-row">
-            <label class="kv">Face Scan or Upload (required)</label>
-            <input type="file" id="face" accept="image/*" required>
-            <div id="facePreview" style="margin-top:8px"></div>
-          </div>
-
-          <div class="form-row">
-            <label class="kv">Date Check In (required, 12-24 hrs)</label>
-            <input class="input" type="datetime-local" id="checkin" required>
-          </div>
-
-          <div class="form-row">
-            <label class="kv">Payment Method (required)</label>
-            <select id="paymethod" class="input" required>
-              <option value="">Select</option>
-              <option value="Cash">Cash</option>
-              <option value="GCash">Online - GCash</option>
-            </select>
-            <div class="small" style="margin-top:6px">If paying online, pay to GCash: 09464766208. Exact price only.</div>
-          </div>
-
-          <div class="form-row">
-            <label class="kv">Proof of Payment (required if GCash)</label>
-            <input type="file" id="proof" accept="image/*">
-            <div id="proofPreview" style="margin-top:8px"></div>
-          </div>
-
-          <div style="display:flex;gap:8px">
-            <button type="button" id="reviewBtn" class="btn btn-outline">Review</button>
-            <button type="submit" class="btn btn-primary">Confirm</button>
-            <button type="button" id="cancelBtn" class="btn btn-outline">Cancel</button>
-          </div>
-        </form>
+      <div id="roomDetails" class="card" style="margin-bottom:1rem;">
+        <strong>Room Image:</strong> <img src="placeholder.jpg" alt="room" style="width:100%;max-width:300px;border-radius:8px;"><br>
+        <strong>Room Number:</strong> <span id="roomNumber">N/A</span><br>
+        <strong>Date Check In:</strong> <span id="checkInPreview">N/A</span><br>
+        <strong>Price:</strong> ₱<span id="roomPrice">0.00</span>
       </div>
+
+      <form id="bookingForm">
+        <label>Full Name: <span style="color:red">*</span></label>
+        <input type="text" name="fullName" required>
+
+        <label>Face Scan or Upload: <span style="color:red">*</span></label>
+        <input type="file" name="faceScan" accept="image/*" required>
+
+        <label>Date Check In: <span style="color:red">*</span></label>
+        <input type="date" name="checkIn" required>
+
+        <label>Payment Method: <span style="color:red">*</span></label>
+        <select name="paymentMethod" required>
+          <option value="">--Select--</option>
+          <option value="cash">Cash</option>
+          <option value="online">Online Payment (GCash 09464766208)</option>
+        </select>
+
+        <label>Proof of Payment (if online):</label>
+        <input type="file" name="paymentProof" accept="image/*">
+
+        <label>Ticket Reference Number:</label>
+        <input type="text" id="ticketRef" name="ticketRef" readonly>
+
+        <div class="form-actions">
+          <button type="button" id="generateRef">Generate Reference</button>
+          <button type="button" id="reviewBtn">Review</button>
+          <button type="submit">Confirm</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
     </section>
   </main>
 
+  <!-- SIDE MENU -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -93,95 +86,50 @@
     </div>
   </aside>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">Avoid booking duplicates: one booking per room per check-in time.</div>
-      <div class="kv">Reservation</div>
+      <div class="small-muted">Thank you for choosing JAYVEE HALL OF MANSION.</div>
+      <div class="kv">© 2025 JHOM</div>
     </div>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
-    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
-    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.add('open');
+    });
+    document.getElementById('closeMenu').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.remove('open');
+    });
 
-    // pre-fill from selectedRoom
-    const selected = JSON.parse(localStorage.getItem('selectedRoom')||'{}') || {};
-    if(selected && selected.name){
-      document.getElementById('roomImg').src = selected.img || 'image1.jpg';
-      document.getElementById('roomName').textContent = selected.name;
-      document.getElementById('roomNumber').textContent = 'Room #' + selected.id;
-      document.getElementById('roomPrice').textContent = 'Price: ₱ ' + Number(selected.price).toLocaleString();
+    // Simulated load of selected room from localStorage
+    const selectedRoom = JSON.parse(localStorage.getItem('selectedRoom') || '{}');
+    if (selectedRoom.roomNumber) {
+      document.getElementById('roomNumber').textContent = selectedRoom.roomNumber;
+      document.getElementById('roomPrice').textContent = selectedRoom.price || '0.00';
+      if (selectedRoom.image) {
+        document.querySelector('#roomDetails img').src = selectedRoom.image;
+      }
     }
 
-    // previews
-    document.getElementById('face').addEventListener('change', function(){
-      const f = this.files[0];
-      if(!f) return;
-      const url = URL.createObjectURL(f);
-      document.getElementById('facePreview').innerHTML = `<img src="${url}" style="height:80px;border-radius:8px;object-fit:cover">`;
-    });
-    document.getElementById('proof').addEventListener('change', function(){
-      const f = this.files[0];
-      if(!f) return;
-      const url = URL.createObjectURL(f);
-      document.getElementById('proofPreview').innerHTML = `<img src="${url}" style="height:80px;border-radius:8px;object-fit:cover">`;
+    document.getElementById('generateRef').addEventListener('click', () => {
+      const ref = 'REF-' + Math.floor(Math.random() * 1000000000);
+      document.getElementById('ticketRef').value = ref;
     });
 
-    document.getElementById('cancelBtn').addEventListener('click', ()=>{
-      if(confirm('Cancel reservation?')) window.history.back();
+    document.getElementById('reviewBtn').addEventListener('click', () => {
+      alert('Review your booking details before confirming.');
     });
 
-    document.getElementById('reviewBtn').addEventListener('click', ()=>{
-      const name = document.getElementById('fullname').value.trim();
-      const checkin = document.getElementById('checkin').value;
-      if(!name||!checkin){ alert('Please fill required fields for review'); return;}
-      const room = selected;
-      const price = room.price || 0;
-      alert(`Review:\nName: ${name}\nRoom: ${room.name}\nPrice: ₱ ${Number(price).toLocaleString()}\nCheck-in: ${new Date(checkin).toLocaleString()}`);
-    });
-
-    document.getElementById('bookingForm').addEventListener('submit', async function(e){
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('fullname').value.trim();
-      const faceFile = document.getElementById('face').files[0];
-      const checkin = document.getElementById('checkin').value;
-      const paymethod = document.getElementById('paymethod').value;
-      const proofFile = document.getElementById('proof').files[0];
+      alert('Booking confirmed! Your details will be sent to admin.');
+      // Here you would send data to the server
+    });
 
-      if(!name||!faceFile||!checkin||!paymethod){ alert('Please fill required fields'); return; }
-
-      if(paymethod === 'GCash' && !proofFile){ alert('Proof of payment required for online payment'); return; }
-
-      // store files as data URLs (small)
-      const toDataURL = (file) => new Promise(res=>{
-        const reader = new FileReader();
-        reader.onload = ()=>res(reader.result);
-        reader.readAsDataURL(file);
-      });
-
-      const faceData = await toDataURL(faceFile);
-      const proofData = proofFile ? await toDataURL(proofFile) : null;
-
-      // create booking
-      const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
-      const ref = 'JHOM-' + Math.random().toString(36).slice(2,10).toUpperCase();
-      const booking = {
-        ref,
-        name,
-        room: selected,
-        date: new Date().toLocaleString(),
-        checkin,
-        paymentMethod: paymethod,
-        proof: proofData,
-        face: faceData,
-        status: 'Pending'
-      };
-      bookings.push(booking);
-      localStorage.setItem('bookings', JSON.stringify(bookings));
-      alert('Booking submitted. Reference: ' + ref);
-      // add notification will be visible on notification.html and adminpanel
-      // navigate to notification
-      window.location.href='notification.html';
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      window.history.back();
     });
   </script>
 </body>
