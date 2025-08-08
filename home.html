@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Jayvee Hall of Mansion</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Side Menu -->
+    <div id="sideMenu" class="side-menu">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <a href="https://www.facebook.com/JaysGumcar" target="_blank">📘 Facebook</a>
+        <a href="https://www.instagram.com/JaysGumcar" target="_blank">📷 Instagram</a>
+        <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+        <a href="mailto:jayveecaringal07@gmail.com">📧 Email</a>
+        <a href="https://www.telegram.com/JaysGumcar" target="_blank">💬 Telegram</a>
+        <a href="about.html">ℹ️ About</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div style="display:flex; align-items:center;">
+            <span class="menu-icon" onclick="openMenu()">☰</span>
+            <img src="logo.jpg" alt="Logo">
+        </div>
+        <div>
+            <a href="home.html" class="active">HOME</a>
+            <a href="room.html">ROOM</a>
+            <a href="cart.html">CART</a>
+            <a href="message.html">MESSAGE</a>
+            <a href="notification.html">NOTIFICATION</a>
+            <a href="adminpanel.html">ADMIN</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        Latest Updates, News & Promotions
+    </header>
+
+    <!-- Welcome Message -->
+    <section style="padding:20px; text-align:center;">
+        <h2>WELCOME (Guest), TO JAYVEE HALL OF MANSION</h2>
+        <p>
+            Stay informed and never miss out! Here, you’ll find the latest news, special promos, and upcoming events happening at Jayvee Hall of Mansion. Whether it’s a luxurious room discount, a seasonal event, or a limited-time package, we make sure our guests always have the inside scoop.
+        </p>
+    </section>
+
+    <!-- Updates Section -->
+    <section class="update-section">
+        <h2>🏨 Hotel Updates</h2>
+        <div class="update-card">
+            <h3>New Presidential Suite Open</h3>
+            <p>Our Gold Presidential Suite is now open for bookings — experience luxury like never before.</p>
+            <span class="date">Posted: August 5, 2025</span>
+        </div>
+        <div class="update-card">
+            <h3>Wi-Fi Upgrade</h3>
+            <p>Enjoy faster and more reliable internet during your stay — perfect for work and entertainment.</p>
+            <span class="date">Posted: July 28, 2025</span>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <h2>📰 News</h2>
+        <div class="update-card">
+            <h3>Malungon Tourism Festival</h3>
+            <p>We are a proud sponsor of this year’s festival — stay tuned for exclusive guest benefits!</p>
+            <span class="date">Posted: July 15, 2025</span>
+        </div>
+        <div class="update-card">
+            <h3>Staff Excellence Award</h3>
+            <p>Congratulations to our housekeeping team for winning the 2025 Hospitality Excellence Award.</p>
+            <span class="date">Posted: July 2, 2025</span>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="events-section">
+        <h2>📅 Upcoming Events</h2>
+        <ul>
+            <li><strong>August 15, 2025:</strong> Romantic Dinner Night at the Rooftop Garden.</li>
+            <li><strong>September 1-5, 2025:</strong> Rainy Season Room Discount — up to 30% off.</li>
+            <li><strong>December 24, 2025:</strong> Christmas Eve Gala for all guests.</li>
+        </ul>
+    </section>
+
+    <!-- Promos -->
+    <section class="promos-section">
+        <h2>💎 Special Promos</h2>
+        <div class="update-card">
+            <h3>Weekend Staycation Package</h3>
+            <p>Book a weekend stay and enjoy free breakfast for two plus late checkout.</p>
+            <span class="date">Valid until: September 30, 2025</span>
+        </div>
+        <div class="update-card">
+            <h3>Anniversary Promo</h3>
+            <p>Celebrate with us and get 20% off for all suites during our anniversary month.</p>
+            <span class="date">Valid: October 2025</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 Jayvee Hall of Mansion — Luxury Beyond Expectation
+    </footer>
+
+    <!-- Menu Script -->
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+    </script>
+
+</body>
+</html>
