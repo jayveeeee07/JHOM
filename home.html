@@ -1,196 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Home — Jayvee Hall of Mansion</title>
-  <link rel="stylesheet" href="index.css">
-  <style>
-    /* Minimal additional styles for homepage cards */
-    .section-card{ background:var(--card); padding:14px; border-radius:12px; box-shadow:var(--shadow); margin-bottom:12px; }
-    .section-row{ display:flex; gap:12px; flex-direction:column; }
-    .item { padding:10px 8px; border-bottom:1px solid #f2f4f7; }
-    .item:last-child{ border-bottom:none; }
-    .meta{ color:var(--muted); font-size:13px; }
-    .view-more{ margin-top:8px; background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; }
-  </style>
+  <title>Home — JHOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Side Menu -->
-  <div id="sideMenu" class="side-menu">
-    <span class="close-btn" onclick="closeMenu()">&times;</span>
-    <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
-    <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
-    <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
-    <a href="mailto:jayveecaringal07@gmail.com">✉️ Email</a>
-    <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
-    <a href="about.html">ℹ️ About</a>
-  </div>
-
-  <!-- Navigation -->
-  <nav>
-    <div style="display:flex; align-items:center;">
-      <span class="menu-icon" onclick="openMenu()">☰</span>
-      <a class="brand" href="home.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
-        <img src="logo.jpg" alt="logo" style="width:44px;height:44px;border-radius:10px;object-fit:cover">
-        <div>
-          <h1 style="margin:0;font-size:16px">JAYVEE HALL OF MANSION</h1>
-        </div>
+  <main class="container">
+    <!-- Header -->
+    <header class="header">
+      <a class="brand" href="index.html">
+        <img src="logo.jpg" alt="logo">
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
       </a>
-    </div>
-    <div>
-      <a href="home.html" class="active">HOME</a>
-      <a href="room.html">ROOM</a>
-      <a href="cart.html">CART</a>
-      <a href="message.html">MESSAGE</a>
-      <a href="notification.html">NOTIFICATION</a>
-      <a href="adminpanel.html">ADMIN</a>
-    </div>
-  </nav>
-
-  <main class="container" style="padding-top:16px;">
-    <header class="header card">
-      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
-        <div>
-          <h2 style="margin:0">Latest Updates, News & Promotions</h2>
-          <div class="kv">Stay informed — recent announcements and exclusive promos for guests.</div>
-        </div>
-        <div style="width:100px">
-          <img src="logo.jpg" alt="logo" style="width:100%;border-radius:12px;object-fit:cover">
-        </div>
+      <div class="nav">
+        <a href="index.html" class="active">HOME</a>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html">CART</a>
+        <a href="message.html">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
       </div>
     </header>
 
-    <section style="margin-top:18px">
-      <!-- Updates -->
-      <div class="section-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h3 style="margin:0">🏨 Updates</h3>
-          <button id="updatesViewMore" class="view-more" onclick="toggleMore('updates')">View More</button>
-        </div>
-        <div id="updatesList" class="section-row"></div>
-      </div>
-
-      <!-- News -->
-      <div class="section-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h3 style="margin:0">📰 News</h3>
-          <button id="newsViewMore" class="view-more" onclick="toggleMore('news')">View More</button>
-        </div>
-        <div id="newsList" class="section-row"></div>
-      </div>
-
-      <!-- Events -->
-      <div class="section-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h3 style="margin:0">📅 Upcoming Events</h3>
-          <button id="eventsViewMore" class="view-more" onclick="toggleMore('events')">View More</button>
-        </div>
-        <div id="eventsList" class="section-row"></div>
-      </div>
-
-      <!-- Promos -->
-      <div class="section-card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h3 style="margin:0">💎 Special Promos</h3>
-          <button id="promosViewMore" class="view-more" onclick="toggleMore('promos')">View More</button>
-        </div>
-        <div id="promosList" class="section-row"></div>
-      </div>
+    <!-- Sections -->
+    <section class="card">
+      <h2>Updates</h2>
+      <div class="grid" id="updatesList"></div>
+      <button class="btn btn-outline" id="updatesMore">View More</button>
     </section>
 
-    <div style="height:18px"></div>
+    <section class="card">
+      <h2>News</h2>
+      <div class="grid" id="newsList"></div>
+      <button class="btn btn-outline" id="newsMore">View More</button>
+    </section>
+
+    <section class="card">
+      <h2>List of Upcoming Events</h2>
+      <div class="grid" id="eventsList"></div>
+      <button class="btn btn-outline" id="eventsMore">View More</button>
+    </section>
+
+    <section class="card">
+      <h2>Promos</h2>
+      <div class="grid" id="promosList"></div>
+      <button class="btn btn-outline" id="promosMore">View More</button>
+    </section>
   </main>
 
+  <!-- Side Menu -->
+  <aside class="side-menu" id="sideMenu">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Connect</strong>
+      <button class="icon-btn" id="closeMenu">✕</button>
+    </div>
+    <div class="socials">
+      <a href="https://www.facebook.com/JaysGumcar" target="_blank">🔵 Facebook</a>
+      <a href="https://www.instagram.com/JaysGumcar" target="_blank">📸 Instagram</a>
+      <a href="https://www.thread.com/JaysGumcar" target="_blank">🧵 Thread</a>
+      <a href="mailto:jayveecaringal07@gmail.com" target="_blank">✉️ Email</a>
+      <a href="https://www.telegram.com/JaysGumcar" target="_blank">📨 Telegram</a>
+      <a href="About.html">ℹ️ About</a>
+    </div>
+  </aside>
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">Check updates regularly — best rates and friendly staff await.</div>
-      <div class="kv">© Jayvee Hall of Mansion</div>
+      <div class="small-muted">© 2025 JHOM. All rights reserved.</div>
+      <div class="kv">Built for mobile and desktop</div>
     </div>
   </footer>
 
   <script>
-    function openMenu(){ document.getElementById('sideMenu').style.width='250px' }
-    function closeMenu(){ document.getElementById('sideMenu').style.width='0' }
+    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
+    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
 
-    // store fetched data
-    let siteData = null;
-    const visibleLimit = 3;
-    const expanded = { updates:false, news:false, events:false, promos:false };
-
-    // fetch data from server.php (which returns data.json)
-    function fetchData(){
-      fetch('server.php')
-        .then(r => r.json())
-        .then(data => {
-          siteData = data;
-          renderSection('updates');
-          renderSection('news');
-          renderSection('events');
-          renderSection('promos');
-        })
-        .catch(err => {
-          console.error(err);
-          document.getElementById('updatesList').innerHTML = '<div class="kv">Unable to load updates.</div>';
-        });
-    }
-
-    function renderSection(section){
-      const container = document.getElementById(section + 'List');
-      container.innerHTML = '';
-      if(!siteData || !siteData[section] || !siteData[section].length){
-        container.innerHTML = '<div class="kv">No entries yet.</div>';
-        return;
-      }
-
-      const items = siteData[section];
-      const showAll = expanded[section];
-      const list = showAll ? items : items.slice(-visibleLimit).reverse(); // show latest items
-      // if showAll we show all in reverse chronological order (last entries last added)
-      const displayList = showAll ? items.slice().reverse() : list;
-
-      displayList.forEach(it=>{
-        const el = document.createElement('div');
-        el.className = 'item';
-        el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:flex-start">
-                          <div>
-                            <div style="font-weight:800">${escapeHtml(it.title)}</div>
-                            <div class="meta">${escapeHtml(it.description)}</div>
-                          </div>
-                          <div class="meta">${escapeHtml(it.date||'')}</div>
-                        </div>`;
-        container.appendChild(el);
+    // Fetch data from backend
+    fetch('server.php?action=getHomeData')
+      .then(res=>res.json())
+      .then(data=>{
+        renderSection('updatesList', data.updates, 3, 'updatesMore');
+        renderSection('newsList', data.news, 3, 'newsMore');
+        renderSection('eventsList', data.events, 3, 'eventsMore');
+        renderSection('promosList', data.promos, 3, 'promosMore');
+      })
+      .catch(err=>{
+        console.error(err);
+        // fallback sample data
+        const sample = [{title:'Sample Item', desc:'Description here', img:'logo.jpg', date:'2025-08-08'}];
+        ['updatesList','newsList','eventsList','promosList'].forEach(id=> renderSection(id, sample, 1));
       });
 
-      // update button text
-      const btn = document.getElementById(section + 'ViewMore');
-      if(expanded[section]){
-        btn.textContent = 'Show Less';
-      } else {
-        btn.textContent = 'View More';
+    function renderSection(containerId, items, limit, moreBtnId){
+      const container = document.getElementById(containerId);
+      let showing = items.slice(0, limit);
+      container.innerHTML = showing.map(cardHTML).join('');
+      if(moreBtnId){
+        document.getElementById(moreBtnId).addEventListener('click', ()=>{
+          showing = showing.length === limit ? items : items.slice(0, limit);
+          container.innerHTML = showing.map(cardHTML).join('');
+        });
       }
     }
 
-    function toggleMore(section){
-      expanded[section] = !expanded[section];
-      renderSection(section);
+    function cardHTML(item){
+      return `
+        <div class="card small">
+          <img src="${item.img}" alt="${item.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px">
+          <h4>${item.title}</h4>
+          <p class="small">${item.desc}</p>
+          <div class="kv">${item.date}</div>
+        </div>
+      `;
     }
-
-    // very small escape helper
-    function escapeHtml(text){
-      if(!text) return '';
-      return String(text)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    // initial load
-    fetchData();
-    // reload periodically (optional)
-    setInterval(fetchData, 120000); // refresh every 2 minutes
   </script>
 </body>
 </html>
