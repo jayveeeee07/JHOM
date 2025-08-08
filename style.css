@@ -1,0 +1,221 @@
+/* =========================
+   Base Styles & Layout
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky Footer Layout */
+body > main {
+  flex: 1 0 auto;
+}
+
+footer.footer {
+  flex-shrink: 0;
+}
+
+/* =========================
+   Header & Navigation
+========================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #004080;
+  color: #fff;
+  padding: 10px 16px;
+}
+
+.header .brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.header .brand img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.header h1 {
+  font-size: 1.2rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 8px;
+}
+
+.nav a.active, .nav a:hover {
+  background-color: #0059b3;
+  border-radius: 4px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* =========================
+   Side Menu
+========================= */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 260px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 6px rgba(0,0,0,0.15);
+  padding: 16px;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+.side-menu .socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.side-menu a {
+  color: #004080;
+  text-decoration: none;
+}
+
+.side-menu a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   Cards, Tables, Forms
+========================= */
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background: #f0f0f0;
+  text-align: left;
+}
+
+.input, textarea.input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #004080;
+  color: #fff;
+  border: none;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid #004080;
+  color: #004080;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   Footer
+========================= */
+.footer {
+  background-color: #004080;
+  color: #fff;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.footer .small-muted {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.footer .kv {
+  font-weight: 500;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .icon-btn {
+    display: block;
+  }
+
+  .header h1 {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .icon-btn {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+  }
+}
