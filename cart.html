@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cart — Jayvee Hall of Mansion</title>
-  <link rel="stylesheet" href="index.css">
+  <title>Your Cart — JHOM</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
+    <!-- Header -->
     <header class="header">
-      <a class="brand" href="home.html">
+      <a class="brand" href="index.html">
         <img src="logo.jpg" alt="logo">
         <div><h1>JAYVEE HALL OF MANSION</h1></div>
       </a>
@@ -24,12 +25,17 @@
       </div>
     </header>
 
+    <!-- Page Title -->
     <section class="card">
-      <h3>Your Cart List</h3>
-      <div id="cartArea"></div>
+      <h2>Your Cart List</h2>
+      <p class="small-muted">Rooms you have marked as interested will appear here.</p>
     </section>
+
+    <!-- Cart List -->
+    <section id="cartList" class="grid"></section>
   </main>
 
+  <!-- Side Menu -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -45,10 +51,11 @@
     </div>
   </aside>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">Review your selections carefully. Proceed to booking to confirm reservations and payments.</div>
-      <div class="kv">JHOM Cart</div>
+      <div class="small-muted">© 2025 JHOM. All rights reserved.</div>
+      <div class="kv">Built for mobile and desktop</div>
     </div>
   </footer>
 
@@ -56,54 +63,48 @@
     document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
     document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
 
-    function renderCart(){
-      const cartArea = document.getElementById('cartArea');
-      const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-      if(!cart.length){ cartArea.innerHTML = '<div class="kv">Your cart is empty.</div>'; return;}
-      cartArea.innerHTML = cart.map((r,i)=>`
-        <div class="card" style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-          <div style="width:88px;height:66px;overflow:hidden;border-radius:8px"><img src="${r.img}" style="width:100%;height:100%;object-fit:cover"></div>
-          <div style="flex:1">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <strong>${r.name}</strong>
-                <div class="kv">Room #${r.id}</div>
-              </div>
-              <div class="badge">₱ ${Number(r.price).toLocaleString()}</div>
-            </div>
-            <div class="small" style="margin-top:6px">${r.desc}</div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button class="btn btn-outline" data-index="${i}" data-action="remove">Not Interested</button>
-            <button class="btn btn-primary" data-index="${i}" data-action="book">Book Now</button>
+    const cartContainer = document.getElementById('cartList');
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    if(cart.length === 0){
+      cartContainer.innerHTML = `<div class="card"><p>No rooms in your cart yet. Visit the <a href="room.html">Room</a> page to add some.</p></div>`;
+    } else {
+      fetch('server.php?action=getRooms')
+        .then(res=>res.json())
+        .then(data=> renderCart(data))
+        .catch(()=>{
+          // fallback sample rooms
+          const sampleRooms = [
+            {img:'image1.jpg', name:'Deluxe Room', price:'₱ 5,000.00', number:'1210', desc:'A spacious deluxe room with modern amenities and a cozy atmosphere.'},
+            {img:'image2.jpg', name:'Standard Room', price:'₱ 3,000.00', number:'1211', desc:'A comfortable standard room perfect for budget-friendly stays.'},
+            {img:'image3.jpg', name:'Gold Presidential Suite', price:'₱ 999,639,976,967,123.00', number:'1218', desc:'Luxurious suite with premium features and panoramic views.'}
+          ];
+          renderCart(sampleRooms);
+        });
+    }
+
+    function renderCart(rooms){
+      const filtered = rooms.filter(r => cart.includes(r.number));
+      cartContainer.innerHTML = filtered.map(room=>`
+        <div class="card">
+          <img src="${room.img}" alt="${room.name}" style="width:100%;height:180px;object-fit:cover;border-radius:8px">
+          <h3>${room.name}</h3>
+          <p class="small-muted">Room No: ${room.number}</p>
+          <p>${room.desc}</p>
+          <div class="kv"><strong>${room.price}</strong></div>
+          <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+            <button class="btn btn-outline" onclick="removeFromCart('${room.number}')">Not Interested</button>
+            <a href="booking.html?room=${room.number}" class="btn">Book Now</a>
           </div>
         </div>
       `).join('');
-      attachCartButtons();
     }
 
-    function attachCartButtons(){
-      document.querySelectorAll('button[data-action="remove"]').forEach(b=>{
-        b.addEventListener('click',()=>{
-          const idx = +b.dataset.index;
-          const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-          cart.splice(idx,1);
-          localStorage.setItem('cart', JSON.stringify(cart));
-          renderCart();
-        });
-      });
-      document.querySelectorAll('button[data-action="book"]').forEach(b=>{
-        b.addEventListener('click',()=>{
-          const idx = +b.dataset.index;
-          const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-          const room = cart[idx];
-          localStorage.setItem('selectedRoom', JSON.stringify(room));
-          window.location.href='booking.html';
-        });
-      });
+    function removeFromCart(roomNumber){
+      cart = cart.filter(num => num !== roomNumber);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.reload();
     }
-
-    renderCart();
   </script>
 </body>
 </html>
