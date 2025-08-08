@@ -94,7 +94,6 @@
         </div>
       `).join('');
     }
-
     function saveToCart(roomNumber){
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
       if(!cart.includes(roomNumber)){
@@ -104,6 +103,19 @@
       } else {
         alert('This room is already in your cart.');
       }
+      document.querySelectorAll('.bookNowBtn').forEach(button => {
+  button.addEventListener('click', () => {
+    const roomCard = button.closest('.room-card');
+    const selectedRoom = {
+      roomNumber: roomCard.getAttribute('data-room-number'),
+      price: roomCard.getAttribute('data-price'),
+      image: roomCard.getAttribute('data-image'),
+    };
+    localStorage.setItem('selectedRoom', JSON.stringify(selectedRoom));
+    // Redirect to booking page
+    window.location.href = 'booking.html';
+  });
+});
     }
   </script>
 </body>
