@@ -4,245 +4,237 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>JHOM — Login / Register</title>
-    <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="index.css">
   <style>
+    /* Reset box-sizing */
+    *, *::before, *::after {
       box-sizing: border-box;
-}
+    }
 
-/* Container to center content and limit width */
-main.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 16px;
-  width: 100%;
-}
+    /* Container to center content and limit width */
+    main.container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+      width: 100%;
+    }
 
-/* Content sections: no border, background light, full width */
-section.content-section {
-  width: 100%;
-  margin: 20px 0;
-  padding: 16px;
-  border: none; /* NO border */
-  border-radius: 8px;
-  background: #f5f5f5;
-  box-shadow: none; /* remove shadow if any */
-}
+    /* Content sections: no border, background light, full width */
+    section.content-section {
+      width: 100%;
+      margin: 20px 0;
+      padding: 16px;
+      border: none; /* NO border */
+      border-radius: 8px;
+      background: #f5f5f5;
+      box-shadow: none; /* remove shadow if any */
+    }
 
-/* Responsive images */
-.content-item img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  flex-shrink: 0;
-}
+    /* Responsive images */
+    .content-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
 
-/* Header and Footer */
-header.header, footer.footer {
-  background: #007bff;
-  color: white;
-  padding: 1rem 1.5rem;
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  user-select: none;
-}
-header.header {
-  background: linear-gradient(90deg, #004080, #cc0000);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-header.header a.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: white;
-}
-header.header a.brand img {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  object-fit: contain;
-}
-header.header a.brand h1 {
-  font-size: 1.4rem;
-  margin: 0;
-  white-space: nowrap;
-}
-.nav {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.nav a {
-  color: white;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-.nav a:hover, .nav a.active {
-  background: #cc0000;
-}
+    header.header, footer.footer {
+      background: #007bff;
+      color: white;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+    header.header {
+      background: linear-gradient(90deg, #004080, #cc0000);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    header.header a.brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+    header.header a.brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    header.header a.brand h1 {
+      font-size: 1.4rem;
+      margin: 0;
+      white-space: nowrap;
+    }
+    .nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav a {
+      color: white;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    .nav a:hover, .nav a.active {
+      background: #cc0000;
+    }
 
-h1.page-title {
-  font-size: 1.5rem;
-}
+    h1.page-title {
+      font-size: 1.5rem;
+    }
 
-section {
-  display: none;
-  flex-direction: column;
-}
+    section {
+      display: none;
+      flex-direction: column;
+    }
+    section.active {
+      display: flex;
+    }
 
-/* *** HERE: Override to make all sections borderless and background transparent *** */
-section {
-  border: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-  border-radius: 0 !important;
-}
+    h2 {
+      margin-bottom: 1rem;
+      color: #007bff;
+      font-weight: 700;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 0.3rem;
+    }
 
-section.active {
-  display: flex;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="file"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline-offset: 2px;
+      outline-color: transparent;
+      transition: outline-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="file"]:focus {
+      outline-color: #007bff;
+      border-color: #007bff;
+    }
 
-h2 {
-  margin-bottom: 1rem;
-  color: #007bff;
-  font-weight: 700;
-  font-size: 1.3rem;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 0.3rem;
-}
+    button {
+      cursor: pointer;
+      padding: 0.6rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover:not(:disabled) {
+      background: #0056b3;
+    }
+    button:disabled {
+      background: #aac4f7;
+      cursor: default;
+    }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-label {
-  font-weight: 600;
-}
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="file"] {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  outline-offset: 2px;
-  outline-color: transparent;
-  transition: outline-color 0.3s ease;
-}
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="file"]:focus {
-  outline-color: #007bff;
-  border-color: #007bff;
-}
+    .form-link {
+      margin-top: 0.2rem;
+      background: none;
+      border: none;
+      color: #007bff;
+      font-weight: 600;
+      text-align: left;
+      padding: 0;
+    }
+    .form-link:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
 
-button {
-  cursor: pointer;
-  padding: 0.6rem 1rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-button:hover:not(:disabled) {
-  background: #0056b3;
-}
-button:disabled {
-  background: #aac4f7;
-  cursor: default;
-}
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
 
-.form-link {
-  margin-top: 0.2rem;
-  background: none;
-  border: none;
-  color: #007bff;
-  font-weight: 600;
-  text-align: left;
-  padding: 0;
-}
-.form-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
+    .error-message {
+      color: #b00020;
+      font-size: 0.85rem;
+      font-style: italic;
+      min-height: 1.1em;
+    }
 
-.checkbox-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
+    #welcomeSection {
+      text-align: center;
+      gap: 1rem;
+    }
+    #welcomeSection img {
+      max-width: 120px;
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+    #welcomeSection p {
+      font-size: 1rem;
+      line-height: 1.4;
+      max-height: 6rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 1rem;
+      color: #444;
+    }
 
-.error-message {
-  color: #b00020;
-  font-size: 0.85rem;
-  font-style: italic;
-  min-height: 1.1em;
-}
+    .recaptcha-placeholder {
+      background: #e1e1e1;
+      height: 50px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.9rem;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
 
-#welcomeSection {
-  text-align: center;
-  gap: 1rem;
-}
-#welcomeSection img {
-  max-width: 120px;
-  border-radius: 8px;
-  margin: 0 auto;
-}
-#welcomeSection p {
-  font-size: 1rem;
-  line-height: 1.4;
-  max-height: 6rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 1rem;
-  color: #444;
-}
-
-.recaptcha-placeholder {
-  background: #e1e1e1;
-  height: 50px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #555;
-  font-size: 0.9rem;
-  user-select: none;
-  margin-bottom: 1rem;
-}
-
-a.brand-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.25rem;
-}
-a.brand-link img {
-  height: 40px;
-  border-radius: 6px;
-  object-fit: contain;
-}
+    a.brand-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    a.brand-link img {
+      height: 40px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
@@ -255,7 +247,7 @@ a.brand-link img {
 
   <main class="container" role="main">
     <!-- Welcome Section -->
-    <section id="welcomeSection" aria-label="Welcome message" class="active">
+    <section id="welcomeSection" aria-label="Welcome message" class="active" >
       <img src="logo.jpg" alt="JHOM Logo" />
       <h1 class="page-title">Welcome to JAYVEE HALL OF MANSION</h1>
       <p>
@@ -330,37 +322,4 @@ a.brand-link img {
   </main>
 
   <footer class="footer" role="contentinfo" aria-label="Site footer">
-    © 2025 JHOM. All rights reserved.
-  </footer>
-
-  <script>
-    // Elements
-    const welcomeSection = document.getElementById('welcomeSection');
-    const getStartedBtn = document.getElementById('getStartedBtn');
-    const termsCheckbox = document.getElementById('termsCheckbox');
-
-    const loginSection = document.getElementById('loginSection');
-    const loginForm = document.getElementById('loginForm');
-    const loginError = document.getElementById('loginError');
-    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-    const showRegisterBtn = document.getElementById('showRegisterBtn');
-
-    const registerSection = document.getElementById('registerSection');
-    const registerForm = document.getElementById('registerForm');
-    const registerError = document.getElementById('registerError');
-    const backToLoginFromRegisterBtn = document.getElementById('backToLoginFromRegisterBtn');
-
-    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-    const forgotError = document.getElementById('forgotError');
-    const forgotResult = document.getElementById('forgotResult');
-    const forgotBackBtn = document.getElementById('forgotBackBtn');
-
-    // Enable Get Started only if checkbox checked
-    termsCheckbox.addEventListener('change', () => {
-      getStartedBtn.disabled = !termsCheckbox.checked;
-    });
-
-    // Show Login form on Get Started click
-    getStartedBtn.addEventListener('click', () => {
-      welcomeSection
+    ©
