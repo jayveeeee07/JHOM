@@ -51,29 +51,33 @@
           <h4>Messages</h4>
           <div id="adminMsgs"></div>
         </div>
-      </section>
 
-      <!-- NEW: Content Management for Home Page -->
-      <section class="card" style="margin-top:16px">
-        <h3>Manage Home Page Content</h3>
-        <form action="server.php" method="POST">
-          <label>Section:</label>
-          <select name="section" class="input" required>
+        <!-- Content Management Section -->
+        <div style="margin-top:16px">
+          <h4>Manage Updates, News, Events & Promos</h4>
+          <div id="contentTables"></div>
+
+          <h5 style="margin-top:12px">Add / Edit Item</h5>
+          <form id="contentForm">
+            <select name="section" required>
+              <option value="">Select Section</option>
               <option value="updates">Updates</option>
               <option value="news">News</option>
               <option value="events">Events</option>
               <option value="promos">Promos</option>
-          </select>
-          <label>Title:</label>
-          <input type="text" name="title" class="input" required>
-          <label>Description:</label>
-          <textarea name="description" class="input" required></textarea>
-          <label>Date:</label>
-          <input type="text" name="date" class="input" placeholder="e.g. August 8, 2025">
-          <button type="submit" class="btn btn-primary" style="margin-top:8px">Save</button>
-        </form>
+            </select>
+            <input type="text" name="title" placeholder="Title" required>
+            <textarea name="description" placeholder="Description" required></textarea>
+            <input type="text" name="date" placeholder="Date (e.g. August 8, 2025)">
+            <input type="hidden" name="index">
+            <input type="hidden" name="action" value="add">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </form>
+        </div>
+
       </section>
     </div>
+
   </main>
 
   <aside class="side-menu" id="sideMenu">
@@ -112,11 +116,12 @@
         document.getElementById('adminArea').style.display='block';
         loginForm.style.display='none';
         loadAdminData();
+        loadContent();
       } else alert('Invalid credentials');
     });
 
     function loadAdminData(){
-      // users (simple placeholder)
+      // users
       const users = JSON.parse(localStorage.getItem('users')||'[]');
       const uT = document.querySelector('#usersTable tbody');
       uT.innerHTML = (users.length? users.map(u=>`<tr><td><img src="${u.photo||'logo.jpg'}" style="width:44px;height:44px;border-radius:8px;object-fit:cover"></td><td>${u.name}</td><td>${u.email}</td><td>${u.contact||'—'}</td><td>${u.status||'Active'}</td></tr>`).join('') : '<tr><td colspan="5">No registered users.</td></tr>');
@@ -154,7 +159,6 @@
           </div>
         </div>
       `).join('') : '<div class="kv">No messages</div>');
-      // attach reply handlers
       document.querySelectorAll('button[data-act="reply"]').forEach(b=>{
         b.addEventListener('click', ()=>{
           const idx = +b.dataset.i;
@@ -192,6 +196,67 @@
         });
       });
     }
+
+    // Content Management JS
+    function loadContent(){
+      fetch('data.json').then(r=>r.json()).then(data=>{
+        let html = '';
+        for(let section in data){
+          html += `<h5>${section.toUpperCase()}</h5><table class="table"><thead><tr><th>Title</th><th>Description</th><th>Date</th><th>Action</th></tr></thead><tbody>`;
+          if(data[section].length){
+            data[section].forEach((item,i)=>{
+              html += `<tr>
+                <td>${item.title}</td>
+                <td>${item.description}</td>
+                <td>${item.date||''}</td>
+                <td>
+                  <button type="button" onclick="editItem('${section}',${i})">Edit</button>
+                  <button type="button" onclick="deleteItem('${section}',${i})">Delete</button>
+                </td>
+              </tr>`;
+            });
+          } else {
+            html += `<tr><td colspan="4">No items</td></tr>`;
+          }
+          html += `</tbody></table>`;
+        }
+        document.getElementById('contentTables').innerHTML = html;
+      });
+    }
+
+    function editItem(section,index){
+      fetch('data.json').then(r=>r.json()).then(data=>{
+        let item = data[section][index];
+        const form = document.getElementById('contentForm');
+        form.section.value = section;
+        form.title.value = item.title;
+        form.description.value = item.description;
+        form.date.value = item.date;
+        form.index.value = index;
+        form.action.value = 'edit';
+      });
+    }
+
+    function deleteItem(section,index){
+      if(!confirm('Delete this item?')) return;
+      const formData = new FormData();
+      formData.append('section', section);
+      formData.append('index', index);
+      formData.append('action', 'delete');
+      fetch('server.php', {method:'POST', body:formData}).then(r=>r.text()).then(res=>{
+        loadContent();
+      });
+    }
+
+    document.getElementById('contentForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      fetch('server.php', {method:'POST', body:formData}).then(r=>r.text()).then(res=>{
+        e.target.reset();
+        e.target.action.value = 'add';
+        loadContent();
+      });
+    });
   </script>
 </body>
 </html>
