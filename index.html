@@ -3,56 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>JAYVEE HALL OF MANSION — Welcome</title>
-  <link rel="stylesheet" href="index.css">
+  <title>JHOM — Home</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
+    <!-- HEADER -->
     <header class="header">
       <a class="brand" href="home.html">
         <img src="logo.jpg" alt="logo">
-        <div>
-          <h1>JAYVEE HALL OF MANSION</h1>
-          <div class="kv">Brgy Poblacion, Malungon, Sarangani, Philippines 9503</div>
-        </div>
+        <div><h1>JAYVEE HALL OF MANSION</h1></div>
       </a>
       <div class="nav">
         <a href="home.html" class="active">HOME</a>
-        <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
+        <a href="room.html">ROOM</a>
+        <a href="cart.html">CART</a>
+        <a href="message.html">MESSAGE</a>
+        <a href="notification.html">NOTIFICATION</a>
+        <a href="adminpanel.html">ADMIN</a>
+        <button class="icon-btn" id="menuBtn">☰</button>
       </div>
     </header>
 
-    <section class="hero card">
-      <div class="info">
-        <h2>Welcome to Jayvee Hall of Mansion</h2>
-        <p>Welcome — we invite you to experience comfort and warm hospitality in our family-run rooms designed for both leisure and business travelers. Enjoy clean, well-appointed rooms, friendly staff, and easy access to local attractions and services. We look forward to making your stay memorable.</p>
-      </div>
-      <div style="width:160px; text-align:center">
-        <img src="logo.jpg" alt="logo" style="width:120px;height:120px;border-radius:12px;object-fit:cover;">
-      </div>
+    <!-- MAIN SECTIONS -->
+    <section class="card">
+      <h2>Updates</h2>
+      <div id="updatesList" class="kv">Loading updates...</div>
     </section>
 
-    <section class="card" style="margin-top:16px;">
-      <h3 style="margin:0 0 8px 0">Get Started</h3>
-      <form id="startForm">
-        <div class="form-row">
-          <label class="small">Please accept terms and conditions</label>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="terms" required>
-            <label for="terms" class="small">I agree to the Terms and Conditions</label>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;">
-          <button type="submit" class="btn btn-primary">GET STARTED</button>
-          <a class="btn btn-outline" href="home.html">Skip</a>
-        </div>
-      </form>
+    <section class="card">
+      <h2>News</h2>
+      <div id="newsList" class="kv">Loading news...</div>
     </section>
 
-    <div style="height:30px"></div>
+    <section class="card">
+      <h2>Upcoming Events</h2>
+      <div id="eventsList" class="kv">Loading events...</div>
+    </section>
+
+    <section class="card">
+      <h2>Promos</h2>
+      <div id="promosList" class="kv">Loading promos...</div>
+    </section>
   </main>
 
-  <!-- Side menu (shared across pages) -->
+  <!-- SIDE MENU -->
   <aside class="side-menu" id="sideMenu">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <strong>Connect</strong>
@@ -68,27 +63,73 @@
     </div>
   </aside>
 
-  <!-- sticky footer (20 words) -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
-      <div class="small-muted">JHOM — Comfort, Care, and Charm. Book with ease — best rates guaranteed and friendly staff awaits you.</div>
-      <div class="kv">© Jayvee Hall of Mansion</div>
+      <div class="small-muted">Stay tuned for the latest updates and offers.</div>
+      <div class="kv">© 2025 JHOM</div>
     </div>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
-    // menu toggle
-    document.getElementById('menuBtn').addEventListener('click', ()=> document.getElementById('sideMenu').classList.add('open'));
-    document.getElementById('closeMenu').addEventListener('click', ()=> document.getElementById('sideMenu').classList.remove('open'));
-
-    // form submit validation
-    document.getElementById('startForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const terms = document.getElementById('terms').checked;
-      if(!terms){ alert('Please accept terms and conditions'); return;}
-      // go to home
-      window.location.href='home.html';
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.add('open');
     });
+    document.getElementById('closeMenu').addEventListener('click', () => {
+      document.getElementById('sideMenu').classList.remove('open');
+    });
+
+    // Dynamic data (placeholder simulation)
+    const updates = [
+      { title: "Website Launch", body: "We are now live with new booking features." },
+      { title: "New Room Added", body: "Presidential Suite now available." }
+    ];
+    const news = [
+      { title: "Awarded Best Event Hall 2025", body: "JHOM wins local recognition." }
+    ];
+    const events = [
+      { date: "Aug 15, 2025", title: "Wedding Expo", body: "Showcasing our facilities." },
+      { date: "Sep 05, 2025", title: "Corporate Night", body: "Special rates for companies." }
+    ];
+    const promos = [
+      { title: "50% Off Weekdays", body: "Valid until end of August." }
+    ];
+
+    function renderList(id, list, formatter) {
+      const el = document.getElementById(id);
+      el.innerHTML = list.length
+        ? list.map(formatter).join("")
+        : `<div class="kv">No items yet.</div>`;
+    }
+
+    renderList("updatesList", updates, u => `
+      <div class="card" style="margin-bottom:8px">
+        <strong>${u.title}</strong>
+        <div class="small-muted">${u.body}</div>
+      </div>
+    `);
+
+    renderList("newsList", news, n => `
+      <div class="card" style="margin-bottom:8px">
+        <strong>${n.title}</strong>
+        <div class="small-muted">${n.body}</div>
+      </div>
+    `);
+
+    renderList("eventsList", events, e => `
+      <div class="card" style="margin-bottom:8px">
+        <strong>${e.date} — ${e.title}</strong>
+        <div class="small-muted">${e.body}</div>
+      </div>
+    `);
+
+    renderList("promosList", promos, p => `
+      <div class="card" style="margin-bottom:8px">
+        <strong>${p.title}</strong>
+        <div class="small-muted">${p.body}</div>
+      </div>
+    `);
   </script>
 </body>
 </html>
